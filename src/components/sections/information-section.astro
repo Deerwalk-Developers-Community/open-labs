@@ -1,0 +1,53 @@
+---
+const features = [
+  {
+    title: "University-Specific Structure",
+    icon: null,
+  },
+  {
+    title: "Github Powered Contributions",
+    icon: null,
+  },
+  {
+    title: "Request Lab Work",
+    icon: null,
+  },
+  {
+    title: "Open Source and Free",
+    icon: null,
+  },
+];
+---
+
+<div class="flex flex-col">
+  <div>
+    <div>
+      <h1>Simplify Lab Work.</h1>
+      <h1>Amplify Learning.</h1>
+      <p>
+        Open Labs Nepal connects students across universities, enabling them to
+        upload, browse, and collaborate on lab work efficiently.
+      </p>
+      <button>View Lab Work</button>
+      <button>Contribute</button>
+    </div>
+  </div>
+  <div>
+    {
+      features.map((feature) => (
+        <div class="flex flex-row">
+          {feature.icon}
+          {feature.title}
+        </div>
+      ))
+    }
+  </div>
+  <div class="flex flex-col">
+    <h2>Got Questions? Take a look at our FAQ.</h2>
+    <div class="flex flex-row">
+      <p>Terms of Service</p>
+      <p>Privary Policy</p>
+      <p>@Open Labs Nepal 2025. All rights reserved</p>
+    </div>
+  </div>
+</div>
