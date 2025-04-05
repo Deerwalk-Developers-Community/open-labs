@@ -1,6 +1,7 @@
 ---
 import Hero from "../components/Hero.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import "../styles/global.css"
 ---
 
 <!doctype html>
@@ -9,7 +10,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
     <meta name="description" content={SITE_DESCRIPTION} />
     <meta name="title" content={SITE_TITLE} />
   </head>
-  <body class="flex">
+  <body class="">
     <Hero />
   </body>
 </html>
