@@ -1,4 +1,11 @@
-# Citizen Code of Conduct
+---
+title: "Open Labs Nepal (OLN) Code fo Conduct"
+layout: "#layouts/landing-layout.astro"
+
+---
+
+
+# Open Labs Nepal (OLN) Code of Conduct
 
 ## 1. Purpose
 

@@ -8,6 +8,9 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+   "imports": {
+        "#*": "./src/*"
+    },
   "dependencies": {
     "@astrojs/mdx": "4.2.3",
     "@astrojs/rss": "^4.0.11",
