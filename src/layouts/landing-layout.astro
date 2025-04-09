@@ -1,6 +1,6 @@
 ---
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import "../styles/global.css"
+import "../styles/global.css";
 const { pageTitle } = Astro.props;
 ---
 
@@ -9,22 +9,31 @@ const { pageTitle } = Astro.props;
   <head>
     <meta name="description" content={SITE_DESCRIPTION} />
     <meta name="title" content={SITE_TITLE} />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Open Graph tags -->
     <meta property="og:title" content="Open Labs Nepal" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://deerwalk-developers-community.github.io/open-labs//" />
-    <meta property="og:description" content="Platform for sharing Lab works for students!" />
-    <meta property="og:image" content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp">
-    <meta property="og:image:alt" content="Logo of Open Labs Nepal">
+    <meta
+      property="og:url"
+      content="https://deerwalk-developers-community.github.io/open-labs//"
+    />
+    <meta
+      property="og:description"
+      content="Platform for sharing Lab works for students!"
+    />
+    <meta
+      property="og:image"
+      content="https://www.example.com/_astro/seo-banner.BZD7kegZ.webp"
+    />
+    <meta property="og:image:alt" content="Logo of Open Labs Nepal" />
 
-    <title> {pageTitle} </title>
+    <title>{pageTitle}</title>
   </head>
   <body class="main-body">
     <main>
-        <slot/> 
+      <slot />
     </main>
   </body>
 </html>
