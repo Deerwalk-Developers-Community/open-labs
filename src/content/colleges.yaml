@@ -1,4 +1,3 @@
-
 deerwalk:
   name: "Deerwalk College"
   affiliated_to: tu
@@ -7,18 +6,15 @@ saint_xaviers:
   name: "Saint Xavier's College"
   affiliated_to: tu
 
-
 ku_soe:
   name: "KU School of Engineering"
   affiliated_to: ku
 
-
 ioe:
   name: "TU Institute of Engineering"
   affiliated_to: tu
-
 # table University {
-#   id number 
+#   id number
 #   name string
 # }
 
