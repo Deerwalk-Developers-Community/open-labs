@@ -1,0 +1,53 @@
+
+deerwalk:
+  name: "Deerwalk College"
+  affiliated_to: tu
+
+saint_xaviers:
+  name: "Saint Xavier's College"
+  affiliated_to: tu
+
+
+ku_soe:
+  name: "KU School of Engineering"
+  affiliated_to: ku
+
+
+ioe:
+  name: "TU Institute of Engineering"
+  affiliated_to: tu
+
+# table University {
+#   id number 
+#   name string
+# }
+
+# table College {
+#   id number
+#   name string
+#   affiliated_to number
+# }
+
+# table Course {
+#   id number
+#   name string
+#   taught_by number
+# }
+
+# table Subject {
+#   id number
+#   semester number
+#   course_id number
+# }
+
+# table Lab {
+#   id number
+#   title string
+#   content string
+#   subject_id number
+# }
+
+# ref: College.affiliated_to > University.id
+# ref: Course.taught_by > College.id
+# ref: Subject.course_id > Course.id
+# ref: Lab.subject_id > Subject.id
