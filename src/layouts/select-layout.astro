@@ -2,9 +2,10 @@
 import Footer from "#components/Footer.astro";
 import OpenLabsLogo from "#sections/open-labs-logo.astro";
 import LandingLayout from "#layouts/landing-layout.astro";
+import UniLayout from "./uniLayout.astro";
 const { title } = Astro.props;
 ---
 
-<LandingLayout pageTitle={title} >
+<UniLayout pageTitle={title} >
     <slot />
-</LandingLayout>
+</UniLayout>
