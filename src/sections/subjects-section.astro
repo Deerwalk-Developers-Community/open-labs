@@ -1,0 +1,70 @@
+---
+import BreadCrumb from "#components/BreadCrumb.astro";
+import Button from "#components/Button.astro";
+import SearchBar from "#components/SearchBar.astro";
+import CollegeCard from "#components/CollegeCard.astro";
+import { collections } from "#content.config.ts";
+import { getCollection } from "astro:content";
+const { pathname } = Astro.url;
+
+const colleges = await getCollection("colleges");
+
+let params = 'tu'; 
+const universityNames:any = {
+  "tu": "Tribhuvan University",
+  "ku": "Kathmandu University",
+  "pu": "Pokhara University",
+};
+const filteredColleges = colleges.filter(college=>college.data.affiliated_to ===params);
+import FilterIcon from '#assets/icons/filter.svg'
+import SubjectCard from "#components/SubjectCard.astro";
+const subjectsData = [
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Object Oriented Programming", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Object Oriented Programming", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Object Oriented Programming", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Microprocessor", hasLabWork: true },
+  { name: "Object Oriented Programming", hasLabWork: true }
+];
+---
+<div class='px-5 md:px-10 lg:px-15 py-5 flex flex-col lg:flex-row gap-5 lg:gap-10'>
+    <div class="flex flex-col gap-5 lg:w-1/3">
+      <BreadCrumb />
+      <h1 class="font-bold text-lg lg:text-3xl mt-2">
+        Subjects available in 
+        <span class="underline">
+          {universityNames[params]}
+        </span>
+      </h1>
+      
+      <div class="flex gap-5 flex-col md:flex-row">
+        <SearchBar entity="colleges" />
+        <Button variant="primary" type="button" text="Search" />
+      </div>
+      <div class="flex gap-2 flex-col items-start">
+        <div>
+
+            <span  class="flex justify-start gap-2 items-center">
+                
+                <FilterIcon/> 
+                <p class="font-semibold">
+                    Filter
+                </p>
+            </span>
+        </div>
+        <select  class="p-3  border border-gray-300 text-gray-600 text-base rounded-lg focus:outline-none">
+            <option selected disabled>Semester</option>
+            <option value={1}>{"1st Semester"}</option>
+            </select>
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1  gap-6 mt-4 lg:mt-0 lg:w-2/3">
+      <SubjectCard subjects={subjectsData}/>
+    </div>
+  </div>
