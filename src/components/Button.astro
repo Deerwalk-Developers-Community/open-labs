@@ -1,0 +1,29 @@
+---
+export interface Props{
+    text:string, 
+    type:"button" | "submit" 
+    variant? : "primary" | "secondary" |"outline"; 
+    className ? : string;
+}
+
+const {
+    text, type = "button", variant = "primary" , className  = "" 
+} = Astro.props
+
+const getVariantClass = ()=>{
+    switch(variant){
+        case "primary":
+      return "bg-[#4338CA] text-white";
+    case "secondary":
+      return "bg-zinc-200 text-zinc-800";
+    case "outline":
+      return "bg-transparent border border-zinc-400 text-zinc-800";
+    default:
+      return "bg-[#4338CA] text-white";
+    }
+}
+---
+
+<button type = {type} class={`${getVariantClass()} px-4 py-2 rounded-lg cursor-pointer ${className}`}>
+    {text}
+</button>
