@@ -18,7 +18,7 @@ const { pageTitle } = Astro.props;
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://deerwalk-developers-community.github.io/open-labs/"
+      content="https://deerwalk-developers-community.github.io/open-labs//"
     />
     <meta
       property="og:description"
@@ -33,10 +33,9 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body class="main-body flex flex-col min-h-screen">
-    <main class="flex-1">
+    <main class="flex-1 flex justify-center h-full w-full">
       <slot />
     </main>
     <Footer />
-
-  </body>
+  </body>  
 </html>
