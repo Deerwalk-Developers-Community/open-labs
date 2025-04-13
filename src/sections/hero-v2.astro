@@ -37,16 +37,30 @@ const features = [
       upload, browse, and collaborate on lab work efficiently.
     </p>
     <div class="flex flex-col gap-2 md:flex-row">
-      <Button text="View Lab Work" type="button" variant="primary" className="h-12" /> 
-      <Button text="Contribute" type="button" variant="secondary" className="h-12"/>
+      <Button
+        text="View Lab Work"
+        type="button"
+        variant="primary"
+        className="h-12"
+      />
+      <Button
+        text="Contribute"
+        type="button"
+        variant="secondary"
+        className="h-12"
+      />
     </div>
-    <div class="flex flex-col gap-2 mt-3 md:grid md:grid-cols-2 md:text-sm md:mt-5">
-      {features.map(feature => (
-        <div class="flex gap-2">
-          <feature.icon/>
-          <h1>{feature.title}</h1>
-        </div>
-      ))}
+    <div
+      class="flex flex-col gap-2 mt-3 md:grid md:grid-cols-2 md:text-sm md:mt-5"
+    >
+      {
+        features.map((feature) => (
+          <div class="flex gap-2">
+            <feature.icon />
+            <h1>{feature.title}</h1>
+          </div>
+        ))
+      }
     </div>
     <p class="text-2xl mt-10 max-w-[80%] md:invisible">
       Got Questions? Take a look at our <a href="/faq" class="underline">FAQ</a>
