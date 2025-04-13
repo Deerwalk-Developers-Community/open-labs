@@ -1,8 +1,9 @@
 ---
-import GraduationHatSVG from "../../assets/icons/graduation_hat.svg";
-import GithubSVG from "../../assets/icons/github.svg";
-import PullRequestSVG from "../../assets/icons/pr.svg";
-import OpenSourceSVG from "../../assets/icons/oss.svg";
+import GraduationHatSVG from "#assets/icons/graduation_hat.svg";
+import GithubSVG from "#assets/icons/github.svg";
+import PullRequestSVG from "#assets/icons/pr.svg";
+import OpenSourceSVG from "#assets/icons/oss.svg";
+import Button from "#components/Button.astro";
 
 const features = [
   {
@@ -25,7 +26,30 @@ const features = [
 ---
 
 <main>
-  <div class="flex-col sm:m-5">
-    <p class="sm:mx-10">&#9673; ddc/oss</p>
+  <div class="flex flex-col gap-3 m-10 font-primary">
+    <p class="text-main-blue font-primary text-l">&#9673; ddc/oss</p>
+    <div class="flex flex-col mt-4">
+      <h1 class="text-3xl font-bold text-main-blue">Simplify Lab Work.</h1>
+      <h1 class="text-3xl font-bold text-main-blue">Amplify Learning.</h1>
+    </div>
+    <p class="text-sm max-w-[90%] font-primary">
+      Open Labs Nepal connects students across universities, enabling them to
+      upload, browse, and collaborate on lab work efficiently.
+    </p>
+    <div class="flex flex-col gap-2">
+      <Button text="View Lab Work" type="button" variant="primary" className="h-12" /> 
+      <Button text="Contribute" type="button" variant="secondary" className="h-12"/>
+    </div>
+    <div class="flex flex-col gap-2 mt-3">
+      {features.map(feature => (
+        <div class="flex gap-2">
+          <feature.icon/>
+          <h1>{feature.title}</h1>
+        </div>
+      ))}
+    </div>
+    <p class="text-2xl mt-10 max-w-[80%]">
+      Got Questions? Take a look at our <a href="/faq" class="underline">FAQ</a>
+    </p>
   </div>
 </main>

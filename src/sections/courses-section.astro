@@ -10,33 +10,44 @@ const { pathname } = Astro.url;
 
 const colleges = await getCollection("colleges");
 
-let params = 'tu'; 
-const universityNames:any = {
-  "tu": "Tribhuvan University",
-  "ku": "Kathmandu University",
-  "pu": "Pokhara University",
+let params = "tu";
+const universityNames: any = {
+  tu: "Tribhuvan University",
+  ku: "Kathmandu University",
+  pu: "Pokhara University",
 };
-const filteredColleges = colleges.filter(college=>college.data.affiliated_to ===params);
+const filteredColleges = colleges.filter(
+  (college) => college.data.affiliated_to === params,
+);
 ---
-<div class='px-5 md:px-10 lg:px-15 py-5 flex flex-col lg:flex-row gap-5 lg:gap-10'>
-    <div class="flex flex-col gap-5 lg:w-1/3">
-      <BreadCrumb />
-      <h1 class="font-bold text-lg lg:text-3xl mt-2">
-Courses Available in 
-        <span class="underline">
-          {universityNames[params]}
-        </span>
-      </h1>
-      
-      <div class="flex gap-2 flex-col md:flex-row">
-        <SearchBar entity="course" />
-        <Button variant="primary" type="button" text="Search" />
-      </div>
-    </div>
-    
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
-      {filteredColleges.map((college)=>(
-        <CourseCard id={college.id} name={college.data.name} affiliatedTo={college.data.affiliated_to} />
-      ))}
+
+<div
+  class="px-5 md:px-10 lg:px-15 py-5 flex flex-col lg:flex-row gap-5 lg:gap-10"
+>
+  <div class="flex flex-col gap-5 lg:w-1/3">
+    <BreadCrumb />
+    <h1 class="font-bold text-lg lg:text-3xl mt-2">
+      Courses Available in
+      <span class="underline">
+        {universityNames[params]}
+      </span>
+    </h1>
+
+    <div class="flex gap-2 flex-col md:flex-row">
+      <SearchBar entity="course" />
+      <Button variant="primary" type="button" text="Search" />
     </div>
   </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
+    {
+      filteredColleges.map((college) => (
+        <CourseCard
+          id={college.id}
+          name={college.data.name}
+          affiliatedTo={college.data.affiliated_to}
+        />
+      ))
+    }
+  </div>
+</div>

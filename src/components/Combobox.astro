@@ -2,74 +2,81 @@
 const universities = ["KU", "DWIT", "PU", "ALY"];
 import DropDownArrow from "#assets/icons/downArrow.svg";
 import Button from "./Button.astro";
-
 ---
 
 <div class="flex flex-col gap-5 md:flex-row md:gap-2 w-full">
-    <div class="relative w-full">
-      <input
-        id="combobox-input"
-        required
-        class="outline rounded-lg outline-zinc-400 w-full md:flex-1 p-2"
-        placeholder="Type or select.."
-        autocomplete="off"
-      />
-      <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <DropDownArrow/>
-      </div>
-      <ul
-        id="combobox-dropdown"
-        class="absolute z-10 hidden w-full mt-1 bg-white border border-zinc-300 rounded-lg max-h-60 overflow-auto"
-      >
-        {universities.map((university) => (
-          <li class="px-4 py-2 hover:bg-zinc-100 cursor-pointer" data-value={university}>{university}</li>
-        ))}
-      </ul>
+  <div class="relative w-full">
+    <input
+      id="combobox-input"
+      required
+      class="outline rounded-lg outline-zinc-400 w-full md:flex-1 p-2"
+      placeholder="Type or select.."
+      autocomplete="off"
+    />
+    <div
+      class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none"
+    >
+      <DropDownArrow />
     </div>
-    
-    <Button text="Search" variant="primary" type="button" />
+    <ul
+      id="combobox-dropdown"
+      class="absolute z-10 hidden w-full mt-1 bg-white border border-zinc-300 rounded-lg max-h-60 overflow-auto"
+    >
+      {
+        universities.map((university) => (
+          <li
+            class="px-4 py-2 hover:bg-zinc-100 cursor-pointer"
+            data-value={university}
+          >
+            {university}
+          </li>
+        ))
+      }
+    </ul>
   </div>
 
-  <script type="module">
-    const input = document.getElementById('combobox-input'); 
-    const dropdown = document.getElementById('combobox-dropdown');
-    const items = dropdown.querySelectorAll('li'); 
-  
-    input.addEventListener('focus', ()=>{
-      dropdown.classList.remove('hidden'); 
-    })
-  
-    input.addEventListener('input', ()=> { 
-      const value = input.value.toLowerCase(); 
-      items.forEach(item=>{
-        const text= item.textContent.toLowerCase(); 
-        if (text.includes(value)){
-          item.style.display = 'block'; 
-        }else{
-          item.style.display = 'none'; 
-        }
-      });
-  
-      dropdown.classList.remove('hidden'); 
-  
-    })
-  
-    items.forEach(item=>{
-      item.addEventListener('click', ()=>{
-        input.value = item.getAttribute('data-value'); 
-        dropdown.classList.add('hidden');
-      });
-    })
-  
-    document.addEventListener('click', (e)=>{
-      if (!input.contains(e.target) && !dropdown.contains(e.target)){
-        dropdown.classList.add('hidden')
-      }
-    })
-  
-    document.addEventListener('keydown', (event)=>{
-      if (event.key==='Escape'){
-        dropdown.classList.add('hidden');
+  <Button text="Search" variant="primary" type="button" />
+</div>
+
+<script type="module">
+  const input = document.getElementById("combobox-input");
+  const dropdown = document.getElementById("combobox-dropdown");
+  const items = dropdown.querySelectorAll("li");
+
+  input.addEventListener("focus", () => {
+    dropdown.classList.remove("hidden");
+  });
+
+  input.addEventListener("input", () => {
+    const value = input.value.toLowerCase();
+    items.forEach((item) => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(value)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
       }
     });
-  </script>
+
+    dropdown.classList.remove("hidden");
+  });
+
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      input.value = item.getAttribute("data-value");
+      dropdown.classList.add("hidden");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.classList.add("hidden");
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      dropdown.classList.add("hidden");
+    }
+  });
+</script>
