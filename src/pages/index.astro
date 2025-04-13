@@ -1,10 +1,10 @@
 ---
-import Hero from "../components/Hero.astro";
+import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
+import HeroV2 from "#sections/hero-v2.astro";
 import { SITE_TITLE } from "../consts";
-import LandingLayout from "../layouts/landing-layout.astro";
 import "../styles/global.css";
 ---
 
-<LandingLayout pageTitle={SITE_TITLE}>
-  <Hero />
-</LandingLayout>
+<LayoutWithSmallFooter pageTitle={SITE_TITLE}>
+  <HeroV2 />
+</LayoutWithSmallFooter>
