@@ -12,7 +12,7 @@ export const getStaticPaths = (async () => {
     let params:any = []; 
     courses.map((course)=>course.data.taught_at.forEach((college:any)=>params.push({params:{college:`${college}`}})))
     console.log(params);
-    return [{params:{college : `deerwalk`}}];
+    return params;
 }) satisfies GetStaticPaths;
 
 const {college} = Astro.params;
