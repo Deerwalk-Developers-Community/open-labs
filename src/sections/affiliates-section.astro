@@ -9,7 +9,7 @@ const { pathname } = Astro.url;
 
 const colleges = await getCollection("colleges");
 
-const {university} = Astro.props; 
+const { university } = Astro.props;
 let params = university;
 console.log(params);
 
@@ -17,12 +17,11 @@ const universityNames: any = {
   tu: "Tribhuvan University",
   ku: "Kathmandu University",
   pu: "Pokhara University",
-  pou: 'purbanchal uni'
+  pou: "purbanchal uni",
 };
 const filteredColleges = colleges.filter(
   (college) => college.data.affiliated_to === params,
 );
-
 ---
 
 <div
