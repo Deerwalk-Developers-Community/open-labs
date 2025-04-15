@@ -10,6 +10,7 @@ const { pathname } = Astro.url;
 const colleges = await getCollection("colleges");
 
 let params = 'tu'; 
+console.log(colleges)
 const universityNames:any = {
   "tu": "Tribhuvan University",
   "ku": "Kathmandu University",
@@ -43,7 +44,7 @@ const subjectsData = [
       </h1>
       
       <div class="flex gap-5 flex-col md:flex-row">
-        <SearchBar entity="colleges" />
+        <SearchBar entity="subjects" />
         <Button variant="primary" type="button" text="Search" />
       </div>
       <div class="flex gap-2 flex-col items-start">
