@@ -8,5 +8,8 @@ const universities = defineCollection({
 const colleges = defineCollection({
   loader: file("./src/content/colleges.yaml"),
 });
+const courses = defineCollection({
+  loader: file("./src/content/courses.yaml"),
+});
 
-export const collections = { universities, colleges };
+export const collections = { universities, colleges, courses };

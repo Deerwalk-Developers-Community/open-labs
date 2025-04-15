@@ -1,5 +1,9 @@
 ---
+import { getCollection } from "astro:content";
+
 const { id, name, affiliated_to } = Astro.props;
+console.log(id,name);
+const course = await getCollection('courses');
 ---
 
 <div
@@ -18,7 +22,7 @@ const { id, name, affiliated_to } = Astro.props;
     >
     <a
       class="underline text-xs md:text-sm text-indigo-800 hover:text-indigo-600 cursor-pointer"
-      >View Courses</a
+     href = `/open-labs/courses/${id}` >View Courses</a
     >
   </div>
 </div>
