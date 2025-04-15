@@ -1,5 +1,3 @@
-
-
 c_programming:
   name: "C Programming"
   taught_at:
@@ -8,14 +6,12 @@ c_programming:
     - csit
     - bca
 
-
 microprocessors:
   name: "Micro Processors"
-  taught_at: 
+  taught_at:
     - ioe
     - deerwalk
   courses:
     - computer_engineering
     - csit
     - bca
-

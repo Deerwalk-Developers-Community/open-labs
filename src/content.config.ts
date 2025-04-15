@@ -12,4 +12,8 @@ const courses = defineCollection({
   loader: file("./src/content/courses.yaml"),
 });
 
-export const collections = { universities, colleges, courses };
+const subjects = defineCollection({
+  loader: file("./src/content/subjects.yaml"),
+});
+
+export const collections = { universities, colleges, courses, subjects };

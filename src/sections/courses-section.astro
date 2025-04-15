@@ -9,7 +9,6 @@ import CourseCard from "#components/CourseCard.astro";
 const { pathname } = Astro.url;
 
 const courses = await getCollection("courses");
-console.log(courses);
 const colleges = await getCollection('colleges');
 const {college} = Astro.props;
 let selectedCollege = colleges.find((coll)=>coll.id ===college)
@@ -40,6 +39,7 @@ let selectedCourses = courses.filter((course) =>
     {
         selectedCourses!.map((course:any) => (
         <CourseCard
+          college = {college}
           id={course.id}
           name={course.data.name}
         />
