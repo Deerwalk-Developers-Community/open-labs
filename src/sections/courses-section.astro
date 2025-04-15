@@ -8,16 +8,13 @@ import { getCollection } from "astro:content";
 import CourseCard from "#components/CourseCard.astro";
 const { pathname } = Astro.url;
 
-const colleges = await getCollection("colleges");
-
-let params = "tu";
-const universityNames: any = {
-  tu: "Tribhuvan University",
-  ku: "Kathmandu University",
-  pu: "Pokhara University",
-};
-const filteredColleges = colleges.filter(
-  (college) => college.data.affiliated_to === params,
+const courses = await getCollection("courses");
+console.log(courses);
+const colleges = await getCollection('colleges');
+const {college} = Astro.props;
+let selectedCollege = colleges.find((coll)=>coll.id ===college)
+let selectedCourses = courses.filter((course) => 
+  course.data.taught_at.includes(college)
 );
 ---
 
@@ -29,7 +26,7 @@ const filteredColleges = colleges.filter(
     <h1 class="font-bold text-lg lg:text-3xl mt-2">
       Courses Available in
       <span class="underline">
-        {universityNames[params]}
+        {selectedCollege?.data.name}
       </span>
     </h1>
 
@@ -41,11 +38,10 @@ const filteredColleges = colleges.filter(
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
     {
-      filteredColleges.map((college) => (
+        selectedCourses!.map((course:any) => (
         <CourseCard
-          id={college.id}
-          name={college.data.name}
-          affiliatedTo={college.data.affiliated_to}
+          id={course.id}
+          name={course.data.name}
         />
       ))
     }
