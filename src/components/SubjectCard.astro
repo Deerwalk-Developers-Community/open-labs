@@ -14,8 +14,8 @@ const { subjects } = Astro.props;
 <div class="w-full h-full  rounded-md  ">
   <div class="">
     {subjects?.map((subject) => (
-      <div class="flex items-center justify-between py-2 px-4">
-        <div class="text-gray-700">{subject.name}</div>
+      <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
+        <div class="font-[450]">{subject.name}</div>
         {subject.hasLabWork && (
           <a 
             href="#" 
