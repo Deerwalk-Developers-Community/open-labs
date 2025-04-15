@@ -2,7 +2,7 @@
 export interface Props {
   text: string;
   type: "button" | "submit";
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "landing-button";
   className?: string;
 }
 
@@ -21,6 +21,8 @@ const getVariantClass = () => {
       return "bg-zinc-200 text-zinc-800";
     case "outline":
       return "bg-transparent border border-zinc-400 text-zinc-800";
+    case "landing-button":
+      return "bg-white text-zinc-800 drop-shadow-lg"
     default:
       return "bg-[#4338CA] text-white";
   }
