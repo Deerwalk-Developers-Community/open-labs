@@ -4,19 +4,19 @@ import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import AffiliatesSection from "#sections/affiliates-section.astro";
 import { getCollection } from "astro:content";
 
-export const getStaticPaths =  (async () => {
-  const uni =await getCollection('universities'); 
-    
-    let params :any= []; 
-    uni.map((uni)=>params.push({params:{university:`${uni.id}`}}))
-    console.log(params);
-    return params;
+export const getStaticPaths = (async () => {
+  const uni = await getCollection("universities");
+
+  let params: any = [];
+  uni.map((uni) => params.push({ params: { university: `${uni.id}` } }));
+  console.log(params);
+  return params;
 }) satisfies GetStaticPaths;
 
-const {university} = Astro.params; 
+const { university } = Astro.params;
 console.log(university);
 ---
 
 <LayoutWithSmallFooter title="About Open Labs Nepal">
-  <AffiliatesSection university = {university} />
+  <AffiliatesSection university={university} />
 </LayoutWithSmallFooter>

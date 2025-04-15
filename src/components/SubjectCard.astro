@@ -11,20 +11,22 @@ export interface Props {
 const { subjects } = Astro.props;
 ---
 
-<div class="w-full h-full  rounded-md  ">
+<div class="w-full h-full rounded-md">
   <div class="">
-    {subjects?.map((subject) => (
-      <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
-        <div class="font-[450]">{subject.name}</div>
-        {subject.hasLabWork && (
-          <a 
-            href="#" 
-            class="text-blue-600 underline text-indigo-800 font-semibold"
-          >
-            View Lab Work
-          </a>
-        )}
-      </div>
-    ))}
+    {
+      subjects?.map((subject) => (
+        <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
+          <div class="font-[450]">{subject.name}</div>
+          {subject.hasLabWork && (
+            <a
+              href="#"
+              class="text-blue-600 underline text-indigo-800 font-semibold"
+            >
+              View Lab Work
+            </a>
+          )}
+        </div>
+      ))
+    }
   </div>
 </div>

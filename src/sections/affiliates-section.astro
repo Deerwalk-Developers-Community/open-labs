@@ -7,18 +7,18 @@ import { getCollection } from "astro:content";
 
 const colleges = await getCollection("colleges");
 const uni = await getCollection("universities");
-const {university} = Astro.props; 
+const { university } = Astro.props;
 let params = university;
 
-const selectedUniversity:any = uni.find(university => params===university.id);
+const selectedUniversity: any = uni.find(
+  (university) => params === university.id,
+);
 
-const universityName  = selectedUniversity.data.name;
-
+const universityName = selectedUniversity.data.name;
 
 const filteredColleges = colleges.filter(
   (college) => college.data.affiliated_to === params,
 );
-
 ---
 
 <div
