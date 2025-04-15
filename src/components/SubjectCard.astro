@@ -21,10 +21,10 @@ const { subjects } = Astro.props;
     {
       subjects?.map((subject:any) => (
         <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
-          <div class="font-[450]">{subject.data?.name}</div>
+          <div class="font-[500]">{subject.data.name}</div>
             <a
               href="#"
-              class="text-blue-600 underline text-indigo-800 font-semibold"
+              class="font-[700] underline text-indigo-800 "
             >
               View Lab Work
             </a>
