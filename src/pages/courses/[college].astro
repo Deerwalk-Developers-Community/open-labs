@@ -1,0 +1,24 @@
+---
+import type { GetStaticPaths } from "astro";
+import CourseCard from "#components/CourseCard.astro";
+import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
+import AffiliatesSection from "#sections/affiliates-section.astro";
+import CoursesSection from "#sections/courses-section.astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = (async () => {
+    const courses = await getCollection('courses');
+    console.log(courses);
+    let params:any = []; 
+    courses.map((course)=>course.data.taught_at.forEach((college:any)=>params.push({params:{college:`${college}`}})))
+    console.log(params);
+    return [{params:{college : `deerwalk`}}];
+}) satisfies GetStaticPaths;
+
+const {college} = Astro.params;
+console.log(college);
+---
+
+<LayoutWithSmallFooter title="About Open Labs Nepal">
+  <CoursesSection college = {college}/>
+</LayoutWithSmallFooter>

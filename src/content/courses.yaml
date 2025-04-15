@@ -1,2 +1,19 @@
 computer_engineering:
   name: "Computer Engineering"
+  taught_at:
+    - ku_soe
+    - ioe
+
+csit:
+  name: "Bachelor's in Computer Science and Information Technology"
+  taught_at:
+    - deerwalk
+    - saint_xaviers
+
+bca:
+  name: "Bachelor's in Computer Applications"
+  taught_at:
+    - deerwalk
+
+
+

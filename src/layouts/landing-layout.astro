@@ -1,8 +1,14 @@
 ---
 import Footer from "#components/Footer.astro";
+import LandingFooter from "#components/Landing-Footer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import "../styles/global.css";
-const { pageTitle } = Astro.props;
+export interface Props {
+  pageTitle: string;
+  isLanding: boolean;
+}
+
+const { pageTitle, isLanding = false }: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -36,6 +42,6 @@ const { pageTitle } = Astro.props;
     <main class="flex-1">
       <slot />
     </main>
-    <Footer />
+    {isLanding ? <LandingFooter /> : <Footer />}
   </body>
 </html>
