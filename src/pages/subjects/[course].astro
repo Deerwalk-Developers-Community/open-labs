@@ -1,6 +1,12 @@
 ---
+import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import SubjectsSection from "#sections/subjects-section.astro";
+
+export const getStaticPaths = (async () => {
+  
+  return [];
+}) satisfies GetStaticPaths;
 ---
 
 <LayoutWithSmallFooter title="About Open Labs Nepal">
