@@ -1,0 +1,31 @@
+---
+import type { GetStaticPaths } from "astro";
+import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
+import SubjectsSection from "#sections/subjects-section.astro";
+import { getCollection } from "astro:content";
+
+
+export const getStaticPaths = (async () => {
+  
+  const subjects = await getCollection('subjects');
+  console.log(subjects);
+  let params:any  = [
+    ]; 
+    subjects.map((subject)=> 
+    subject.data.taught_at.forEach(
+      (college:any)=>
+      subject.data.courses.forEach((course:any)=>
+      
+      params.push({params:{college:college, course:course}}))
+    )
+    )
+    console.log(params);
+    return params;
+  }) satisfies GetStaticPaths;
+  const {college, course} = Astro.params;
+
+---
+
+<LayoutWithSmallFooter title="About Open Labs Nepal">
+  <SubjectsSection college = {college} course = {course}/>
+</LayoutWithSmallFooter>

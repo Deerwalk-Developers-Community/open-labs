@@ -6,34 +6,17 @@ import CollegeCard from "#components/CollegeCard.astro";
 import { collections } from "#content.config.ts";
 import { getCollection } from "astro:content";
 const { pathname } = Astro.url;
-
-const colleges = await getCollection("colleges");
-
-let params = "tu";
-console.log(colleges);
-const universityNames: any = {
-  tu: "Tribhuvan University",
-  ku: "Kathmandu University",
-  pu: "Pokhara University",
-};
-const filteredColleges = colleges.filter(
-  (college) => college.data.affiliated_to === params,
-);
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
-const subjectsData = [
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Object Oriented Programming", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Object Oriented Programming", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Object Oriented Programming", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Microprocessor", hasLabWork: true },
-  { name: "Object Oriented Programming", hasLabWork: true },
-];
+
+
+const {college, course} = Astro.props;
+const courses = await getCollection('courses'); 
+const selectedCourse = courses.find((cour)=>cour.id==course)
+console.log(selectedCourse);
+const subjects = await getCollection('subjects');
+const selectedSubjects = subjects.filter(subject => subject.data.taught_at.includes(college))
+console.log(selectedSubjects);
 ---
 
 <div
@@ -44,7 +27,7 @@ const subjectsData = [
     <h1 class="font-bold text-lg lg:text-3xl mt-2">
       Subjects available in
       <span class="underline">
-        {universityNames[params]}
+        {selectedCourse!.data.name}
       </span>
     </h1>
 
@@ -69,6 +52,6 @@ const subjectsData = [
   </div>
 
   <div class="grid grid-cols-1 gap-6 mt-4 lg:mt-0 lg:w-2/3">
-    <SubjectCard subjects={subjectsData} />
+    <SubjectCard subjects={selectedSubjects} />
   </div>
 </div>

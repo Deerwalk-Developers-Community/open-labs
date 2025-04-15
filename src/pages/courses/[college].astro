@@ -8,7 +8,6 @@ import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
     const courses = await getCollection('courses');
-    console.log(courses);
     let params:any = []; 
     courses.map((course)=>course.data.taught_at.forEach((college:any)=>params.push({params:{college:`${college}`}})))
     console.log(params);

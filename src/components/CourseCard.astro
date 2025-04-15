@@ -1,5 +1,6 @@
 ---
-const { id, name } = Astro.props;
+const { id, name ,college} = Astro.props;
+console.log(college);
 ---
 
 <div
@@ -23,7 +24,7 @@ const { id, name } = Astro.props;
     >
     <a
       class="underline text-xs md:text-sm text-indigo-800 hover:text-indigo-600 cursor-pointer"
-      >View Subjects</a
+      href=`/open-labs/subjects/${college}-${id}`>View Subjects</a
     >
   </div>
 </div>
