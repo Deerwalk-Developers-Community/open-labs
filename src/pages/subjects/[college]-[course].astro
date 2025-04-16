@@ -2,22 +2,26 @@
 import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import SubjectsSection from "#sections/subjects-section.astro";
-import { getCollection } from "astro:content";
+import { getSubjects } from "#lib/helper.ts";
+
+interface Subject {
+  name: string;
+  taught_at: string[];
+  courses: string[];
+}
 
 export const getStaticPaths = (async () => {
-  const subjects = await getCollection("subjects");
-  console.log(subjects);
-  let params: any = [];
-  subjects.map((subject) =>
-    subject.data.taught_at.forEach((college: any) =>
-      subject.data.courses.forEach((course: any) =>
-        params.push({ params: { college: college, course: course } }),
-      ),
-    ),
+  const subjects = await getSubjects() as Subject[];
+  const paths = subjects.flatMap((subject) =>
+    subject.taught_at.flatMap((college) =>
+      subject.courses.map((course) => ({
+        params: { college, course },
+      }))
+    )
   );
-  console.log(params);
-  return params;
+  return paths;
 }) satisfies GetStaticPaths;
+
 const { college, course } = Astro.params;
 ---
 

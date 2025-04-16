@@ -2,23 +2,26 @@
 import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import CoursesSection from "#sections/courses-section.astro";
-import { getCollection } from "astro:content";
+import { getCourses } from "#lib/helper.ts";
+
+interface Course {
+  name: string;
+  taught_at: string[];
+}
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const courses = await getCollection("courses");
-
+  const courses = await getCourses() as Course[];
   const paths = courses.flatMap((course) =>
-    course.data.taught_at.map((college: string) => ({
+    course.taught_at.map((college) => ({
       params: { college },
-    })),
+    }))
   );
-
   return paths;
 };
 
 const { college } = Astro.params;
 ---
 
-<LayoutWithSmallFooter title=`${college} Open Labs Nepal`>
+<LayoutWithSmallFooter title={`${college} Open Labs Nepal`}>
   <CoursesSection college={college} />
 </LayoutWithSmallFooter>

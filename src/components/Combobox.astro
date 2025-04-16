@@ -1,10 +1,10 @@
 ---
-const uni = await getCollection("universities");
+const uni = await getUniversities();
 const universities = uni.map((university) => university.id.toLocaleUpperCase());
 
 import DropDownArrow from "#assets/icons/downArrow.svg";
-import { getCollection } from "astro:content";
 import Button from "./Button.astro";
+import { getUniversities } from "#lib/helper.ts";
 ---
 
 <div class="flex flex-col gap-5 sm:flex-row md:gap-2 w-full">

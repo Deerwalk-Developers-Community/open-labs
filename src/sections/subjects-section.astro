@@ -2,23 +2,16 @@
 import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
-import { getCollection } from "astro:content";
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
+import { getSubjects } from "#lib/helper.ts";
 
 const { college, course } = Astro.props;
 
-const courses = await getCollection("courses");
-
-const selectedCourse = courses.find((cour) => cour.id == course);
-
-const subjects = await getCollection("subjects");
-
-const selectedSubjects = subjects.filter((subject) =>
-  subject.data.taught_at.includes(college),
+const subjects = await getSubjects();
+const selectedSubjects = subjects.filter(subject => 
+  subject.taught_at.includes(college) && subject.courses.includes(course)
 );
-
-console.log(selectedSubjects);
 ---
 
 <div
@@ -29,7 +22,7 @@ console.log(selectedSubjects);
     <h1 class="font-bold text-lg lg:text-3xl mt-2">
       Subjects available in
       <span class="underline">
-        {selectedCourse!.data.name}
+        {course}
       </span>
     </h1>
 

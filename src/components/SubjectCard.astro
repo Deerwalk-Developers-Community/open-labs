@@ -1,13 +1,8 @@
 ---
 interface Subject {
-  id: string;
-  data: {
-    name: string;
-    taught_at: any[];
-    courses: any[];
-  };
-  filePath: string;
-  collection: string;
+  name: string;
+  taught_at: string[];
+  courses: string[];
 }
 
 const { subjects } = Astro.props;
@@ -16,9 +11,9 @@ const { subjects } = Astro.props;
 <div class="w-full h-full rounded-md">
   <div class="">
     {
-      subjects?.map((subject: any) => (
+      subjects?.map((subject: Subject) => (
         <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
-          <div class="font-[500]">{subject.data.name}</div>
+          <div class="font-[500]">{subject.name}</div>
           <a href="" class="font-[700] underline text-indigo-800 ">
             View Lab Work
           </a>
