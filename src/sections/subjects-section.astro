@@ -2,20 +2,22 @@
 import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
-import CollegeCard from "#components/CollegeCard.astro";
-import { collections } from "#content.config.ts";
 import { getCollection } from "astro:content";
-const { pathname } = Astro.url;
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
 
+const { college, course } = Astro.props;
 
-const {college, course} = Astro.props;
-const courses = await getCollection('courses'); 
-const selectedCourse = courses.find((cour)=>cour.id==course)
-console.log(selectedCourse);
-const subjects = await getCollection('subjects');
-const selectedSubjects = subjects.filter(subject => subject.data.taught_at.includes(college))
+const courses = await getCollection("courses");
+
+const selectedCourse = courses.find((cour) => cour.id == course);
+
+const subjects = await getCollection("subjects");
+
+const selectedSubjects = subjects.filter((subject) =>
+  subject.data.taught_at.includes(college),
+);
+
 console.log(selectedSubjects);
 ---
 

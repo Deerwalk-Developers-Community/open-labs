@@ -48,12 +48,14 @@ const features = [
         type="button"
         variant="primary"
         className="h-12 w-full md:w-45"
+        id="view-lab-button"
       />
       <Button
         text="Contribute"
         type="button"
         variant="landing-button"
         className="h-12 w-full md:w-45"
+        id="contribute-button"
       />
     </div>
     <div
@@ -70,3 +72,15 @@ const features = [
     </div>
   </div>
 </main>
+
+<script type="module">
+  document.getElementById("view-lab-button")?.addEventListener("click", () => {
+    window.location.assign(`${window.location}universities`);
+  });
+
+  document
+    .getElementById("contribute-button")
+    ?.addEventListener("click", () => {
+      window.location.assign(`${window.location}contribute`);
+    });
+</script>

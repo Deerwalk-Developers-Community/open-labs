@@ -6,11 +6,12 @@ import CollegeCard from "#components/CollegeCard.astro";
 import { getCollection } from "astro:content";
 
 const colleges = await getCollection("colleges");
-const uni = await getCollection("universities");
+const universities = await getCollection("universities");
+
 const { university } = Astro.props;
 let params = university;
 
-const selectedUniversity: any = uni.find(
+const selectedUniversity: any = universities.find(
   (university) => params === university.id,
 );
 

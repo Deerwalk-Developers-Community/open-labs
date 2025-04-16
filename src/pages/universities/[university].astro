@@ -5,18 +5,18 @@ import AffiliatesSection from "#sections/affiliates-section.astro";
 import { getCollection } from "astro:content";
 
 export const getStaticPaths = (async () => {
-  const uni = await getCollection("universities");
+  const universitites = await getCollection("universities");
 
-  let params: any = [];
-  uni.map((uni) => params.push({ params: { university: `${uni.id}` } }));
-  console.log(params);
-  return params;
+  return universitites.map((university) => ({
+    params: { university: university.id },
+    props: { name: university.data.name },
+  }));
 }) satisfies GetStaticPaths;
 
 const { university } = Astro.params;
-console.log(university);
+const { name } = Astro.props;
 ---
 
-<LayoutWithSmallFooter title="About Open Labs Nepal">
+<LayoutWithSmallFooter title=`${name} Colleges`>
   <AffiliatesSection university={university} />
 </LayoutWithSmallFooter>

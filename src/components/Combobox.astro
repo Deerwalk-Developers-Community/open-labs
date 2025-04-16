@@ -1,6 +1,6 @@
 ---
-const uni = await getCollection('universities');
-const universities = uni.map(university=>university.id.toLocaleUpperCase());
+const uni = await getCollection("universities");
+const universities = uni.map((university) => university.id.toLocaleUpperCase());
 
 import DropDownArrow from "#assets/icons/downArrow.svg";
 import { getCollection } from "astro:content";

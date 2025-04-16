@@ -10,24 +10,18 @@ interface Subject {
   collection: string;
 }
 
-
-
 const { subjects } = Astro.props;
-
 ---
 
 <div class="w-full h-full rounded-md">
   <div class="">
     {
-      subjects?.map((subject:any) => (
+      subjects?.map((subject: any) => (
         <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
           <div class="font-[500]">{subject.data.name}</div>
-            <a
-              href="#"
-              class="font-[700] underline text-indigo-800 "
-            >
-              View Lab Work
-            </a>
+          <a href="" class="font-[700] underline text-indigo-800 ">
+            View Lab Work
+          </a>
         </div>
       ))
     }

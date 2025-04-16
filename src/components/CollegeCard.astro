@@ -2,8 +2,8 @@
 import { getCollection } from "astro:content";
 
 const { id, name, affiliated_to } = Astro.props;
-console.log(id,name);
-const course = await getCollection('courses');
+console.log(id, name);
+const course = await getCollection("courses");
 ---
 
 <div
@@ -22,7 +22,7 @@ const course = await getCollection('courses');
     >
     <a
       class="underline font-[700] text-xs md:text-sm text-indigo-800 hover:text-indigo-600 cursor-pointer"
-     href = `/open-labs/courses/${id}` >View Courses</a
+      href=`/open-labs/courses/${id}`>View Courses</a
     >
   </div>
 </div>
