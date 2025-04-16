@@ -4,11 +4,13 @@ import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
-import { getSubjects } from "#lib/helper.ts";
+import { getSubjects, getColleges } from "#lib/helper.ts";
 
 const { college, course } = Astro.props;
 
 const subjects = await getSubjects();
+const colleges = await getColleges();
+const selectedCollege = colleges.find(c => c.id === college);
 const selectedSubjects = subjects.filter(subject => 
   subject.taught_at.includes(college) && subject.courses.includes(course)
 );
@@ -47,6 +49,10 @@ const selectedSubjects = subjects.filter(subject =>
   </div>
 
   <div class="grid grid-cols-1 gap-6 mt-4 lg:mt-0 lg:w-2/3">
-    <SubjectCard subjects={selectedSubjects} />
+    <SubjectCard 
+      subjects={selectedSubjects} 
+      university_id={selectedCollege?.affiliated_to} 
+      course={course} 
+    />
   </div>
 </div>

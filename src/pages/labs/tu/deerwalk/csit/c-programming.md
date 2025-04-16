@@ -4,14 +4,17 @@ college_id: deerwalk
 college_name: "Deerwalk Institute of Technology"
 course: csit
 semester: 1
-subject: c_programming
+subject: c-programming
 university_id: tu
 university_name: "Tribhubhan University"
 ---
 
 # Create a function to add two values
 
-```python
-def main(a, b) -> int:
-    return a + b
+```c
+
+int add(int a, int b){
+    return a + b;
+}
+
 ```
