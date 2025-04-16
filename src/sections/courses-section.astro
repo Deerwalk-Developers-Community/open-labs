@@ -2,19 +2,13 @@
 import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
-import CollegeCard from "#components/CollegeCard.astro";
-import { collections } from "#content.config.ts";
-import { getCollection } from "astro:content";
 import CourseCard from "#components/CourseCard.astro";
-const { pathname } = Astro.url;
+import { getCourses } from "#lib/helper.ts";
 
-const courses = await getCollection("courses");
-const colleges = await getCollection('colleges');
-const {college} = Astro.props;
-let selectedCollege = colleges.find((coll)=>coll.id ===college)
-let selectedCourses = courses.filter((course) => 
-  course.data.taught_at.includes(college)
-);
+const { college } = Astro.props;
+
+const courses = await getCourses();
+const selectedCourses = courses.filter(course => course.taught_at.includes(college));
 ---
 
 <div
@@ -25,7 +19,7 @@ let selectedCourses = courses.filter((course) =>
     <h1 class="font-bold text-lg lg:text-3xl mt-2">
       Courses Available in
       <span class="underline">
-        {selectedCollege?.data.name}
+        {college}
       </span>
     </h1>
 
@@ -37,12 +31,8 @@ let selectedCourses = courses.filter((course) =>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
     {
-        selectedCourses!.map((course:any) => (
-        <CourseCard
-          college = {college}
-          id={course.id}
-          name={course.data.name}
-        />
+      selectedCourses.map((course) => (
+        <CourseCard college={college} id={course.name} name={course.name} />
       ))
     }
   </div>

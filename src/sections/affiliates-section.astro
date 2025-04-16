@@ -3,22 +3,24 @@ import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import CollegeCard from "#components/CollegeCard.astro";
-import { getCollection } from "astro:content";
+import { getColleges, getUniversities } from "#lib/helper.ts";
 
-const colleges = await getCollection("colleges");
-const uni = await getCollection("universities");
+const colleges = await getColleges()
+const universities = await getUniversities();
+
 const { university } = Astro.props;
 let params = university;
 
-const selectedUniversity: any = uni.find(
+const selectedUniversity: any = universities.find(
   (university) => params === university.id,
 );
 
-const universityName = selectedUniversity.data.name;
+const universityName = selectedUniversity.name;
 
 const filteredColleges = colleges.filter(
-  (college) => college.data.affiliated_to === params,
+  (college) => college.affiliated_to === params,
 );
+
 ---
 
 <div
@@ -44,8 +46,8 @@ const filteredColleges = colleges.filter(
       filteredColleges.map((college) => (
         <CollegeCard
           id={college.id}
-          name={college.data.name}
-          affiliatedTo={college.data.affiliated_to}
+          name={college.name}
+          affiliatedTo={college.affiliated_to}
         />
       ))
     }

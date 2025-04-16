@@ -1,19 +1,19 @@
-import { file, glob } from "astro/loaders";
+import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
-const universities = defineCollection({
-  loader: file("./src/content/universities.yaml"),
+const labs = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/pages/labs"}),
+  schema: z.object({
+    title: z.string(),
+    college_id: z.string(),
+    college_name: z.string(),
+    course: z.string(),
+    semester: z.number().min(1).max(8),
+    subject: z.string(),
+    university_id: z.string(),
+    university_name: z.string()
+  })
 });
 
-const colleges = defineCollection({
-  loader: file("./src/content/colleges.yaml"),
-});
-const courses = defineCollection({
-  loader: file("./src/content/courses.yaml"),
-});
+export const collections = { labs };
 
-const subjects = defineCollection({
-  loader: file("./src/content/subjects.yaml"),
-});
-
-export const collections = { universities, colleges, courses, subjects };

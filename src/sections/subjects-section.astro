@@ -2,21 +2,18 @@
 import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
-import CollegeCard from "#components/CollegeCard.astro";
-import { collections } from "#content.config.ts";
-import { getCollection } from "astro:content";
-const { pathname } = Astro.url;
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
+import { getSubjects, getColleges } from "#lib/helper.ts";
 
+const { college, course } = Astro.props;
 
-const {college, course} = Astro.props;
-const courses = await getCollection('courses'); 
-const selectedCourse = courses.find((cour)=>cour.id==course)
-console.log(selectedCourse);
-const subjects = await getCollection('subjects');
-const selectedSubjects = subjects.filter(subject => subject.data.taught_at.includes(college))
-console.log(selectedSubjects);
+const subjects = await getSubjects();
+const colleges = await getColleges();
+const selectedCollege = colleges.find(c => c.id === college);
+const selectedSubjects = subjects.filter(subject => 
+  subject.taught_at.includes(college) && subject.courses.includes(course)
+);
 ---
 
 <div
@@ -27,7 +24,7 @@ console.log(selectedSubjects);
     <h1 class="font-bold text-lg lg:text-3xl mt-2">
       Subjects available in
       <span class="underline">
-        {selectedCourse!.data.name}
+        {course}
       </span>
     </h1>
 
@@ -52,6 +49,10 @@ console.log(selectedSubjects);
   </div>
 
   <div class="grid grid-cols-1 gap-6 mt-4 lg:mt-0 lg:w-2/3">
-    <SubjectCard subjects={selectedSubjects} />
+    <SubjectCard 
+      subjects={selectedSubjects} 
+      university_id={selectedCollege?.affiliated_to} 
+      course={course} 
+    />
   </div>
 </div>
