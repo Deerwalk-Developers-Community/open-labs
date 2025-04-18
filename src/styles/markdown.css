@@ -1,0 +1,14 @@
+
+.markdown-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  /* font-family: "MD Sans"; */
+}
+
+.markdown-content p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.markdown-content h2{
+    font-size: 1rem;
+}

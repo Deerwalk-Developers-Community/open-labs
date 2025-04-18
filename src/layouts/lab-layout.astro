@@ -1,9 +1,19 @@
 ---
 import Footer from "#components/Footer.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import "../styles/global.css";
+import { SITE_DESCRIPTION, SITE_TITLE } from "#consts.ts";
+
+interface Props {
+    pageTitle: string
+}
+
 const { pageTitle } = Astro.props;
+
+import "#styles/global.css"
+import "#styles/markdown.css"
+
+
 ---
+
 
 <!doctype html>
 <html lang="en">
@@ -18,7 +28,7 @@ const { pageTitle } = Astro.props;
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://deerwalk-developers-community.github.io/open-labs/"
+      content="https://deerwalk-developers-community.github.io/open-labs//"
     />
     <meta
       property="og:description"
@@ -33,9 +43,9 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body class="main-body flex flex-col min-h-screen">
-    <main class="flex-1 flex justify-center h-full w-full">
+    <main class="markdown-content md:m-20">
       <slot />
     </main>
     <Footer />
-  </body>
+</body>
 </html>

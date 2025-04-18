@@ -17,7 +17,7 @@ export async function getUniversities() {
 }
 
 export async function getColleges() {
-  const allLabs = await await getCollection("labs");
+  const allLabs =  await getCollection("labs");
   const collegesMap = new Map();
   
   allLabs.forEach(lab => {
@@ -46,7 +46,6 @@ export async function getCourses() {
     coursesMap.get(lab.data.course).taught_at.add(lab.data.college_id);
   });
   
-  // Convert Sets to Arrays for the final result
   return Array.from(coursesMap.values()).map(course => ({
     name: course.name,
     taught_at: Array.from(course.taught_at)
@@ -71,7 +70,6 @@ export async function getSubjects() {
     subject.courses.add(lab.data.course);
   });
   
-  // Convert Sets to Arrays for the final result
   return Array.from(subjectsMap.values()).map(subject => ({
     name: subject.name,
     taught_at: Array.from(subject.taught_at),
