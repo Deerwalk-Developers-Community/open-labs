@@ -14,7 +14,7 @@ interface SubjectCardProps {
 const { subjects, university_id, course } = Astro.props as SubjectCardProps;
 
 const generateSlug = (text: string): string => {
-  return text.toLowerCase().replace(/\s+/g, '-');
+  return text.toLowerCase().replace(/\s+/g, "-");
 };
 ---
 
@@ -24,8 +24,8 @@ const generateSlug = (text: string): string => {
       subjects?.map((subject: Subject) => (
         <div class="flex items-center justify-between py-3 px-4 border-b-2 border-gray-200">
           <div class="font-[500]">{subject.name}</div>
-          <a 
-            href={`/open-labs/labs/${university_id}/${subject.taught_at[0]}/${course}/${generateSlug(subject.name)}`} 
+          <a
+            href={`/open-labs/labs/${university_id}/${subject.taught_at[0]}/${course}/${generateSlug(subject.name)}`}
             class="font-[700] underline text-indigo-800 hover:text-indigo-600 transition-colors"
           >
             View Lab Work

@@ -2,16 +2,15 @@
 import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import AffiliatesSection from "#sections/affiliates-section.astro";
-import { getUniversities } from "#lib/helper.ts"
+import { getUniversities } from "#lib/helper.ts";
 
 export const getStaticPaths = (async () => {
-  const universities = await getUniversities()
+  const universities = await getUniversities();
 
   return universities.map((university) => ({
     params: { university: university.id },
     props: { name: university.name },
   }));
-
 }) satisfies GetStaticPaths;
 
 const { university } = Astro.params;

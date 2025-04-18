@@ -11,13 +11,13 @@ interface Subject {
 }
 
 export const getStaticPaths = (async () => {
-  const subjects = await getSubjects() as Subject[];
+  const subjects = (await getSubjects()) as Subject[];
   const paths = subjects.flatMap((subject) =>
     subject.taught_at.flatMap((college) =>
       subject.courses.map((course) => ({
         params: { college, course },
-      }))
-    )
+      })),
+    ),
   );
   return paths;
 }) satisfies GetStaticPaths;

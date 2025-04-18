@@ -11,13 +11,13 @@ interface CourseCardProps {
   subjectCount?: number;
 }
 
-const { 
-  id, 
-  name, 
+const {
+  id,
+  name,
   college,
   degreeType = "Bachelors",
   duration = { years: 4, semesters: 8 },
-  subjectCount = 145
+  subjectCount = 145,
 } = Astro.props as CourseCardProps;
 ---
 
@@ -33,7 +33,9 @@ const {
         {degreeType}
       </h3>
     </div>
-    <h4 class="font-semibold text-gray-700">{duration.years} years/{duration.semesters} Semesters</h4>
+    <h4 class="font-semibold text-gray-700">
+      {duration.years} years/{duration.semesters} Semesters
+    </h4>
   </div>
   <div class="mt-4 lg:mt-6 flex flex-row justify-between items-center">
     <span

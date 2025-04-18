@@ -8,7 +8,9 @@ import { getCourses } from "#lib/helper.ts";
 const { college } = Astro.props;
 
 const courses = await getCourses();
-const selectedCourses = courses.filter(course => course.taught_at.includes(college));
+const selectedCourses = courses.filter((course) =>
+  course.taught_at.includes(college),
+);
 ---
 
 <div

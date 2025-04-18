@@ -5,7 +5,11 @@ interface ComboboxProps {
   buttonText?: string;
 }
 
-const { placeholder = "Type or select..", required = true, buttonText = "Search" } = Astro.props as ComboboxProps;
+const {
+  placeholder = "Type or select..",
+  required = true,
+  buttonText = "Search",
+} = Astro.props as ComboboxProps;
 
 const uni = await getUniversities();
 const universities = uni.map((university) => university.id.toLocaleUpperCase());

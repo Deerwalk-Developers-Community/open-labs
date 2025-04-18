@@ -32,7 +32,10 @@ export function initCombobox() {
   });
 
   document.addEventListener("click", (e) => {
-    if (!input.contains(e.target as Node) && !dropdown.contains(e.target as Node)) {
+    if (
+      !input.contains(e.target as Node) &&
+      !dropdown.contains(e.target as Node)
+    ) {
       dropdown.classList.add("hidden");
     }
   });
@@ -53,4 +56,4 @@ export function initCombobox() {
       );
     }
   });
-} 
+}

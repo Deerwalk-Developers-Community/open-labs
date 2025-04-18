@@ -1,26 +1,30 @@
 ---
-
 interface Props {
-    title: string 
-    collegeName: string
-    semester: number
-    course: string
-    doneBy: string
+  title: string;
+  collegeName: string;
+  semester: number;
+  course: string;
+  doneBy: string;
 }
 
 const props = Astro.props;
-import "#styles/markdown.css"
-
+import "#styles/markdown.css";
 ---
 
-
-
 <aside class="my-2">
-    <div class="flex-col">
-        <h1 class="font-primary font-bold text-[3rem] text-main" style="font-size: 3rem;">{props.title}</h1>
-        <div class="flex gap-1 items-center">
-            <p class="text-xl"> {props.collegeName} &#9679; {props.course.toLocaleUpperCase()} &#9679; Semester {props.semester} </p> 
-        </div>
+  <div class="flex-col">
+    <h1
+      class="font-primary font-bold text-[3rem] text-main"
+      style="font-size: 3rem;"
+    >
+      {props.title}
+    </h1>
+    <div class="flex gap-1 items-center">
+      <p class="text-xl">
+        {props.collegeName} &#9679; {props.course.toLocaleUpperCase()} &#9679; Semester
+        {props.semester}
+      </p>
     </div>
-    <code>Done By: {props.doneBy}</code>
+  </div>
+  <code>Done By: {props.doneBy}</code>
 </aside>

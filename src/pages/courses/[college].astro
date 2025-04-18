@@ -10,11 +10,11 @@ interface Course {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const courses = await getCourses() as Course[];
+  const courses = (await getCourses()) as Course[];
   const paths = courses.flatMap((course) =>
     course.taught_at.map((college) => ({
       params: { college },
-    }))
+    })),
   );
   return paths;
 };

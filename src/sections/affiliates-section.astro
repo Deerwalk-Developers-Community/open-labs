@@ -5,7 +5,7 @@ import SearchBar from "#components/SearchBar.astro";
 import CollegeCard from "#components/CollegeCard.astro";
 import { getColleges, getUniversities } from "#lib/helper.ts";
 
-const colleges = await getColleges()
+const colleges = await getColleges();
 const universities = await getUniversities();
 
 const { university } = Astro.props;
@@ -20,7 +20,6 @@ const universityName = selectedUniversity.name;
 const filteredColleges = colleges.filter(
   (college) => college.affiliated_to === params,
 );
-
 ---
 
 <div
