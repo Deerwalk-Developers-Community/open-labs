@@ -26,12 +26,12 @@ const selectedCourses = courses.filter((course) =>
     </h1>
 
     <div class="flex gap-2 flex-col md:flex-row">
-      <SearchBar entity="course" />
-      <Button variant="primary" type="button" text="Search" />
+      <SearchBar entity="courses" />
+      <Button  id = 'search-button' variant="primary" type="button" text="Search" />
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3" id = 'course-container'>
     {
       selectedCourses.map((course) => (
         <CourseCard college={college} id={course.name} name={course.name} />
@@ -39,3 +39,10 @@ const selectedCourses = courses.filter((course) =>
     }
   </div>
 </div>
+
+
+<script> 
+  import { initCourseSearch } from "#lib/searchCourse.ts";
+
+  initCourseSearch();
+</script>
