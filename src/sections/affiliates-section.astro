@@ -20,6 +20,8 @@ const universityName = selectedUniversity.name;
 const filteredColleges = colleges.filter(
   (college) => college.affiliated_to === params,
 );
+
+  
 ---
 
 <div
@@ -36,11 +38,11 @@ const filteredColleges = colleges.filter(
 
     <div class="flex gap-1 flex-col md:flex-row">
       <SearchBar entity="colleges" />
-      <Button variant="primary" type="button" text="Search" className="px-5" />
+      <Button id = "search-button" variant="primary" type="button" text="Search" className="px-5" />
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 lg:w-2/3" id = "college-container">
     {
       filteredColleges.map((college) => (
         <CollegeCard
@@ -52,3 +54,11 @@ const filteredColleges = colleges.filter(
     }
   </div>
 </div>
+
+
+
+<script> 
+import {initCollegeSearch} from '#lib/searchCollege.ts'
+initCollegeSearch();
+
+</script> 

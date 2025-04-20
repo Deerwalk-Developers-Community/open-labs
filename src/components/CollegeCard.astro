@@ -3,17 +3,17 @@ import { getCollection } from "astro:content";
 
 const { id, name, affiliated_to } = Astro.props;
 console.log(id, name);
-const course = await getCollection("courses");
 ---
 
 <div
-  class="flex flex-col border border-gray-300 p-4 md:p-5 gap-10 md:gap-8 lg:gap-15 rounded-lg h-full shadow-sm hover:shadow-md transition-shadow"
+  class={`flex flex-col border border-gray-300 p-4 md:p-5 gap-10 md:gap-8 lg:gap-15 rounded-lg h-full shadow-sm hover:shadow-md transition-shadow ${name}`}
+  id = {id}
 >
   <div class="flex-1">
     <h3 class="font-bold text-lg md:text-xl mb-2">
       {name}
     </h3>
-    <h4 class="font-semibold text-gray-700">Place</h4>
+    <!-- <h4 class="font-semibold text-gray-700">Place</h4> -->
   </div>
   <div class="mt-4 lg:mt-6 flex flex-row justify-between items-center">
     <span
