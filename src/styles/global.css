@@ -8,3 +8,7 @@
   --color-main-blue: #1e1b4b;
   --color-shadcn-blue: #4338ca;
 }
+
+body{
+  letter-spacing: -4%;
+}

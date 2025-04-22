@@ -35,12 +35,12 @@ import { getUniversities } from "#lib/helper.ts";
     </div>
     <ul
       id="combobox-dropdown"
-      class="absolute z-10 hidden w-full mt-1 bg-white border border-zinc-300 rounded-lg max-h-60 overflow-auto shadow-lg"
+      class="absolute z-10 rounded-t-none hidden w-full mt-1 bg-white border border-zinc-300 rounded-lg max-h-60 overflow-auto shadow-lg"
     >
       {
         universities.map((university) => (
           <li
-            class="px-4 py-2 hover:bg-zinc-100 cursor-pointer transition-colors"
+            class="px-4 py-2 hover:bg-zinc-100 rounded-t-none cursor-pointer"
             data-value={university}
           >
             {university}
