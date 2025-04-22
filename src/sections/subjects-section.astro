@@ -49,7 +49,10 @@ const selectedSubjects = subjects.filter(
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-6 mt-4 lg:mt-0 lg:w-2/3">
+  <div
+    class="grid grid-cols-1 gap-6 mt-4 lg:mt-0 lg:w-2/3"
+    id="subject-container"
+  >
     <SubjectCard
       subjects={selectedSubjects}
       university_id={selectedCollege?.affiliated_to}
@@ -57,3 +60,8 @@ const selectedSubjects = subjects.filter(
     />
   </div>
 </div>
+
+<script>
+  import { initSubjectSearch } from "#lib/searchSubjects.ts";
+  initSubjectSearch();
+</script>

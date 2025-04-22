@@ -2,17 +2,39 @@
 import BreadCrumbArrow from "./BreadCrumbArrow.astro";
 
 const { pathname } = Astro.url;
-
 const levels = [
-  { title: "University", href: "/open-labs" },
-  { title: "College", href: "/open-labs/affiliates" },
-  { title: "Courses", href: "/college/courses" },
-  { title: "Subjects", href: "/college/courses/subjects" },
+  { title: "University", href: "/open-labs/universities", pattern: "/open-labs/universities$" },
+  { title: "College", href: "#", pattern: "/open-labs/universities/[^/]+$" },
+  { title: "Courses", href: "#", pattern: "/open-labs/courses/[^/]+$" },
+  { title: "Subjects", href: "#", pattern: "/open-labs/subjects/[^/]+$" },
 ];
 
-const activeIndex = levels.findIndex((level) => level.href === pathname);
-const visibleBreadcrumbs =
-  activeIndex !== -1 ? levels.slice(0, activeIndex + 1) : [];
+const activeIndex = levels.findIndex((level) => {
+  const regex = new RegExp(level.pattern);
+  return regex.test(pathname);
+});
+
+const dynamicBreadcrumbs = levels.map((level, index) => {
+  if (index === 0) {
+    return level;
+  }
+  
+  let href = "#";
+  
+  if (index === 1 && pathname.includes('/universities/')) {
+    href = pathname;
+  }
+  else if (index === 2 && pathname.includes('/courses/')) {
+    href = pathname;
+  }
+  else if (index === 3 && pathname.includes('/subjects/')) {
+    href = pathname;
+  }
+  
+  return { ...level, href };
+});
+
+const visibleBreadcrumbs = activeIndex !== -1 ? dynamicBreadcrumbs.slice(0, activeIndex + 1) : [];
 ---
 
 <nav class="flex">
@@ -24,7 +46,7 @@ const visibleBreadcrumbs =
         <li class="inline-flex items-center gap-3">
           <a
             href={crumb.href}
-            class={`inline-flex text-sm font-medium ${i == visibleBreadcrumbs.length - 1 && "text-gray-700"} `}
+            class={`inline-flex text-sm font-medium ${i == visibleBreadcrumbs.length - 1 ? "text-gray-700" : "text-blue-600 hover:text-blue-800"}`}
           >
             <span class={`ms-1 text-sm font-medium md:ms-2`}>
               {crumb.title}
