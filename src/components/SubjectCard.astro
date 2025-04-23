@@ -13,6 +13,8 @@ interface SubjectCardProps {
 
 const { subjects, university_id, course } = Astro.props as SubjectCardProps;
 
+console.log(subjects);
+
 const generateSlug = (text: string): string => {
   return text.toLowerCase().replace(/\s+/g, "-");
 };

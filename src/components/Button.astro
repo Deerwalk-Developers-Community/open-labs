@@ -1,4 +1,5 @@
 ---
+import {cn} from "#utils/utils.ts"
 export interface Props {
   text: string;
   type: "button" | "submit";
@@ -33,7 +34,7 @@ const getVariantClass = () => {
 
 <button
   type={type}
-  class={`${getVariantClass()} px-4 py-2 rounded-lg cursor-pointer ${className}`}
+  class={cn(`${getVariantClass()} px-7 py-3 text-xl font-[550] rounded-md cursor-pointer`,className)}
   id={id}
 >
   {text}
