@@ -9,6 +9,7 @@ const levels = [
   { title: "Subjects", href: "#", pattern: "/open-labs/subjects/[^/]+$" },
 ];
 
+console.log(pathname);
 const activeIndex = levels.findIndex((level) => {
   const regex = new RegExp(level.pattern);
   return regex.test(pathname);
