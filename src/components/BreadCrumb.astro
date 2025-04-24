@@ -21,13 +21,13 @@ const dynamicBreadcrumbs = levels.map((level, index) => {
   
   let href = "#";
   
-  if (index === 1 && pathname.includes('/universities/')) {
+  if (index === 1 && pathname.includes('/open-labs/universities/')) {
     href = pathname;
   }
-  else if (index === 2 && pathname.includes('/courses/')) {
+  else if (index === 2 && pathname.includes('/open-labs/courses/')) {
     href = pathname;
   }
-  else if (index === 3 && pathname.includes('/subjects/')) {
+  else if (index === 3 && pathname.includes('/open-labs/subjects/')) {
     href = pathname;
   }
   
@@ -46,7 +46,7 @@ const visibleBreadcrumbs = activeIndex !== -1 ? dynamicBreadcrumbs.slice(0, acti
         <li class="inline-flex items-center gap-3">
           <a
             href={crumb.href}
-            class={`inline-flex text-sm font-medium ${i == visibleBreadcrumbs.length - 1 ? "text-gray-700" : "text-blue-600 hover:text-blue-800"}`}
+            class={`inline-flex text-sm font-medium ${i == visibleBreadcrumbs.length - 1 ? "text-black hover:text-blue-800":"text-[#71717A]"}`}
           >
             <span class={`ms-1 text-sm font-medium md:ms-2`}>
               {crumb.title}

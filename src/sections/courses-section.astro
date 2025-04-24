@@ -25,13 +25,14 @@ const selectedCourses = courses.filter((course) =>
       </span>
     </h1>
 
-    <div class="flex gap-2 flex-col md:flex-row">
+    <div class="flex gap-3 flex-col md:flex-row">
       <SearchBar entity="courses" />
       <Button
         id="search-button"
         variant="primary"
         type="button"
         text="Search"
+        className="px-8 text-sm lg:text-md"
       />
     </div>
   </div>
