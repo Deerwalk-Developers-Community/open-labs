@@ -13,7 +13,7 @@ export function initCollegeSearch() {
           ?.textContent?.toLowerCase();
         console.log(collegeName);
         if (searchValue === "" || collegeName?.includes(searchValue)) {
-          card.style.display = "block";
+          card.style.display = "flex";
         } else {
           card.style.display = "none";
         }

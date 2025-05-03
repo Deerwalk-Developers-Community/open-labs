@@ -3,29 +3,28 @@ export function initCourseSearch() {
     const searchInput = document.getElementById("courses");
     const searchButton = document.getElementById("search-button");
 
-    const courseCard = document.querySelectorAll("#course-container");
+    const courseCards = document.querySelectorAll(".course-card");
 
     function filterCourses() {
       const searchValue = searchInput?.value.toLowerCase().trim();
-      courseCard.forEach((card) => {
-        const courseName = card.querySelector("h3")?.textContent?.toLowerCase();
-        console.log(courseName);
+      courseCards.forEach((card) => {
+        const courseName = card
+          .querySelector(".course-name")
+          ?.textContent?.toLowerCase();
         if (searchValue === "" || courseName?.includes(searchValue)) {
-          card.style.display = "block";
+          card.classList.remove("hidden");
         } else {
-          card.style.display = "none";
+          card.classList.add("hidden");
         }
       });
     }
 
     searchButton?.addEventListener("click", filterCourses);
 
-    searchInput!.addEventListener("keyup", (e) => {
+    searchInput?.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         filterCourses();
       }
     });
-
-    // searchInput!.addEventListener("input", filterCourses);
   });
 }

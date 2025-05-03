@@ -11,7 +11,7 @@ export function initSubjectSearch() {
         const courseName = card.querySelector("h3")?.textContent?.toLowerCase();
         console.log(courseName);
         if (searchValue === "" || courseName?.includes(searchValue)) {
-          card.style.display = "block";
+          card.style.display = "flex";
         } else {
           card.style.display = "none";
         }
