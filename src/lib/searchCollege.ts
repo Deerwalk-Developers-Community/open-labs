@@ -3,19 +3,20 @@ export function initCollegeSearch() {
     const searchInput = document.getElementById("colleges");
     const searchButton = document.getElementById("search-button");
 
-    const collegeCards = document.querySelectorAll("#college-container");
+    const collegeCards = document.querySelectorAll(".college-card");
 
     function filterColleges() {
       const searchValue = searchInput?.value.toLowerCase().trim();
+      console.log(searchValue);
       collegeCards.forEach((card) => {
         const collegeName = card
-          .querySelector("h3")
+          .querySelector(".college-name")
           ?.textContent?.toLowerCase();
         console.log(collegeName);
         if (searchValue === "" || collegeName?.includes(searchValue)) {
-          card.style.display = "flex";
+          card.classList.remove("hidden");
         } else {
-          card.style.display = "none";
+          card.classList.add("hidden");
         }
       });
     }
