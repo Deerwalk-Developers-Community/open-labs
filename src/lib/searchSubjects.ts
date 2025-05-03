@@ -7,12 +7,10 @@ export function initSubjectSearch() {
 
     function filterSubjects() {
       const searchValue = searchInput?.value.toLowerCase().trim();
-      console.log(searchValue);
       subjectCard.forEach((card) => {
         const subjectName = card
           .querySelector(".subject-name")
           ?.textContent.toLowerCase();
-        console.log(subjectName);
         if (searchValue === "" || subjectName?.includes(searchValue)) {
           card.classList.remove("hidden");
         } else {
