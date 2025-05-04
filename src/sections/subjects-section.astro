@@ -7,7 +7,6 @@ import SubjectCard from "#components/SubjectCard.astro";
 import { getSubjects, getColleges } from "#lib/helper.ts";
 import Footer from "#components/Footer.astro";
 import Pagination from "#components/Pagination.astro";
-
 const { college, course } = Astro.props;
 
 const subjects = await getSubjects();
@@ -17,6 +16,8 @@ const selectedSubjects = subjects.filter(
   (subject) =>
     subject.taught_at.includes(college) && subject.courses.includes(course),
 );
+
+
 ---
 
 <div
@@ -30,7 +31,8 @@ const selectedSubjects = subjects.filter(
       >
         Subjects available in
         <span class="underline">
-          {course.charAt(0).toUpperCase() + course.slice(1)}
+          <!-- {course.charAt(0).toUpperCase() + course.slice(1)} -->
+          {course.toUpperCase()}
         </span>
       </h1>
 
@@ -52,10 +54,18 @@ const selectedSubjects = subjects.filter(
           </span>
         </div>
         <select
+          id="semester-filter"
           class="p-3 w-full sm:w-fit border border-gray-300 text-gray-600 text-base rounded-lg focus:outline-none"
         >
-          <option selected disabled>Semester</option>
-          <option value={1}>{"1st Semester"}</option>
+          <option value="" selected>All Semesters</option>
+          <option value="1">1st Semester</option>
+          <option value="2">2nd Semester</option>
+          <option value="3">3rd Semester</option>
+          <option value="4">4th Semester</option>
+          <option value="5">5th Semester</option>
+          <option value="6">6th Semester</option>
+          <option value="7">7th Semester</option>
+          <option value="8">8th Semester</option>
         </select>
       </div>
     </div>
@@ -86,4 +96,5 @@ const selectedSubjects = subjects.filter(
 <script>
   import { initSubjectSearch } from "#lib/searchSubjects.ts";
   initSubjectSearch();
+
 </script>

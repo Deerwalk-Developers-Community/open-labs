@@ -3,7 +3,7 @@ import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import CollegeCard from "#components/CollegeCard.astro";
-import { getColleges, getUniversities } from "#lib/helper.ts";
+import { getColleges, getCourses, getUniversities } from "#lib/helper.ts";
 import Footer from "#components/Footer.astro";
 import Pagination from "#components/Pagination.astro";
 
@@ -22,6 +22,9 @@ const universityName = selectedUniversity.name;
 const filteredColleges = colleges.filter(
   (college) => college.affiliated_to === params,
 );
+
+const courses = getCourses();
+
 ---
 
 <div

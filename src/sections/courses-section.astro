@@ -3,7 +3,7 @@ import BreadCrumb from "#components/BreadCrumb.astro";
 import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import CourseCard from "#components/CourseCard.astro";
-import { getCourses } from "#lib/helper.ts";
+import {  getCourses } from "#lib/helper.ts";
 import Footer from "#components/Footer.astro";
 import Pagination from "#components/Pagination.astro";
 
@@ -13,6 +13,7 @@ const courses = await getCourses();
 const selectedCourses = courses.filter((course) =>
   course.taught_at.includes(college),
 );
+
 ---
 
 <div
@@ -27,6 +28,7 @@ const selectedCourses = courses.filter((course) =>
         Courses Available in
         <span class="underline">
           {college.charAt(0).toUpperCase() + college.slice(1)}
+          <!-- {collegeReal.name} -->
         </span>
       </h1>
 
