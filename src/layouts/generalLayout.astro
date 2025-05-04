@@ -6,7 +6,7 @@ export interface Props {
   title: string;
 }
 
-const {title}: Props = Astro.props;
+const { title }: Props = Astro.props;
 ---
 
 <!doctype html>
@@ -39,6 +39,6 @@ const {title}: Props = Astro.props;
   <body class="main-body flex flex-col min-h-screen">
     <main class="flex-1">
       <slot />
-    </main> 
+    </main>
   </body>
 </html>
