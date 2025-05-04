@@ -3,6 +3,8 @@ import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import SubjectsSection from "#sections/subjects-section.astro";
 import { getSubjects } from "#lib/helper.ts";
+import GeneralLayout from "#layouts/generalLayout.astro";
+import OpenLabsLogo from "#sections/open-labs-logo.astro";
 
 interface Subject {
   name: string;
@@ -25,6 +27,7 @@ export const getStaticPaths = (async () => {
 const { college, course } = Astro.params;
 ---
 
-<LayoutWithSmallFooter title="About Open Labs Nepal">
+<GeneralLayout title=`Subjects in ${course.toUpperCase()}`>
+  <OpenLabsLogo />
   <SubjectsSection college={college} course={course} />
-</LayoutWithSmallFooter>
+</GeneralLayout>

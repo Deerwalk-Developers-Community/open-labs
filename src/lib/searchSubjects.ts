@@ -3,17 +3,18 @@ export function initSubjectSearch() {
     const searchInput = document.getElementById("subjects");
     const searchButton = document.getElementById("search-button");
 
-    const courseCard = document.querySelectorAll("#subject-container");
+    const subjectCard = document.querySelectorAll(".subject-card");
 
     function filterSubjects() {
       const searchValue = searchInput?.value.toLowerCase().trim();
-      courseCard.forEach((card) => {
-        const courseName = card.querySelector("h3")?.textContent?.toLowerCase();
-        console.log(courseName);
-        if (searchValue === "" || courseName?.includes(searchValue)) {
-          card.style.display = "block";
+      subjectCard.forEach((card) => {
+        const subjectName = card
+          .querySelector(".subject-name")
+          ?.textContent.toLowerCase();
+        if (searchValue === "" || subjectName?.includes(searchValue)) {
+          card.classList.remove("hidden");
         } else {
-          card.style.display = "none";
+          card.classList.add("hidden");
         }
       });
     }

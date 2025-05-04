@@ -4,6 +4,8 @@ import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import CollegeCard from "#components/CollegeCard.astro";
 import { getColleges, getUniversities } from "#lib/helper.ts";
+import Footer from "#components/Footer.astro";
+import Pagination from "#components/Pagination.astro";
 
 const colleges = await getColleges();
 const universities = await getUniversities();
@@ -23,42 +25,60 @@ const filteredColleges = colleges.filter(
 ---
 
 <div
-  class="px-5 md:px-10 lg:px-15 py-5 flex flex-col lg:flex-row gap-5 lg:gap-40 justify-between w-full"
+  class="px-5 md:px-10 lg:px-15 py-5 flex flex-col lg:flex-row gap-5 lg:gap-40 mt-10 lg:justify-between w-full min-h-[90dvh]"
 >
-  <div class="flex flex-col gap-5 lg:w-[35%]">
-    <BreadCrumb />
-    <h1 class="font-[600] text-indigo-950 text-lg lg:text-3xl mt-2">
-      Colleges affiliated with
-      <span class="underline">
-        {universityName}
-      </span>
-    </h1>
+  <div class="flex flex-col gap-5 lg:w-[35%] justify-between">
+    <div>
+      <BreadCrumb />
+      <h1
+        class="font-[600] text-2xl md:text-3xl text-indigo-950 lg:text-4xl mt-10"
+      >
+        Colleges affiliated with
+        <span class="underline">
+          {universityName.charAt(0) + universityName.slice(1)}
+        </span>
+      </h1>
 
-    <div class="flex gap-3 w-full sm:w-fit lg:w-full flex-col sm:flex-row">
-      <SearchBar entity="colleges" />
-      <Button
-        id="search-button"
-        variant="primary"
-        type="button"
-        text="Search"
-        className="px-8 text-sm lg:text-md  "
-      />
+      <div
+        class="flex gap-3 w-full sm:w-fit lg:w-full flex-col sm:flex-row mt-5"
+      >
+        <SearchBar entity="colleges" />
+        <Button
+          id="search-button"
+          variant="primary"
+          type="button"
+          text="Search"
+          className="px-8 text-sm lg:text-md"
+        />
+      </div>
+    </div>
+
+    <div class="hidden lg:block mt-auto">
+      <Footer />
     </div>
   </div>
-
-  <div
-    class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 lg:mt-0 w-full lg:w-2/3  flex-1/2"
-    id="college-container"
-  >
-    {
-      filteredColleges.map((college) => (
-        <CollegeCard
-          id={college.id}
-          name={college.name}
-          affiliatedTo={college.affiliated_to}
-        />
-      ))
-    }
+  <div class="flex flex-col justify-between w-full lg:w-2/3">
+    <div
+      class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 md:mt-0 w-full auto-rows-max"
+      id="college-container"
+    >
+      {
+        filteredColleges.map((college) => (
+          <CollegeCard
+            id={college.id}
+            name={college.name}
+            affiliatedTo={college.affiliated_to}
+          />
+        ))
+      }
+    </div>
+    <div class="hidden lg:block mt-auto">
+      <Pagination />
+    </div>
+  </div>
+  <div class="block lg:hidden mt-auto">
+    <Pagination />
+    <Footer />
   </div>
 </div>
 

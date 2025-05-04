@@ -1,0 +1,161 @@
+---
+import GeneralLayout from "#layouts/generalLayout.astro";
+import OpenLabsLogo from "#sections/open-labs-logo.astro";
+import GuideSection from "#sections/guide-section.astro";
+import GuideSiderbar from "#components/guideSiderbar.astro";
+import Footer from "#components/Footer.astro";
+
+export const sections = [
+  {
+    title: "Basic Syntax",
+    items: [
+      {
+        id: "headers",
+        name: "Headers",
+      },
+      {
+        id: "emphasis",
+        name: "Emphasis",
+      },
+      {
+        id: "lists",
+        name: "Lists",
+        subItems: [
+          {
+            name: "Unordered Lists",
+          },
+          {
+            name: "Ordered Lists",
+          },
+        ],
+      },
+      {
+        id: "links-images",
+        name: "Links and Images",
+      },
+      {
+        id: "code",
+        name: "Code",
+      },
+      {
+        id: "blockquotes",
+        name: "Blockquotes",
+      },
+      {
+        id: "horizontal-rules",
+        name: "Horizontal Rules",
+      },
+    ],
+  },
+  {
+    title: "Extended Syntax",
+    items: [
+      {
+        id: "tables",
+        name: "Tables",
+      },
+      {
+        id: "task-lists",
+        name: "Task Lists",
+      },
+      {
+        id: "footnotes",
+        name: "Footnotes",
+      },
+      {
+        id: "emoji",
+        name: "Emoji",
+      },
+      {
+        id: "highlight",
+        name: "Highlight",
+      },
+    ],
+  },
+  {
+    title: "Best Practices",
+    items: [
+      {
+        id: "heading-structure",
+        description:
+          "Use consistent heading levels to maintain a clear structure.",
+      },
+      {
+        id: "readable-content",
+        description:
+          "Write plain, readable text before focusing on formatting.",
+      },
+      {
+        id: "list-usage",
+        description: "Use bullet or numbered lists for better scannability.",
+      },
+      {
+        id: "descriptive-links",
+        description: "Add links with descriptive text instead of raw URLs.",
+      },
+      {
+        id: "preview-markdown",
+        description: "Preview your Markdown to catch formatting issues early.",
+      },
+      {
+        id: "consistency",
+        description: "Use consistent formatting throughout your document.",
+      },
+      {
+        id: "readability",
+        description:
+          "Focus on making your markdown readable even in its raw form.",
+      },
+    ],
+  },
+  {
+    title: "Common Pitfalls",
+    items: [
+      {
+        id: "inconsistent-headings",
+        description: "Inconsistent use of headings breaks content hierarchy.",
+      },
+      {
+        id: "missing-blank-lines",
+        description:
+          "Forgetting to leave blank lines before/after lists or headings causes rendering issues.",
+      },
+      {
+        id: "overusing-emphasis",
+        description:
+          "Overusing emphasis (bold/italics) can reduce readability.",
+      },
+      {
+        id: "ignoring-line-breaks",
+        description: "Ignoring line breaks can lead to walls of text.",
+      },
+      {
+        id: "unnecessary-html",
+        description: "Using raw HTML unnecessarily complicates Markdown files.",
+      },
+      {
+        id: "spacing",
+        description:
+          "Remember to include proper spacing for list items and headers.",
+      },
+      {
+        id: "escaping",
+        description:
+          "Use backslash to escape special characters: \\*, \\_, \\`, etc.",
+      },
+    ],
+  },
+];
+---
+
+<GeneralLayout title={`Markdown Guide`}>
+  <OpenLabsLogo />
+  <h1 class="md:text-2xl text-xl lg:text-3xl font-bold text-center mb-10">
+    Complete Markdown Guide for Open Labs Nepal
+  </h1>
+  <div class="flex justify-between">
+    <GuideSiderbar sections={sections} />
+    <GuideSection sections={sections} />
+  </div>
+  <Footer/>
+</GeneralLayout>
