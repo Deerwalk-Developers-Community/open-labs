@@ -1,191 +1,223 @@
 ---
 interface SubItem {
-    name: string;
-    codeExample?: string;
+  name: string;
+  codeExample?: string;
 }
 
 interface Item {
-    id: string;
-    name?: string;
-    description?: string;
-    codeExample?: string;
-    subItems?: SubItem[];
+  id: string;
+  name?: string;
+  description?: string;
+  codeExample?: string;
+  subItems?: SubItem[];
 }
 
 interface Section {
-    title: string;
-    items: Item[];
+  title: string;
+  items: Item[];
 }
 
 const { sections } = Astro.props;
 
-const bestPractices = sections.find((section: Section) => section.title === "Best Practices");
-const commonPitfalls = sections.find((section: Section) => section.title === "Common Pitfalls");
+const bestPractices = sections.find(
+  (section: Section) => section.title === "Best Practices",
+);
+const commonPitfalls = sections.find(
+  (section: Section) => section.title === "Common Pitfalls",
+);
 ---
 
 <section class="max-w-5xl mx-auto px-5 md:px-10 lg:px-15 py-5 mt-10">
-    
-    <div class="mb-10">
-        <h2 class="text-2xl font-semibold mb-4" id="basic-syntax">Basic Syntax</h2>
+  <div class="mb-10">
+    <h2 class="text-2xl font-semibold mb-4" id="basic-syntax">Basic Syntax</h2>
 
-        <div class="mb-8">
-            <h3 id="headers" class="text-lg font-medium mb-3">Headers</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-# H1
-## H2
-### H3
-#### H4
-##### H5
-###### H6
-            </div>
-        </div>
+    <div class="mb-8">
+      <h3 id="headers" class="text-lg font-medium mb-3">Headers</h3>
+      <div
+        class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+      >
+        # H1 ## H2 ### H3 #### H4 ##### H5 ###### H6
+      </div>
+    </div>
 
-        <div class="mb-8">
-            <h3 id="emphasis" class="text-lg font-medium mb-3">Emphasis</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-*<span class="italic">Italic text</span>* or _Italic text_
-**<span class="font-bold">Bold text</span>** or <span class="font-bold"> __Bold text__ </span>
-<span class="font-bold italic">
-    ***Bold and italic*** </span> or <span class="font-bold italic">___Bold and italic___
-~~Strikethrough~~
-            </div>
-        </div>
+    <div class="mb-8">
+      <h3 id="emphasis" class="text-lg font-medium mb-3">Emphasis</h3>
+      <div
+        class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+      >
+        *<span class="italic">Italic text</span>* or _Italic text_ **<span
+          class="font-bold">Bold text</span
+        >** or <span class="font-bold"> __Bold text__ </span>
+        <span class="font-bold italic"> ***Bold and italic*** </span> or <span
+          class="font-bold italic"
+          >___Bold and italic___ ~~Strikethrough~~
+        </span>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="lists" class="text-lg font-medium mb-3">Lists</h3>
-            <div class="mt-4 mb-4">
-                <h4 class="font-medium mb-2">Unordered Lists</h4>
-                <div class="bg-gray-100 font-[500] rounded-md p-4 text-sm whitespace-pre-wrap">
-- First item
-- Second item
-- Third item
-  - Indented item
-  - Another indented item
-                </div>
-            </div>
-            <div class="mt-4 mb-4">
-                <h4 class="font-medium mb-2">Ordered Lists</h4>
-                <div class="bg-gray-100 font-[500] rounded-md p-4 text-sm whitespace-pre-wrap">
-1. First item
-2. Second item
-3. Third item
-   1. Indented item
-   2. Another indented item
-                </div>
-            </div>
+      <div class="mb-8">
+        <h3 id="lists" class="text-lg font-medium mb-3">Lists</h3>
+        <div class="mt-4 mb-4">
+          <h4 class="font-medium mb-2">Unordered Lists</h4>
+          <div
+            class="bg-gray-100 font-[500] rounded-md p-4 text-sm whitespace-pre-wrap"
+          >
+            - First item - Second item - Third item - Indented item - Another
+            indented item
+          </div>
         </div>
+        <div class="mt-4 mb-4">
+          <h4 class="font-medium mb-2">Ordered Lists</h4>
+          <div
+            class="bg-gray-100 font-[500] rounded-md p-4 text-sm whitespace-pre-wrap"
+          >
+            1. First item 2. Second item 3. Third item 1. Indented item 2.
+            Another indented item
+          </div>
+        </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="links-images" class="text-lg font-medium mb-3">Links and Images</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap underline">
-[Link text](https://www.example.com)
-![Alt text](image.jpg "Optional title")
-            </div>
+      <div class="mb-8">
+        <h3 id="links-images" class="text-lg font-medium mb-3">
+          Links and Images
+        </h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap underline"
+        >
+          [Link text](https://www.example.com) ![Alt text](image.jpg "Optional
+          title")
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="code" class="text-lg font-medium mb-3">Code</h3>
-            <h2 class="text-md font-medium">Inline Code</h2>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-            Use `code` in your text
-            </div>
-            <h2 class="text-md font-medium">Code Blocks</h2>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-```javascript
-const hello = "world";
-console.log(hello);
-```     
-             </div>
+      <div class="mb-8">
+        <h3 id="code" class="text-lg font-medium mb-3">Code</h3>
+        <h2 class="text-md font-medium">Inline Code</h2>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          Use `code` in your text
         </div>
+        <h2 class="text-md font-medium">Code Blocks</h2>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          ```javascript const hello = "world"; console.log(hello); ```
+        </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="blockquotes" class="text-lg font-medium mb-3">Blockquotes</h3>
-            <div class="bg-gray-100 text-indigo-600 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-> This is a blockquote
-> 
-> It can span multiple lines
-            </div>
+      <div class="mb-8">
+        <h3 id="blockquotes" class="text-lg font-medium mb-3">Blockquotes</h3>
+        <div
+          class="bg-gray-100 text-indigo-600 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          > This is a blockquote > > It can span multiple lines
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="horizontal-rules" class="text-lg font-medium mb-3">Horizontal Rules</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
----
-***
-_ _ _ 
-            </div>
+      <div class="mb-8">
+        <h3 id="horizontal-rules" class="text-lg font-medium mb-3">
+          Horizontal Rules
+        </h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          --- *** _ _ _
         </div>
+      </div>
     </div>
 
     <div class="mb-10">
-        <h2 class="text-2xl font-semibold mb-4" id="extended-syntax">Extended Syntax</h2>
+      <h2 class="text-2xl font-semibold mb-4" id="extended-syntax">
+        Extended Syntax
+      </h2>
 
-        <div class="mb-8">
-            <h3 id="tables" class="text-lg font-medium mb-3">Tables</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-| Header 1 | Header 2 |
-| -------- | -------- |
-| Cell 1   | Cell 2   |
-| Cell 3   | Cell 4   |
-            </div>
+      <div class="mb-8">
+        <h3 id="tables" class="text-lg font-medium mb-3">Tables</h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          | Header 1 | Header 2 | | -------- | -------- | | Cell 1 | Cell 2 | |
+          Cell 3 | Cell 4 |
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="task-lists" class="text-lg font-medium mb-3">Task Lists</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
-            </div>
+      <div class="mb-8">
+        <h3 id="task-lists" class="text-lg font-medium mb-3">Task Lists</h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          - [x] Write the press release - [ ] Update the website - [ ] Contact
+          the media
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="footnotes" class="text-lg font-medium mb-3">Footnotes</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-Here's a sentence with a footnote.<span class='underline'>[^1]</span>
-<br>
-[^1]: This is the footnote.
-            </div>
+      <div class="mb-8">
+        <h3 id="footnotes" class="text-lg font-medium mb-3">Footnotes</h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          Here's a sentence with a footnote.<span class="underline">[^1]</span>
+          <br />
+          [^1]: This is the footnote.
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="emoji" class="text-lg font-medium mb-3">Emoji</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-:smile: :heart: :rocket:
-            </div>
+      <div class="mb-8">
+        <h3 id="emoji" class="text-lg font-medium mb-3">Emoji</h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          :smile: :heart: :rocket:
         </div>
+      </div>
 
-        <div class="mb-8">
-            <h3 id="highlight" class="text-lg font-medium mb-3">Highlight</h3>
-            <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
-==Highlighted text==
-            </div>
+      <div class="mb-8">
+        <h3 id="highlight" class="text-lg font-medium mb-3">Highlight</h3>
+        <div
+          class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap"
+        >
+          ==Highlighted text==
         </div>
+      </div>
     </div>
 
-    {bestPractices && (
-      <div class="mb-12">
-        <h2 id="best-practices" class="text-2xl font-semibold mb-6" id="best-practices">{bestPractices.title}</h2>
-        <ol class="list-decimal pl-5 space-y-4">
-          {bestPractices.items.map((item: Item) => (
-            <li class="text-base " id={item.id}>
-              {item.name ? `${item.name}: ` : ""}{item.description}
-            </li>
-          ))}
-        </ol>
-      </div>
-    )}
+    {
+      bestPractices && (
+        <div class="mb-12">
+          <h2
+            id="best-practices"
+            class="text-2xl font-semibold mb-6"
+            id="best-practices"
+          >
+            {bestPractices.title}
+          </h2>
+          <ol class="list-decimal pl-5 space-y-4">
+            {bestPractices.items.map((item: Item) => (
+              <li class="text-base " id={item.id}>
+                {item.name ? `${item.name}: ` : ""}
+                {item.description}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
 
-    {commonPitfalls && (
-      <div class="">
-        <h2 id="common-pitfalls" class="text-2xl font-semibold mb-6">{commonPitfalls.title}</h2>
-        <ol class="list-decimal pl-5 space-y-4">
-          {commonPitfalls.items.map((item: Item) => (
-            <li class="text-base" id={item.id}>
-              {item.name ? `${item.name}: ` : ""}{item.description}
-            </li>
-          ))}
-        </ol>
-      </div>
-    )}
+    {
+      commonPitfalls && (
+        <div class="">
+          <h2 id="common-pitfalls" class="text-2xl font-semibold mb-6">
+            {commonPitfalls.title}
+          </h2>
+          <ol class="list-decimal pl-5 space-y-4">
+            {commonPitfalls.items.map((item: Item) => (
+              <li class="text-base" id={item.id}>
+                {item.name ? `${item.name}: ` : ""}
+                {item.description}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+  </div>
 </section>

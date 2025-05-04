@@ -15,28 +15,28 @@ const breadcrumbs = [];
 breadcrumbs.push({
   title: "University",
   href: "/open-labs/universities",
-  active: isUniversitiesHome
+  active: isUniversitiesHome,
 });
 
 if (isCollegePage || isCoursesPage || isSubjectsPage) {
   breadcrumbs.push({
     title: "College",
-    // href: '#', 
-    active: isCollegePage
+    // href: '#',
+    active: isCollegePage,
   });
 }
 
 if (isCoursesPage || isSubjectsPage) {
   breadcrumbs.push({
     title: "Courses",
-    active: isCoursesPage
+    active: isCoursesPage,
   });
 }
 
 if (isSubjectsPage) {
   breadcrumbs.push({
     title: "Subjects",
-    active: true
+    active: true,
   });
 }
 ---

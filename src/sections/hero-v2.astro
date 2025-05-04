@@ -75,12 +75,22 @@ const features = [
 
 <script type="module">
   document.getElementById("view-lab-button")?.addEventListener("click", () => {
-    window.location.assign(`${window.location}universities`);
+    const currentUrl = window.location;
+    if (currentUrl[-1] == "/") {
+      window.location.assign(`${window.location}universities`);
+    } else {
+      window.location.assign(`${window.location}/universities`);
+    }
   });
 
   document
     .getElementById("contribute-button")
     ?.addEventListener("click", () => {
-      window.location.assign(`${window.location}contribute`);
+      const currentUrl = window.location;
+      if (currentUrl[-1] == "/") {
+        window.location.assign(`${window.location}contribute`);
+      } else {
+        window.location.assign(`${window.location}/contribute`);
+      }
     });
 </script>

@@ -20,7 +20,9 @@ interface Section {
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const links = document.querySelectorAll(".sidebar-link");
-      const sections = [...document.querySelectorAll("section[id], h2[id], h3[id]")];
+      const sections = [
+        ...document.querySelectorAll("section[id], h2[id], h3[id]"),
+      ];
 
       const setActiveLink = (id) => {
         links.forEach((link) => {
@@ -34,7 +36,9 @@ interface Section {
       };
 
       const hash = window.location.hash.substring(1);
-      const activeLink = document.getElementById("link-" + (hash || "{{ defaultActiveId }}"));
+      const activeLink = document.getElementById(
+        "link-" + (hash || "{{ defaultActiveId }}"),
+      );
       if (activeLink) {
         setActiveLink(hash || "{{ defaultActiveId }}");
       }
@@ -49,7 +53,9 @@ interface Section {
           if (targetElement) {
             const navbarHeight = 80;
             const targetPosition =
-              targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight;
+              targetElement.getBoundingClientRect().top +
+              window.scrollY -
+              navbarHeight;
 
             window.scrollTo({
               top: targetPosition,
@@ -66,13 +72,21 @@ interface Section {
         let currentSection = "";
 
         sections.forEach((section) => {
-          const sectionTop = section.offsetTop - 90; 
+          const sectionTop = section.offsetTop - 90;
           const sectionHeight = section.clientHeight;
 
-          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+          if (
+            window.scrollY >= sectionTop &&
+            window.scrollY < sectionTop + sectionHeight
+          ) {
             current = section.getAttribute("id");
-            
-            const mainSectionIds = ["basic-syntax", "extended-syntax", "best-practices", "common-pitfalls"];
+
+            const mainSectionIds = [
+              "basic-syntax",
+              "extended-syntax",
+              "best-practices",
+              "common-pitfalls",
+            ];
             if (mainSectionIds.includes(current)) {
               currentSection = current;
             }
@@ -82,7 +96,7 @@ interface Section {
         if (current !== "") {
           setActiveLink(current);
         }
-        
+
         if (currentSection !== "") {
           setActiveLink(currentSection);
         }
@@ -90,30 +104,32 @@ interface Section {
     });
   </script>
 
-  {sections.map((section: Section) => (
-    <div class="flex flex-col mb-3">
-      <h2 class="mt-3 text-lg font-semibold">
-        <a
-          href={`#${section.id}`}
-          id={`link-${section.id}`}
-          class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
-        >
-          {section.title}
-        </a>
-      </h2>
-      <ul class="space-y-3 pl-5 mt-3">
-        {section.items.map((item) => (
-          <li>
-            <a
-              href={`#${item.id}`}
-              id={`link-${item.id}`}
-              class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
-            >
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  ))}
+  {
+    sections.map((section: Section) => (
+      <div class="flex flex-col mb-3">
+        <h2 class="mt-3 text-lg font-semibold">
+          <a
+            href={`#${section.id}`}
+            id={`link-${section.id}`}
+            class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
+          >
+            {section.title}
+          </a>
+        </h2>
+        <ul class="space-y-3 pl-5 mt-3">
+          {section.items.map((item) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                id={`link-${item.id}`}
+                class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
+              >
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
 </aside>
