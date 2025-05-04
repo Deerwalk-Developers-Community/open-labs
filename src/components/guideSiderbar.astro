@@ -1,18 +1,75 @@
 ---
-const {sections}=  Astro.props; 
+const { sections } = Astro.props;
+
+const firstSection = sections[0];
+const firstItem = firstSection?.items[0];
+const defaultActiveId = firstItem?.id;
+
+interface Section {
+  title: string;
+  items: {
+    id: string;
+    name?: string;
+  }[];
+}
 ---
 
-<aside class="hidden lg:block lg:w-64 flex-shrink-0 px-5 md:px-10 lg:px-15 mt-10 py-5">
-    {sections.map((section:any) => (
-      <div class="mb-6">
-        <h2 class="text-lg font-semibold mb-3">{section.title}</h2>
-        <ul class="space-y-2">
-          {section.items.map((item:any) => (
+<aside
+  class="hidden lg:flex sticky top-10 flex-col lg:w-64 flex-shrink-0 px-5 md:px-10 lg:px-15 mt-10 py-5 h-fit bg-white"
+>
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      const links = document.querySelectorAll(".sidebar-link");
+      const activeLink = document.getElementById("link-{{ defaultActiveId }}");
+
+      if (activeLink) {
+        activeLink.classList.add("text-indigo-600", "underline");
+      }
+
+      links.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          links.forEach((l) => {
+            l.classList.remove("text-indigo-600", "underline");
+            l.classList.add("text-black");
+          });
+
+          link.classList.add("text-indigo-600", "underline");
+          const targetId = link.getAttribute("href").substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            const targetPosition =
+              targetElement.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+  {
+    sections.map((section: Section) => (
+      <div class="flex flex-col mb-3">
+        <h2 class="mt-3 text-lg font-semibold">{section.title}</h2>
+        <ul class="space-y-3 pl-5 mt-3">
+          {section.items.map((item) => (
             <li>
-              <a href={`#${item.id}`} class="text-black font=[500]">{item.name}</a>
+              <a
+                href={`#${item.id}`}
+                id={`link-${item.id}`}
+                class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
+              >
+                {item.name}
+              </a>
             </li>
           ))}
         </ul>
       </div>
-    ))}
-  </aside>
+    ))
+  }
+</aside>
