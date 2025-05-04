@@ -27,7 +27,7 @@ export const getStaticPaths = (async () => {
 const { college, course } = Astro.params;
 ---
 
-  <GeneralLayout title=`Subjects in ${course.toUpperCase()}` >
-    <OpenLabsLogo />
-    <SubjectsSection college={college} course={course} />
-  </GeneralLayout>
+<GeneralLayout title=`Subjects in ${course.toUpperCase()}`>
+  <OpenLabsLogo />
+  <SubjectsSection college={college} course={course} />
+</GeneralLayout>
