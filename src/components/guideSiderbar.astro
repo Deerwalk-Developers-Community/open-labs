@@ -3,10 +3,10 @@ const { sections } = Astro.props;
 
 const firstSection = sections[0];
 const firstItem = firstSection?.items[0];
-const defaultActiveId = firstItem?.id;
 
 interface Section {
   title: string;
+  id: string;
   items: {
     id: string;
     name?: string;
@@ -20,56 +20,100 @@ interface Section {
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const links = document.querySelectorAll(".sidebar-link");
-      const activeLink = document.getElementById("link-{{ defaultActiveId }}");
+      const sections = [...document.querySelectorAll("section[id], h2[id], h3[id]")];
 
+      const setActiveLink = (id) => {
+        links.forEach((link) => {
+          if (link.getAttribute("href") === "#" + id) {
+            link.classList.add("text-indigo-600", "underline");
+          } else {
+            link.classList.remove("text-indigo-600", "underline");
+            link.classList.add("text-black");
+          }
+        });
+      };
+
+      const hash = window.location.hash.substring(1);
+      const activeLink = document.getElementById("link-" + (hash || "{{ defaultActiveId }}"));
       if (activeLink) {
-        activeLink.classList.add("text-indigo-600", "underline");
+        setActiveLink(hash || "{{ defaultActiveId }}");
       }
 
       links.forEach((link) => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
 
-          links.forEach((l) => {
-            l.classList.remove("text-indigo-600", "underline");
-            l.classList.add("text-black");
-          });
-
-          link.classList.add("text-indigo-600", "underline");
           const targetId = link.getAttribute("href").substring(1);
           const targetElement = document.getElementById(targetId);
 
           if (targetElement) {
+            const navbarHeight = 80;
             const targetPosition =
-              targetElement.getBoundingClientRect().top + window.scrollY;
+              targetElement.getBoundingClientRect().top + window.scrollY - navbarHeight;
+
             window.scrollTo({
               top: targetPosition,
               behavior: "smooth",
             });
+
+            setActiveLink(targetId);
           }
         });
+      });
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        let currentSection = "";
+
+        sections.forEach((section) => {
+          const sectionTop = section.offsetTop - 90; 
+          const sectionHeight = section.clientHeight;
+
+          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+            current = section.getAttribute("id");
+            
+            const mainSectionIds = ["basic-syntax", "extended-syntax", "best-practices", "common-pitfalls"];
+            if (mainSectionIds.includes(current)) {
+              currentSection = current;
+            }
+          }
+        });
+
+        if (current !== "") {
+          setActiveLink(current);
+        }
+        
+        if (currentSection !== "") {
+          setActiveLink(currentSection);
+        }
       });
     });
   </script>
 
-  {
-    sections.map((section: Section) => (
-      <div class="flex flex-col mb-3">
-        <h2 class="mt-3 text-lg font-semibold">{section.title}</h2>
-        <ul class="space-y-3 pl-5 mt-3">
-          {section.items.map((item) => (
-            <li>
-              <a
-                href={`#${item.id}`}
-                id={`link-${item.id}`}
-                class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
-              >
-                {item.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))
-  }
+  {sections.map((section: Section) => (
+    <div class="flex flex-col mb-3">
+      <h2 class="mt-3 text-lg font-semibold">
+        <a
+          href={`#${section.id}`}
+          id={`link-${section.id}`}
+          class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
+        >
+          {section.title}
+        </a>
+      </h2>
+      <ul class="space-y-3 pl-5 mt-3">
+        {section.items.map((item) => (
+          <li>
+            <a
+              href={`#${item.id}`}
+              id={`link-${item.id}`}
+              class="sidebar-link text-black hover:text-indigo-600 transition-colors duration-200"
+            >
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
 </aside>
