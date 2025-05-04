@@ -2,33 +2,26 @@
 import BreadCrumbArrow from "./BreadCrumbArrow.astro";
 
 const { pathname } = Astro.url;
-const basePath = import.meta.env.BASE_URL || "/";
-
-function createUrl(path:any) {
-  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-  const baseWithoutTrailing = basePath.endsWith('/') 
-    ? basePath.slice(0, -1) 
-    : basePath;
-  return `${baseWithoutTrailing}/${cleanPath}`;
-}
 
 const isUniversitiesHome = pathname.match(/\/open-labs\/universities\/?$/);
 const isCollegePage = pathname.match(/\/open-labs\/universities\/[^\/]+\/?$/);
 const isCoursesPage = pathname.match(/\/open-labs\/courses\/[^\/]+\/?$/);
 const isSubjectsPage = pathname.match(/\/open-labs\/subjects\/[^\/]+\/?$/);
 
+console.log("Current path:", pathname);
+
 const breadcrumbs = [];
 
 breadcrumbs.push({
   title: "University",
-  href: createUrl("open-labs/universities"),
+  href: "/open-labs/universities",
   active: isUniversitiesHome
 });
 
 if (isCollegePage || isCoursesPage || isSubjectsPage) {
   breadcrumbs.push({
     title: "College",
-    href: isCollegePage ? pathname : "#",
+    // href: '#', 
     active: isCollegePage
   });
 }
@@ -36,7 +29,6 @@ if (isCollegePage || isCoursesPage || isSubjectsPage) {
 if (isCoursesPage || isSubjectsPage) {
   breadcrumbs.push({
     title: "Courses",
-    href: isCoursesPage ? pathname : "#",
     active: isCoursesPage
   });
 }
@@ -44,7 +36,6 @@ if (isCoursesPage || isSubjectsPage) {
 if (isSubjectsPage) {
   breadcrumbs.push({
     title: "Subjects",
-    href: pathname,
     active: true
   });
 }
