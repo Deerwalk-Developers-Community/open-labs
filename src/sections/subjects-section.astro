@@ -7,14 +7,6 @@ import SubjectCard from "#components/SubjectCard.astro";
 import { getSubjects, getColleges, getCollegeByName } from "#lib/helper.ts";
 import Footer from "#components/Footer.astro";
 import Pagination from "#components/Pagination.astro";
-
-interface Subject {
-  name: string;
-  taught_at: string[];
-  courses: string[];
-  semesters: number[];
-}
-
 const { college, course } = Astro.props;
 
 const subjects = await getSubjects();
@@ -25,8 +17,6 @@ const selectedSubjects = subjects.filter(
     subject.taught_at.includes(college) && subject.courses.includes(course),
 );
 
-// Serialize the subjects data for client-side use
-const serializedSubjects = JSON.stringify(selectedSubjects);
 
 ---
 
@@ -41,7 +31,8 @@ const serializedSubjects = JSON.stringify(selectedSubjects);
       >
         Subjects available in
         <span class="underline">
-          {course.charAt(0).toUpperCase() + course.slice(1)}
+          <!-- {course.charAt(0).toUpperCase() + course.slice(1)} -->
+          {course.toUpperCase()}
         </span>
       </h1>
 
@@ -106,28 +97,4 @@ const serializedSubjects = JSON.stringify(selectedSubjects);
   import { initSubjectSearch } from "#lib/searchSubjects.ts";
   initSubjectSearch();
 
-  // Parse the serialized subjects data
-  const subjectsData = JSON.parse('{serializedSubjects}');
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const semesterFilter = document.getElementById("semester-filter") as HTMLSelectElement;
-    const subjectCards = document.querySelectorAll(".subject-card > div > div");
-
-    function filterBySemester() {
-      const selectedSemester = semesterFilter?.value;
-      
-      subjectCards.forEach((card) => {
-        const subjectName = card.querySelector(".subject-name")?.textContent;
-        const subject = subjectsData.find((s: any) => s.name === subjectName);
-        
-        if (!selectedSemester || (subject && subject.semesters.includes(Number(selectedSemester)))) {
-          card.classList.remove("hidden");
-        } else {
-          card.classList.add("hidden");
-        }
-      });
-    }
-
-    semesterFilter?.addEventListener("change", filterBySemester);
-  });
 </script>
