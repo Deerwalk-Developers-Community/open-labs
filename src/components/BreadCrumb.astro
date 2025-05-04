@@ -3,61 +3,51 @@ import BreadCrumbArrow from "./BreadCrumbArrow.astro";
 
 const { pathname } = Astro.url;
 const basePath = import.meta.env.BASE_URL || "/";
-const normalizedPathname = pathname.startsWith(basePath) 
-  ? pathname.slice(basePath.length - 1) 
-  : pathname;
 
-const levels = [
-  {
-    title: "University",
-    href: `${basePath}open-labs/universities`,
-    pattern: "/?open-labs/universities$",
-  },
-  { 
-    title: "College", 
-    href: "#", 
-    pattern: "/?open-labs/universities/[^/]+$" 
-  },
-  { 
-    title: "Courses", 
-    href: "#", 
-    pattern: "/?open-labs/courses/[^/]+$" 
-  },
-  { 
-    title: "Subjects", 
-    href: "#", 
-    pattern: "/?open-labs/subjects/[^/]+$" 
-  },
-];
+function createUrl(path:any) {
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  const baseWithoutTrailing = basePath.endsWith('/') 
+    ? basePath.slice(0, -1) 
+    : basePath;
+  return `${baseWithoutTrailing}/${cleanPath}`;
+}
 
-console.log("Current pathname:", pathname);
-console.log("Normalized pathname:", normalizedPathname);
+const isUniversitiesHome = pathname.match(/\/open-labs\/universities\/?$/);
+const isCollegePage = pathname.match(/\/open-labs\/universities\/[^\/]+\/?$/);
+const isCoursesPage = pathname.match(/\/open-labs\/courses\/[^\/]+\/?$/);
+const isSubjectsPage = pathname.match(/\/open-labs\/subjects\/[^\/]+\/?$/);
 
-const activeIndex = levels.findIndex((level) => {
-  const regex = new RegExp(level.pattern);
-  return regex.test(normalizedPathname);
+const breadcrumbs = [];
+
+breadcrumbs.push({
+  title: "University",
+  href: createUrl("open-labs/universities"),
+  active: isUniversitiesHome
 });
 
-const dynamicBreadcrumbs = levels.map((level, index) => {
-  if (index === 0) {
-    return level;
-  }
+if (isCollegePage || isCoursesPage || isSubjectsPage) {
+  breadcrumbs.push({
+    title: "College",
+    href: isCollegePage ? pathname : "#",
+    active: isCollegePage
+  });
+}
 
-  let href = "#";
+if (isCoursesPage || isSubjectsPage) {
+  breadcrumbs.push({
+    title: "Courses",
+    href: isCoursesPage ? pathname : "#",
+    active: isCoursesPage
+  });
+}
 
-  if (index === 1 && normalizedPathname.includes("/open-labs/universities/")) {
-    href = pathname; // Use the full pathname including base path
-  } else if (index === 2 && normalizedPathname.includes("/open-labs/courses/")) {
-    href = pathname;
-  } else if (index === 3 && normalizedPathname.includes("/open-labs/subjects/")) {
-    href = pathname;
-  }
-
-  return { ...level, href };
-});
-
-const visibleBreadcrumbs =
-  activeIndex !== -1 ? dynamicBreadcrumbs.slice(0, activeIndex + 1) : [];
+if (isSubjectsPage) {
+  breadcrumbs.push({
+    title: "Subjects",
+    href: pathname,
+    active: true
+  });
+}
 ---
 
 <nav class="flex">
@@ -65,17 +55,17 @@ const visibleBreadcrumbs =
     class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
   >
     {
-      visibleBreadcrumbs.map((crumb, i) => (
+      breadcrumbs.map((crumb, i) => (
         <li class="inline-flex items-center gap-3">
           <a
             href={crumb.href}
-            class={`inline-flex text-sm font-medium ${i == visibleBreadcrumbs.length - 1 ? "text-black hover:text-blue-800" : "text-[#71717A]"}`}
+            class={`inline-flex text-sm font-medium ${crumb.active ? "text-black hover:text-blue-800" : "text-[#71717A]"}`}
           >
             <span class={`ms-1 text-sm font-medium md:ms-2`}>
               {crumb.title}
             </span>
           </a>
-          {i < visibleBreadcrumbs.length - 1 && <BreadCrumbArrow />}
+          {i < breadcrumbs.length - 1 && <BreadCrumbArrow />}
         </li>
       ))
     }
