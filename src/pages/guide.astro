@@ -3,6 +3,7 @@ import GeneralLayout from "#layouts/generalLayout.astro";
 import OpenLabsLogo from "#sections/open-labs-logo.astro";
 import GuideSection from "#sections/guide-section.astro";
 import GuideSiderbar from "#components/guideSiderbar.astro";
+import Footer from "#components/Footer.astro";
 
 export const sections = [
   {
@@ -156,4 +157,5 @@ export const sections = [
     <GuideSiderbar sections={sections} />
     <GuideSection sections={sections} />
   </div>
+  <Footer/>
 </GeneralLayout>
