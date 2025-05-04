@@ -29,6 +29,16 @@ export async function getColleges() {
   return Array.from(collegesMap.values());
 }
 
+export async function getCollegeByName(collegeName: string){
+  const colleges = await  getColleges()
+  for(const college of colleges){
+    if (college.name == collegeName){
+      return college;
+    }
+  }
+  return null
+}
+
 export async function getCourses() {
   const allLabs = await getCollection("labs");
   const coursesMap = new Map();
@@ -60,17 +70,20 @@ export async function getSubjects() {
         name: lab.data.subject,
         taught_at: new Set(),
         courses: new Set(),
+        semesters: new Set(),
       });
     }
 
     const subject = subjectsMap.get(lab.data.subject);
     subject.taught_at.add(lab.data.college_id);
     subject.courses.add(lab.data.course);
+    subject.semesters.add(lab.data.semester);
   });
 
   return Array.from(subjectsMap.values()).map((subject) => ({
     name: subject.name,
     taught_at: Array.from(subject.taught_at),
     courses: Array.from(subject.courses),
+    semesters: Array.from(subject.semesters),
   }));
 }

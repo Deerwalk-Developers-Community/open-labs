@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import LayoutWithSmallFooter from "#layouts/layout-with-small-footer.astro";
 import SubjectsSection from "#sections/subjects-section.astro";
-import { getSubjects } from "#lib/helper.ts";
+import { getColleges, getSubjects, getCollegeByName } from "#lib/helper.ts";
 import GeneralLayout from "#layouts/generalLayout.astro";
 import OpenLabsLogo from "#sections/open-labs-logo.astro";
 
@@ -25,6 +25,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { college, course } = Astro.params;
+
 ---
 
 <GeneralLayout title=`Subjects in ${course.toUpperCase()}`>

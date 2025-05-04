@@ -4,9 +4,16 @@ import Button from "#components/Button.astro";
 import SearchBar from "#components/SearchBar.astro";
 import FilterIcon from "#assets/icons/filter.svg";
 import SubjectCard from "#components/SubjectCard.astro";
-import { getSubjects, getColleges } from "#lib/helper.ts";
+import { getSubjects, getColleges, getCollegeByName } from "#lib/helper.ts";
 import Footer from "#components/Footer.astro";
 import Pagination from "#components/Pagination.astro";
+
+interface Subject {
+  name: string;
+  taught_at: string[];
+  courses: string[];
+  semesters: number[];
+}
 
 const { college, course } = Astro.props;
 
@@ -17,6 +24,10 @@ const selectedSubjects = subjects.filter(
   (subject) =>
     subject.taught_at.includes(college) && subject.courses.includes(course),
 );
+
+// Serialize the subjects data for client-side use
+const serializedSubjects = JSON.stringify(selectedSubjects);
+
 ---
 
 <div
@@ -52,10 +63,18 @@ const selectedSubjects = subjects.filter(
           </span>
         </div>
         <select
+          id="semester-filter"
           class="p-3 w-full sm:w-fit border border-gray-300 text-gray-600 text-base rounded-lg focus:outline-none"
         >
-          <option selected disabled>Semester</option>
-          <option value={1}>{"1st Semester"}</option>
+          <option value="" selected>All Semesters</option>
+          <option value="1">1st Semester</option>
+          <option value="2">2nd Semester</option>
+          <option value="3">3rd Semester</option>
+          <option value="4">4th Semester</option>
+          <option value="5">5th Semester</option>
+          <option value="6">6th Semester</option>
+          <option value="7">7th Semester</option>
+          <option value="8">8th Semester</option>
         </select>
       </div>
     </div>
@@ -86,4 +105,29 @@ const selectedSubjects = subjects.filter(
 <script>
   import { initSubjectSearch } from "#lib/searchSubjects.ts";
   initSubjectSearch();
+
+  // Parse the serialized subjects data
+  const subjectsData = JSON.parse('{serializedSubjects}');
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const semesterFilter = document.getElementById("semester-filter") as HTMLSelectElement;
+    const subjectCards = document.querySelectorAll(".subject-card > div > div");
+
+    function filterBySemester() {
+      const selectedSemester = semesterFilter?.value;
+      
+      subjectCards.forEach((card) => {
+        const subjectName = card.querySelector(".subject-name")?.textContent;
+        const subject = subjectsData.find((s: any) => s.name === subjectName);
+        
+        if (!selectedSemester || (subject && subject.semesters.includes(Number(selectedSemester)))) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    }
+
+    semesterFilter?.addEventListener("change", filterBySemester);
+  });
 </script>
