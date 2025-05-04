@@ -2,21 +2,40 @@
 import BreadCrumbArrow from "./BreadCrumbArrow.astro";
 
 const { pathname } = Astro.url;
+const basePath = import.meta.env.BASE_URL || "/";
+const normalizedPathname = pathname.startsWith(basePath) 
+  ? pathname.slice(basePath.length - 1) 
+  : pathname;
+
 const levels = [
   {
     title: "University",
-    href: "/open-labs/universities",
-    pattern: "/open-labs/universities$",
+    href: `${basePath}open-labs/universities`,
+    pattern: "/?open-labs/universities$",
   },
-  { title: "College", href: "#", pattern: "/open-labs/universities/[^/]+$" },
-  { title: "Courses", href: "#", pattern: "/open-labs/courses/[^/]+$" },
-  { title: "Subjects", href: "#", pattern: "/open-labs/subjects/[^/]+$" },
+  { 
+    title: "College", 
+    href: "#", 
+    pattern: "/?open-labs/universities/[^/]+$" 
+  },
+  { 
+    title: "Courses", 
+    href: "#", 
+    pattern: "/?open-labs/courses/[^/]+$" 
+  },
+  { 
+    title: "Subjects", 
+    href: "#", 
+    pattern: "/?open-labs/subjects/[^/]+$" 
+  },
 ];
 
-console.log(pathname);
+console.log("Current pathname:", pathname);
+console.log("Normalized pathname:", normalizedPathname);
+
 const activeIndex = levels.findIndex((level) => {
   const regex = new RegExp(level.pattern);
-  return regex.test(pathname);
+  return regex.test(normalizedPathname);
 });
 
 const dynamicBreadcrumbs = levels.map((level, index) => {
@@ -26,11 +45,11 @@ const dynamicBreadcrumbs = levels.map((level, index) => {
 
   let href = "#";
 
-  if (index === 1 && pathname.includes("/open-labs/universities/")) {
+  if (index === 1 && normalizedPathname.includes("/open-labs/universities/")) {
+    href = pathname; // Use the full pathname including base path
+  } else if (index === 2 && normalizedPathname.includes("/open-labs/courses/")) {
     href = pathname;
-  } else if (index === 2 && pathname.includes("/open-labs/courses/")) {
-    href = pathname;
-  } else if (index === 3 && pathname.includes("/open-labs/subjects/")) {
+  } else if (index === 3 && normalizedPathname.includes("/open-labs/subjects/")) {
     href = pathname;
   }
 
