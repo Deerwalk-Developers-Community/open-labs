@@ -1,0 +1,88 @@
+---
+    // Define types for your data structure
+    interface SubItem {
+        name: string;
+        codeExample?: string;
+    }
+    
+    interface Item {
+        id: string;
+        name?: string;
+        description?: string;
+        codeExample?: string;
+        subItems?: SubItem[];
+    }
+    
+    interface Section {
+        title: string;
+        items: Item[];
+    }
+    
+    const { sections } = Astro.props;
+    
+    const syntaxSections = sections.filter((section: Section) => 
+        section.title === "Basic Syntax" || section.title === "Extended Syntax");
+    const bestPractices = sections.find((section: Section) => section.title === "Best Practices");
+    const commonPitfalls = sections.find((section: Section) => section.title === "Common Pitfalls");
+---
+
+<section class="max-w-5xl mx-auto px-5 md:px-10 lg:px-15 py-5 mt-10">
+    
+    <div class="flex-1">
+        {syntaxSections.map((section: Section) => (
+          <div class="mb-10">
+            <h2 class="text-2xl font-semibold mb-4">{section.title}</h2>
+            
+            {section.items.map((item: Item) => (
+              <div class="mb-8">
+                <h3 id={item.id} class="text-lg font-medium mb-3">{item.name}</h3>
+                {item.description && <p class="mb-3">{item.description}</p>}
+                
+                {item.codeExample && (
+                  <div class="bg-gray-100 rounded-md p-4 mb-4 font-[500] text-sm whitespace-pre-wrap">
+                    {item.codeExample}
+                  </div>
+                )}
+                
+                {item.subItems && item.subItems.map((subItem: SubItem) => (
+                  <div class="mt-4 mb-4">
+                    <h4 class="font-medium mb-2">{subItem.name}</h4>
+                    {subItem.codeExample && (
+                      <div class="bg-gray-100 font-[500] rounded-md p-4 text-sm whitespace-pre-wrap">
+                        {subItem.codeExample}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ))}
+    </div>
+    
+    {bestPractices && (
+      <div class="mb-12 ">
+        <h2 id="best-practices" class="text-2xl font-semibold mb-6">{bestPractices.title}</h2>
+        <ol class="list-decimal pl-5 space-y-4">
+          {bestPractices.items.map((item: Item) => (
+            <li class="text-base list-disc" id={item.id}>
+              {item.name ? `${item.name}: ` : ""}{item.description}
+            </li>
+          ))}
+        </ol>
+      </div>
+    )}
+    
+    {commonPitfalls && (
+      <div class="">
+        <h2 id="common-pitfalls" class="text-2xl font-semibold mb-6">{commonPitfalls.title}</h2>
+        <ol class="list-decimal pl-5 space-y-4">
+          {commonPitfalls.items.map((item: Item) => (
+            <li class="text-base list-disc" id={item.id}>
+              {item.name ? `${item.name}: ` : ""}{item.description}
+            </li>
+          ))}
+        </ol>
+      </div>
+    )}
+</section>
