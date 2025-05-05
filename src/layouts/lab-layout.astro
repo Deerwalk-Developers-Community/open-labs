@@ -1,5 +1,6 @@
 ---
 import Footer from "#components/Footer.astro";
+import TableOfContents from "#components/markdown/TableOfContents.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "#consts.ts";
 
 interface Props {
@@ -40,9 +41,15 @@ import "#styles/markdown.css";
     <title>{pageTitle}</title>
   </head>
   <body class="main-body flex flex-col min-h-screen">
-    <main class="markdown-content md:m-20">
-      <slot />
+    <main class="markdown-content ">
+      <TableOfContents>
+        <slot />
+      </TableOfContents>
     </main>
     <Footer />
   </body>
 </html>
+
+
+
+
