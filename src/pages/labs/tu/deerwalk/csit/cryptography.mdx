@@ -1,0 +1,1259 @@
+---
+title: "Cryptography Lab Works"
+college_id: deerwalk
+college_name: "Deerwalk Institute of Technology"
+course: csit
+semester: 5
+subject: cryptography
+university_id: tu
+university_name: "Tribhubhan University"
+layout: "#layouts/lab-layout.astro"
+doneBy: "Aashish Kadel"
+---
+
+import LabHeader from "#components/markdown/LabHeader.astro";
+
+<LabHeader
+  title={frontmatter.title}
+  collegeName={frontmatter.college_name}
+  course={frontmatter.course}
+  semester={frontmatter.semester}
+  doneBy={frontmatter.doneBy}
+/>
+
+
+## **Lab 1 \- Caesar Cipher**
+
+
+The Caesar Cipher is a simple substitution cipher used in cryptography, where each letter in the plaintext is shifted a fixed number of places in the alphabet. For example, with a shift of 3, "A" becomes "D," "B" becomes "E," and so on. It is one of the earliest encryption techniques, attributed to Julius Caesar, who used it to communicate securely with his generals. While easy to implement, the Caesar Cipher is highly insecure by modern standards, as it can be easily broken using frequency analysis or brute force methods.
+
+### **Algorithm:**
+
+1. Choose a shift value (key) between 1 and 25\.  
+2. For each letter in the plaintext:  
+* Shift it forward by the key value in the alphabet.  
+* Wrap around if it exceeds 'Z' (for uppercase) or 'z' (for lowercase).  
+3. Keep non-alphabetic characters unchanged.  
+4. Output the encrypted text.
+
+### **Objective:**
+
+To encrypt the text “Barcelona is the greatest club of all time” using Caesar Cipher algorithm in the C programming language.
+
+### **Tools:**
+
+GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
+
+### **Source Code:** 
+
+```c++
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>`
+#define SHIFT_MAX 26
+#define MAX 300
+
+struct Message {
+  char data[MAX];
+  int shift;
+};
+
+int main(void) {
+  struct Message *input = malloc(sizeof(struct Message));
+  printf("enter message: ");
+  fgets(input->data, MAX, stdin);
+  printf("enter shift: ");
+  scanf("%d", &input->shift);
+
+  if (input->shift > SHIFT_MAX) {
+    input->shift = input->shift % SHIFT_MAX;
+  }
+
+  for (size_t i = 0; i < strlen(input->data) - 1; ++i) {
+    // ascii round edge-case
+    if (input->data[i] > 121) {
+      input->data[i] = 97;
+    }
+    input->data[i] += input->shift;
+
+  }
+  printf("caesar cipher with shift %d: %s", input->shift, input->data);
+  free(input);
+  return 0;
+`}
+
+```
+
+
+
+### **Output:**
+
+### **Observation and Result**
+
+As we can see in the output the text `“Barcelona is the greatest club of all time”` was encrypted using Caesar cipher with shift value of 3 and cipher text of `“Edufhorqd lv wkh juhdwhvw foxe ri doo wlph”` was obtained.
+
+### **Conclusion**
+
+Caesar cipher was implemented in the C programming language.
+
+## **Lab 2 \- Monoalphabetic Cipher**
+
+A **Monoalphabetic Cipher** is a substitution cipher where each letter in the plaintext is replaced with a corresponding letter from a fixed but randomly shuffled alphabet. 
+
+### **Algorithm:**
+
+1. Create a key: a shuffled version of the alphabet (e.g., ABCDEFGHIJKLMNOPQRSTUVWXYZ → QWERTYUIOPASDFGHJKLZXCVBNM).  
+2. Replace each letter in the plaintext with its corresponding letter from the shuffled alphabet.  
+3. Keep non-alphabetic characters unchanged.  
+4. Output the encrypted text.
+
+### **Objective:**
+
+To encrypt the text “messi is the greatest player of all time” using the Monoalphabetic Cipher algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
+
+### **Source Code**
+
+```cpp
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <cstdio> // Required for std::printf
+
+#define MAX 300
+
+struct Message {
+    std::string message;
+};
+
+int main(void) {
+    std::unordered_map<char, char> map = {
+        {'a', 'm'}, {'b', 'o'}, {'c', 'q'}, {'d', 's'}, {'e', 'z'}, {'f', 'x'},
+        {'g', 'h'}, {'h', 'k'}, {'i', 'l'}, {'j', 'p'}, {'k', 'n'}, {'l', 'u'},
+        {'m', 'v'}, {'n', 'y'}, {'o', 'w'}, {'p', 'r'}, {'q', 't'}, {'r', 'a'},
+        {'s', 'j'}, {'t', 'g'}, {'u', 'd'}, {'v', 'i'}, {'w', 'e'}, {'x', 'f'},
+        {'y', 'c'}, {'z', 'b'}, {' ', ' '}
+    };
+
+    struct Message input = Message{};
+
+    std::printf("enter your message: ");
+
+    std::getline(std::cin, input.message);
+
+    std::string encrypted;
+
+    std::cout << "message: " << input.message << std::endl;
+
+    for (const char character : input.message) {
+        if (map.find(character) != map.end()) {
+            const char new_key = map[character];
+            encrypted += new_key;
+        } else {
+            std::printf("error: key not in map, please use only lowercase characters\n");
+            return -1;
+        }
+    }
+
+    std::cout << "encrypted: " << encrypted << std::endl;
+
+    return 0;
+}
+```
+
+
+### **Output:**
+
+
+### **Observation and Result**
+
+As we can see in the output the text `“messi is the greatest player of all time”` was encrypted using Monoalphabetic cipher and a cipher text of `“vzjjl lj gkz hazmgzjg rumcza wx muu glvz”` was obtained.
+
+### **Conclusion**
+
+Monoalphabetic cipher was implemented in the C++ programming language.
+
+## 
+
+## **Lab 3 \- Playfair Cipher** 
+
+The **Playfair Cipher** is a digraph substitution cipher that encrypts pairs of letters instead of single letters, making it more secure than simple monoalphabetic ciphers. It uses a **5×5 grid** of letters, generated from a keyword, where 'I' and 'J' are usually combined. To encrypt, pairs of letters in the plaintext are modified based on their positions in the grid: if they are in the same row, they shift right; in the same column, they shift down; otherwise, they form a rectangle and swap corners. This method reduces frequency analysis effectiveness, making it harder to break than a simple substitution cipher.
+
+### **Algorithm :**
+
+**Key Generation**
+
+1. Choose a keyword and remove duplicate letters.  
+2. Fill a **5×5 grid** with the keyword, then the remaining letters of the alphabet (excluding 'J' or merging it with 'I').
+
+**Process**
+
+1. Divide the plaintext into letter pairs (digraphs) (e.g., "HELLO" → "HE LX LO" with 'X' added if needed to prevent duplicate letters in a pair).  
+2. For each digraph:  
+   1. Same Row: Replace each letter with the letter to its right (wrap around if at the end).  
+   2. Same Column: Replace each letter with the letter below (wrap around if at the bottom).  
+   3. Different Row & Column: Form a rectangle and swap letters at the opposite corners.  
+3. Output the encrypted text.
+
+### **Objective:**
+
+To encrypt the text “argentina has two world cups” using the Playfair Cipher with the key “messi” algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
+
+### **Source Code:** 
+```cpp
+#include <bits/stdc++.h>
+#include <iostream>
+#include <unordered_map>
+
+#define MAX 25
+
+template <typename T> 
+void printVector(const std::vector<T> &vec) {
+    for (const T &element : vec) {
+        std::cout << element << " ";
+    }
+    std::cout << std::endl;
+}
+
+bool has(std::vector<char> vec, char item) {
+    for (const char c : vec) {
+        if (item == c) {
+            return true;
+        }
+    }
+    return false;
+}
+
+struct Message {
+    std::string message;
+};
+
+std::vector<char> chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                           'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+                           't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+std::pair<int, int> findPosition(char ch, char matrix[5][5]) {
+    if (ch == 'j')
+        ch = 'i';
+    
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (matrix[i][j] == ch) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1}; 
+}
+
+std::string prepareText(const std::string& text) {
+    std::string result;
+    
+    for (size_t i = 0; i < text.length(); i++) {
+        char current = std::tolower(text[i]);
+        
+        if (!std::isalpha(current))
+            continue;
+            
+        if (current == 'j')
+            current = 'i';
+            
+        result.push_back(current);
+        
+        if (i + 1 < text.length() && std::tolower(text[i]) == std::tolower(text[i + 1])) {
+            result.push_back('x');
+        }
+    }
+    
+    if (result.length() % 2 != 0) {
+        result.push_back('x');
+    }
+    
+    return result;
+}
+
+std::string encrypt(const std::string& preparedText, char matrix[5][5]) {
+    std::string cipher;
+    
+    for (size_t i = 0; i < preparedText.length(); i += 2) {
+        char first = preparedText[i];
+        char second = preparedText[i + 1];
+        
+        auto pos1 = findPosition(first, matrix);
+        auto pos2 = findPosition(second, matrix);
+        
+        int row1 = pos1.first;
+        int col1 = pos1.second;
+        int row2 = pos2.first;
+        int col2 = pos2.second;
+        
+        // Same row
+        if (row1 == row2) {
+            cipher.push_back(matrix[row1][(col1 + 1) % 5]);
+            cipher.push_back(matrix[row2][(col2 + 1) % 5]);
+        }
+        // Same column
+        else if (col1 == col2) {
+            cipher.push_back(matrix[(row1 + 1) % 5][col1]);
+            cipher.push_back(matrix[(row2 + 1) % 5][col2]);
+        }
+        // Rectangle case
+        else {
+            cipher.push_back(matrix[row1][col2]); 
+            cipher.push_back(matrix[row2][col1]);
+        }
+    }
+    
+    return cipher;
+}
+
+int main() {
+    struct Message input = Message{};
+    std::string keyWord;
+    
+    std::cout << "Enter key: ";
+    std::cin >> keyWord;
+    
+    for (auto &c : keyWord) {
+        c = std::tolower(c);
+        if (c == 'j') c = 'i';
+    }
+    
+    std::cout << "Enter plaintext: ";
+    std::cin.ignore(); 
+    std::getline(std::cin, input.message);
+    
+    std::vector<char> matrixVector;
+    
+    for (const char character : keyWord) {
+        if (!has(matrixVector, character) && isalpha(character)) {
+            matrixVector.push_back(character);
+        }
+    }
+    
+    for (const char char_ : chars) {
+        if (!has(matrixVector, char_)) {
+            matrixVector.push_back(char_);
+        }
+    }
+    
+    std::cout << "Your matrix is: " << std::endl;
+    
+    char matrix[5][5];
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            matrix[i][j] = matrixVector[i * 5 + j];
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+    
+    std::string preparedText = prepareText(input.message);
+    std::cout << "\nPrepared text: " << preparedText << std::endl;
+    std::string encrypted = encrypt(preparedText, matrix);
+    std::cout << "Encrypted text: " << encrypted << std::endl;
+    
+    return 0;
+}
+```
+
+
+
+
+### **Output:**
+
+### **Observation and Result**
+
+As we can see in the output the text `“argentina has two world cups”` was encrypted using Playfair cipher  with the key of “messi” and a cipher text of `“sucatyftmomiqykzlurlgqrm”` was obtained.
+
+### **Conclusion**
+
+Playfair cipher was implemented in the C++ programming language.
+
+## **Lab 4 \- Hill Cipher** 
+
+The Hill Cipher is a polygraphic substitution cipher that encrypts multiple letters simultaneously using matrix multiplication over modulo arithmetic. It relies on linear algebra, where plaintext letters are converted into numerical vectors and multiplied by an invertible key matrix to produce ciphertext. The cipher is more secure than simple substitution ciphers, but decryption requires the inverse of the key matrix, which exists only if the matrix has a nonzero determinant modulo 26\.
+
+### **Algorithm**
+
+1. Choose an **n×n key matrix** (must be invertible modulo 26).  
+2. Convert plaintext into numerical form (`A=0, B=1, ..., Z=25`).  
+3. Divide plaintext into **blocks of size n** and represent each block as a vector.  
+4. Multiply each vector by the **key matrix** modulo 26\.  
+5. Convert resulting numbers back into letters to get ciphertext.
+
+### **Objective:**
+
+To encrypt the text “svelte is better than react” using the Hill Cipher with a matrix of `{ {5,8}, {17,3} }` algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### **Source Code**
+```cpp
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cctype>
+#include <numeric> // Required for std::gcd
+
+int charToInt(char c) {
+    return std::tolower(c) - 'a';
+}
+
+char intToChar(int n) {
+    n = (n % 26 + 26) % 26; // Ensure n is positive
+    return static_cast<char>(n + 'a');
+}
+
+// Calculates the determinant of a 2x2 matrix
+int determinant(const std::vector<std::vector<int>>& matrix) {
+    return (matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
+}
+
+int modInverse(int a, int m) {
+    a = (a % m + m) % m; // Ensure 'a' is positive
+    for (int x = 1; x < m; x++) {
+        if ((a * x) % m == 1) {
+            return x;
+        }
+    }
+    return 1; // Should not reach here if a and m are coprime
+}
+
+bool isValidKey(const std::vector<std::vector<int>>& matrix) {
+    int det = determinant(matrix);
+    det = (det % 26 + 26) % 26; // Ensure positive determinant
+
+    if (det == 0) return false;
+
+    int gcd = std::gcd(det, 26);
+    return gcd == 1;
+}
+
+std::vector<std::vector<int>> inverseMatrix(const std::vector<std::vector<int>>& matrix) {
+    int det = determinant(matrix);
+    det = (det % 26 + 26) % 26; // Ensure positive determinant
+
+    int detInv = modInverse(det, 26);
+
+    std::vector<std::vector<int>> inverse = {
+        {(matrix[1][1] * detInv) % 26, (-matrix[0][1] * detInv) % 26},
+        {(-matrix[1][0] * detInv) % 26, (matrix[0][0] * detInv) % 26}
+    };
+
+    // Ensure all values in the inverse matrix are positive
+    for (auto& row : inverse) {
+        for (auto& val : row) {
+            val = (val % 26 + 26) % 26;
+        }
+    }
+
+    return inverse;
+}
+
+std::string prepareText(const std::string& text) {
+    std::string result;
+    for (char c : text) {
+        if (std::isalpha(c)) {
+            result.push_back(std::tolower(c));
+        }
+    }
+
+    // Pad with 'x' if the length is odd
+    if (result.length() % 2 != 0) {
+        result.push_back('x');
+    }
+
+    return result;
+}
+
+std::string hillEncrypt(const std::string& plaintext, const std::vector<std::vector<int>>& keyMatrix) {
+    std::string prepared = prepareText(plaintext);
+    std::string ciphertext;
+
+    for (size_t i = 0; i < prepared.length(); i += 2) {
+        int p1 = charToInt(prepared[i]);
+        int p2 = charToInt(prepared[i + 1]);
+
+        int c1 = (keyMatrix[0][0] * p1 + keyMatrix[0][1] * p2) % 26;
+        int c2 = (keyMatrix[1][0] * p1 + keyMatrix[1][1] * p2) % 26;
+
+        ciphertext.push_back(intToChar(c1));
+        ciphertext.push_back(intToChar(c2));
+    }
+
+    return ciphertext;
+}
+
+int main() {
+    std::vector<std::vector<int>> keyMatrix = {
+        {5, 8},
+        {17, 3}
+    };
+
+    if (!isValidKey(keyMatrix)) {
+        std::cerr << "Error: Invalid key matrix. The determinant must be coprime with 26.\n";
+        return 1;
+    }
+
+    std::cout << "Using key matrix:\n";
+    std::cout << keyMatrix[0][0] << " " << keyMatrix[0][1] << "\n";
+    std::cout << keyMatrix[1][0] << " " << keyMatrix[1][1] << "\n\n";
+
+    std::string plaintext;
+    std::cout << "Enter plaintext: ";
+    std::getline(std::cin, plaintext);
+
+    std::string ciphertext = hillEncrypt(plaintext, keyMatrix);
+    std::cout << "Encrypted text: " << ciphertext << std::endl;
+
+    return 0;
+}
+```
+
+### **Output**
+
+![][image3]
+
+### **Observation and Result**
+
+As we can see in the output the text `“svelete is better than react”` was encrypted using Hill cipher and a cipher text of `“yfexqvgouxqvxxdijptmuqgn”` was obtained.
+
+### **Conclusion**
+
+Hill cipher was implemented in the C++ programming language.
+
+## **Lab 5 \- Vigenere Cipher**
+
+The Vigenère Cipher is a polyalphabetic substitution cipher that uses a repeating keyword to shift letters in the plaintext. Unlike simple shift ciphers like Caesar, the Vigenère Cipher applies different shifts for each letter, making it much harder to break using frequency analysis.
+
+### **Algorithm**
+
+1. Choose a keyword and repeat it to match the plaintext length.  
+2. Convert letters to numbers (A=0, B=1, ..., Z=25).  
+3. Shift each plaintext letter forward using the corresponding keyword letter's value (modulo 26).  
+4. Convert back to letters to get ciphertext.
+
+### **Objective:**
+
+To encrypt the text “python is better than javascript” with the key “zig” using the Vigenere Cipher algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### **Source Code:**
+
+```cpp 
+#include <iostream>
+#include <string>
+#include <cctype>
+
+std::string prepare_text(const std::string& text) {
+    std::string result;
+    for (char c : text) {
+        if (std::isalpha(c)) {
+            result.push_back(std::tolower(c));
+        }
+    }
+    return result;
+}
+
+std::string vigenere_encrypt(const std::string& plaintext, const std::string& key) {
+    std::string sanitizedText = prepare_text(plaintext);
+    std::string sanitizedKey = prepare_text(key);
+
+    if (sanitizedKey.empty()) {
+        std::cerr << "error: uncool key:p\n";
+        return "";
+    }
+
+    std::string ciphertext;
+    size_t keyLength = sanitizedKey.length();
+
+    for (size_t i = 0; i < sanitizedText.length(); ++i) {
+        char plainChar = sanitizedText[i];
+        char keyChar = sanitizedKey[i % keyLength];
+
+        int plainValue = plainChar - 'a';
+        int keyValue = keyChar - 'a';
+
+        int encryptedValue = (plainValue + keyValue) % 26;
+
+        char encryptedChar = encryptedValue + 'a';
+
+        ciphertext.push_back(encryptedChar);
+    }
+
+    return ciphertext;
+}
+
+void display_formatted(const std::string& text, const std::string& label) {
+    std::cout << label << ": ";
+    for (size_t i = 0; i < text.length(); ++i) {
+        std::cout << text[i];
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::string plaintext, key;
+
+    std::cout << "Enter plaintext: ";
+    std::getline(std::cin, plaintext);
+
+    std::cout << "Enter key: ";
+    std::getline(std::cin, key);
+
+    if (key.empty()) {
+        std::cerr << "Error: Key cannot be empty.\n";
+        return 1;
+    }
+
+    std::string sanitizedPlaintext = prepare_text(plaintext);
+    std::string sanitizedKey = prepare_text(key);
+
+    std::cout << "\nSanitized plaintext: " << sanitizedPlaintext << std::endl;
+    std::cout << "Sanitized key: " << sanitizedKey << std::endl;
+
+    std::string ciphertext = vigenere_encrypt(plaintext, key);
+
+    std::cout << "\n--- ENCRYPTION ---\n";
+    display_formatted(ciphertext, "Ciphertext");
+
+    return 0;
+}
+
+```
+
+
+
+### **Observation and Result**
+
+As we can see in the output the text `“arsenal are the best in england”,`
+
+`ascii=”97 114 115 101 110 97 108 32 97 114 101 32 116 104 101 32 98 101 115 116 32 105 110 32 101 110 103 108 97 110 100”`
+
+`key = “38 112 12 123 23 41 28 12 81 179 89 142 147 18 89 183 177 45 91 19 227 17 234 58 239 112 154 166 134 42 205”`
+
+was encrypted using Hill cipher and a cipher text of `“GyHp,0Á<®çz<ÓH(gÃxýÊçD©”,`  
+`ascii=”71 2 127 30 121 72 112 44 48 193 60 174 231 122 60 151 211 72 40 103 195 120 132 26 138 30 253 202 231 68 169”` was obtained.
+
+### **Conclusion**
+
+One Time Pad was implemented in the C++ programming language.
+
+## **Lab 7 \- Rail Fence Cipher**
+
+The Rail Fence Cipher is a transposition cipher that rearranges the plaintext characters by writing them in a zigzag pattern across multiple rows (rails) and then reading them row by row. It is simple but provides basic security by scrambling letter positions.
+
+### **Algorithm**
+
+1. Choose the number of rails (rows) (e.g., 3).  
+2. Write the plaintext in a zigzag pattern across the rails.  
+3. Read the text row by row to get the ciphertext.
+
+### **Objective:**
+
+To encrypt the text “aashutosh is batman” using the Rail Fence Cipher algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### **Source Code:**
+```cpp 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cctype> // Required for std::isalpha and std::tolower (if used)
+
+std::string railfence_encrypt(const std::string& text, int rails) {
+    if (rails <= 1) return text;
+    if (text.empty()) return "";
+
+    std::vector<std::vector<char>> fence(rails, std::vector<char>(text.length(), ' '));
+
+    int row = 0;
+    bool dirDown = true;
+
+    for (size_t i = 0; i < text.length(); i++) {
+        fence[row][i] = text[i];
+
+        if (row == 0) {
+            dirDown = true;
+        } else if (row == rails - 1) {
+            dirDown = false;
+        }
+
+        if (dirDown) {
+            row++;
+        } else {
+            row--;
+        }
+    }
+
+    std::string result;
+    for (int i = 0; i < rails; i++) {
+        for (size_t j = 0; j < text.length(); j++) {
+            if (fence[i][j] != ' ') {
+                result += fence[i][j];
+            }
+        }
+    }
+
+    return result;
+}
+
+void display_rail_pattern(const std::string& text, int rails) {
+    std::vector<std::vector<char>> fence(rails, std::vector<char>(text.length(), '.'));
+
+    int row = 0;
+    bool dirDown = true;
+
+    for (size_t i = 0; i < text.length(); i++) {
+        fence[row][i] = text[i];
+
+        if (row == 0) {
+            dirDown = true;
+        } else if (row == rails - 1) {
+            dirDown = false;
+        }
+
+        if (dirDown) {
+            row++;
+        } else {
+            row--;
+        }
+    }
+
+    std::cout << "\nRail Pattern:\n";
+    for (int i = 0; i < rails; i++) {
+        for (size_t j = 0; j < text.length(); j++) {
+            std::cout << fence[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+}
+
+int main() {
+    std::string plaintext;
+    int rails = 2; // Default number of rails
+
+    std::cout << "Enter plaintext: ";
+    std::getline(std::cin, plaintext);
+
+    // Remove spaces from the plaintext for encryption
+    std::string textNoSpaces;
+    for (char c : plaintext) {
+        if (c != ' ') {
+            textNoSpaces += c;
+        }
+    }
+
+    display_rail_pattern(textNoSpaces, rails);
+
+    std::string ciphertext = railfence_encrypt(textNoSpaces, rails);
+    std::cout << "Encrypted text: " << ciphertext << std::endl;
+
+    return 0;
+}
+
+```
+
+
+### **Output:**
+
+![][image5]
+
+### **Observation and Result**
+
+As we can see in the output the text `“aashutosh is batman””` was encrypted using Rail Fence cipher and a cipher text of `“asuohsamnahtsibta”` was obtained.
+
+### **Conclusion**
+
+Rail Fence cipher was implemented in the C++ programming language.
+
+## **Lab 8 \- Euclidean and Extended Euclidean Algorithm**
+
+The Euclidean Algorithm finds the Greatest Common Divisor (GCD) of two numbers efficiently using repeated division.
+
+Extended euclidean algorithm finds integers X and Y such that:
+
+#AX+BY=GCD(A,B) 
+
+This is useful for modular inverses in cryptography.
+
+### **Algorithm ( Euclidean )**
+
+1. Given two numbers A and B, where A \> B.  
+2. Compute A mod B (remainder of A when divided by B).  
+3. Replace A with B and B with A mod B.  
+4. Repeat until B becomes 0\. The remaining A is the GCD.
+
+### **Algorithm ( Extended Euclidean )**
+
+1. Use the Euclidean Algorithm to get the GCD(A, B)  
+2. Work backward to express GCD as a linear combination of A and B.
+
+### **Objective:**
+
+To find GCD and X,Y of user input numbers using the Euclidean and Extended Euclidean algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### **Source Code:**
+
+```cpp 
+#include <iostream>
+#include <tuple>    // Required for std::tuple and std::make_tuple
+#include <numeric>  // Required for std::abs (though cmath might be more common for abs)
+
+// Function to calculate the Greatest Common Divisor (GCD) using the Euclidean Algorithm
+int euclidean_gcd(int a, int b) {
+    a = std::abs(a); // Ensure positive values for GCD calculation
+    b = std::abs(b); // Ensure positive values for GCD calculation
+
+    if (b == 0)
+        return a;
+
+    return euclidean_gcd(b, a % b);
+}
+
+// Function to calculate the GCD and coefficients x, y using the Extended Euclidean Algorithm
+std::tuple<int, int, int> extended_euclidean_gcd(int a, int b) {
+    if (b == 0)
+        return std::make_tuple(a, 1, 0);
+
+    // Recursive call to get gcd, x1, and y1 for the next step
+    auto [gcd, x1, y1] = extended_euclidean_gcd(b, a % b);
+
+    // Calculate x and y using the values from the recursive call
+    int x = y1;
+    int y = x1 - (a / b) * y1;
+
+    return std::make_tuple(gcd, x, y);
+}
+
+// Function to display the steps of the Euclidean Algorithm
+void show_euclidean_steps(int a, int b) {
+    std::cout << "\nSteps for Euclidean Algorithm:\n";
+    std::cout << "--------------------------------\n";
+
+    int originalA = a; // Store original values for final display
+    int originalB = b;
+
+    a = std::abs(a); // Work with absolute values for consistent algorithm steps
+    b = std::abs(b);
+
+    int step = 1;
+
+    while (b != 0) {
+        int quotient = a / b;
+        int remainder = a % b;
+
+        std::cout << "Step " << step << ": ";
+        std::cout << a << " = " << b << " * " << quotient << " + " << remainder << std::endl;
+
+        a = b;         // Update a to the previous b
+        b = remainder; // Update b to the previous remainder
+        step++;
+    }
+
+    std::cout << "GCD(" << originalA << ", " << originalB << ") = " << a << std::endl;
+}
+
+// Function to display the steps of the Extended Euclidean Algorithm
+void show_extended_euclidean_steps(int a, int b) {
+    std::cout << "\nSteps for Extended Euclidean Algorithm:\n";
+    std::cout << "--------------------------------------\n";
+
+    int originalA = a; // Store original values for final display
+    int originalB = b;
+
+    int a1 = a; // Use temporary variables for calculations
+    int b1 = b;
+
+    int x0 = 1, x1 = 0; // Initialize coefficients for Bezout's identity
+    int y0 = 0, y1 = 1;
+
+    int step = 1;
+
+    while (b1 != 0) {
+        int quotient = a1 / b1;
+        int remainder = a1 % b1;
+
+        int tempX = x0 - quotient * x1; // Calculate next x coefficient
+        int tempY = y0 - quotient * y1; // Calculate next y coefficient
+
+        std::cout << "Step " << step << ": ";
+        std::cout << a1 << " = " << b1 << " * " << quotient << " + " << remainder << std::endl;
+        std::cout << "   x" << step << " = " << x0 << " - " << quotient << " * " << x1 << " = " << tempX << std::endl;
+        std::cout << "   y" << step << " = " << y0 << " - " << quotient << " * " << y1 << " = " << tempY << std::endl;
+
+        a1 = b1;         // Update a1
+        b1 = remainder; // Update b1
+
+        x0 = x1;         // Update x0
+        x1 = tempX;      // Update x1
+
+        y0 = y1;         // Update y0
+        y1 = tempY;      // Update y1
+
+        step++;
+    }
+
+    std::cout << "GCD(" << originalA << ", " << originalB << ") = " << a1 << std::endl;
+    // Display Bezout's identity with the final coefficients
+    std::cout << "Bezout's identity: " << originalA << " * " << x0 << " + "
+              << originalB << " * " << y0 << " = " << a1 << std::endl;
+}
+
+int main() {
+    int a, b;
+
+    std::cout << "Enter two integers to find their GCD using Euclidean algorithms:" << std::endl;
+    std::cout << "First number (a): ";
+    std::cin >> a;
+    std::cout << "Second number (b): ";
+    std::cin >> b;
+
+    // --- Euclidean Algorithm ---
+    int gcd = euclidean_gcd(a, b);
+    std::cout << "\nUsing Euclidean Algorithm:" << std::endl;
+    std::cout << "GCD(" << a << ", " << b << ") = " << gcd << std::endl;
+
+    show_euclidean_steps(a, b);
+
+    // --- Extended Euclidean Algorithm ---
+    auto [extGcd, x, y] = extended_euclidean_gcd(a, b);
+    std::cout << "\nUsing Extended Euclidean Algorithm:" << std::endl;
+    std::cout << "GCD(" << a << ", " << b << ") = " << extGcd << std::endl;
+    std::cout << "Coefficients x and y such that " << a << " * " << x << " + "
+              << b << " * " << y << " = " << extGcd << std::endl;
+
+    show_extended_euclidean_steps(a, b);
+
+    // --- Verification ---
+    std::cout << "\nVerification:" << std::endl;
+    std::cout << a << " * " << x << " + " << b << " * " << y << " = " << (a * x + b * y) << std::endl;
+
+    return 0;
+}
+
+```
+
+### **Output:**
+
+![][image6]
+
+### **Observation and Result**
+
+As we can see in the output that the GCD was obtained from two user entered numbers and the coefficients of X and Y were also obtained using extended euclidean algorithm.
+
+### **Conclusion**
+
+Euclidean and Extended Euclidean algorithm was implemented in the C++ programming language.
+
+## **Lab 9 \- Diffie Hellman Key Exchange**
+
+The Diffie-Hellman Key Exchange (DHKE) is a cryptographic protocol that allows two parties to securely generate a shared secret key over an insecure channel. This key can then be used for encryption.
+
+### **Algorithm**
+
+**Step 1: Public Parameters**
+
+* Choose a **large prime number** p.  
+* Choose a **primitive root** g (also called a generator) modulo p.  
+* These values (p,g) are publicly known.
+
+**Step 2: Private Key Selection**
+
+* **Alice** picks a **private key** a (a secret number) and computes:  
+   A=g^a mod  p  
+*  She sends A to **Bob**.
+
+* **Bob** picks a **private key** b and computes:  
+   B=g^b mod  p  
+* He sends B to **Alice**.
+
+**Step 3: Compute Shared Secret**
+
+* **Alice** computes:  
+   S=B^a mod  p  
+* **Bob** computes:  
+   S=A^b mod  p  
+* Both get the same **shared secret S**, which can be used as a symmetric encryption key.
+
+### **Objective:**
+
+To demonstrate Diffie Hellman Key exchange algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### 
+
+### **Source Code:**
+```cpp 
+#include <iostream> // Required for input/output operations
+#include <cmath>    // Not strictly necessary for this code, but often included for math functions
+
+// No need for 'using namespace std;' in headers or global scope.
+// It's generally better practice to explicitly use std:: or bring in specific names.
+
+/*
+ * Function to perform modular exponentiation (base^exp % mod)
+ * using the method of exponentiation by squaring.
+ * This is efficient for large exponents.
+ */
+long long mod_exp(long long base, long long exp, long long mod) {
+    long long result = 1; // Initialize result to 1
+
+    // Reduce base to be within the modulo range
+    base %= mod;
+
+    while (exp > 0) {
+        // If exp is odd, multiply base with result
+        if (exp % 2 == 1) {
+            result = (result * base) % mod;
+        }
+
+        // Square the base and reduce it modulo mod
+        base = (base * base) % mod;
+
+        // Divide the exponent by 2
+        exp /= 2;
+    }
+    return result;
+}
+
+int main() {
+    // Diffie-Hellman Key Exchange Parameters
+    long long p = 23;  // A large prime number (publicly known)
+    long long g = 5;   // A primitive root modulo p (publicly known generator)
+
+    // Private keys for Alice and Bob (kept secret)
+    long long a = 6;  // Alice's private key
+    long long b = 15; // Bob's private key
+
+    // Public key generation
+    // Alice calculates A = g^a mod p and sends A to Bob
+    long long A = mod_exp(g, a, p); // Alice's public key
+    // Bob calculates B = g^b mod p and sends B to Alice
+    long long B = mod_exp(g, b, p); // Bob's public key
+
+    // Shared secret key computation
+    // Alice computes K = B^a mod p using Bob's public key and her private key
+    long long shared_secret_A = mod_exp(B, a, p); // Alice computes shared key
+    // Bob computes K = A^b mod p using Alice's public key and his private key
+    long long shared_secret_B = mod_exp(A, b, p); // Bob computes shared key
+
+    // Displaying the results of the key exchange
+    std::cout << "Prime (p): " << p << ", Generator (g): " << g << std::endl;
+    std::cout << "Alice's Private Key: " << a << ", Public Key: " << A << std::endl;
+    std::cout << "Bob's Private Key: " << b << ", Public Key: " << B << std::endl;
+    std::cout << "Shared Secret (Alice): " << shared_secret_A << std::endl;
+    std::cout << "Shared Secret (Bob): " << shared_secret_B << std::endl;
+
+    // Verify if the shared secrets are equal
+    if (shared_secret_A == shared_secret_B) {
+        std::cout << "Key Exchange Successful! Shared Key: " << shared_secret_A << std::endl;
+    } else {
+        std::cout << "Error in Key Exchange!" << std::endl;
+    }
+
+    return 0; // Indicate successful execution
+}
+
+```
+
+
+### **Output:**
+
+![][image7]
+
+### **Observation and Result**
+
+As we can see in the output, the Diffie Hellman key exchange was successfully demonstrated.
+
+### **Conclusion**
+
+Diffie Hellman Key Exchange was implemented in the C++ programming language.
+
+## **Lab 10 \- RSA Algorithm**
+
+The RSA algorithm is a widely used asymmetric encryption technique that enables secure communication and digital signatures. It relies on the mathematical difficulty of prime factorization. The algorithm involves three key steps: 
+
+Key Generation, Encryption, and Decryption. In key generation, two large prime numbers are chosen and multiplied to form a modulus, from which a public key (e, n) and a private key (d, n) are derived. For encryption, the plaintext is raised to the power of the public exponent (e) and taken modulo n, producing the ciphertext. 
+
+Decryption reverses this by raising the ciphertext to the power of the private exponent (d) modulo n, recovering the original message. RSA's security relies on the fact that factoring large numbers (used in key generation) is computationally infeasible. It is commonly used in secure web communication (HTTPS), digital signatures, and cryptographic protocols.
+
+### **Algorithm Steps**
+
+**1\. Key Generation**
+
+1. **Choose two large prime numbers** p and q.  
+2. Compute n=p×q (this forms the modulus).  
+3. Compute **Euler’s totient function**:  
+    ϕ(n)=(p−1)×(q−1)  
+4. Choose an **encryption exponent** eee such that:  
+    1\<e\<ϕ(n)and gcd⁡(e,ϕ(n))=1 (Common choice: **e \= 65537** for efficiency).
+
+5. Compute the **decryption exponent** d as the **modular inverse** of e mod ϕ(n:  
+    d=e−1mod  ϕ(n)  
+    (This can be computed using the **Extended Euclidean Algorithm**).
+
+6. **Public Key**: (e,n) **Private Key**: (d,n)
+
+**2\. Encryption**
+
+* Convert plaintext into a numeric form **M**.
+
+* Compute ciphertext **C** using:  
+   C=M^e mod  n  
+* Send **C** as the encrypted message.
+
+**3\. Decryption**
+
+* Compute plaintext **M** from ciphertext **C** using the private key:  
+   M=C^d mod n  
+* Convert **M** back into readable text.
+
+### **Objective:**
+
+To demonstrate the RSA algorithm in the C++ programming language.
+
+### **Tools:**
+
+GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
+
+### **Source Code:**
+```cpp 
+
+#include <iostream> // Required for input/output operations
+#include <cmath>    // Not strictly necessary for this code, but often included for math functions
+#include <numeric>  // Required for std::gcd
+
+// No need for 'using namespace std;' in headers or global scope.
+// It's generally better practice to explicitly use std:: or bring in specific names.
+
+/*
+ * Function to perform modular exponentiation (base^exp % mod)
+ * using the method of exponentiation by squaring.
+ * This is efficient for large exponents.
+ */
+long long mod_exp(long long base, long long exp, long long mod) {
+    long long result = 1; // Initialize result to 1
+
+    // Reduce base to be within the modulo range
+    base %= mod;
+
+    while (exp > 0) {
+        // If exp is odd, multiply base with result
+        if (exp % 2 == 1) {
+            result = (result * base) % mod;
+        }
+
+        // Square the base and reduce it modulo mod
+        base = (base * base) % mod;
+
+        // Divide the exponent by 2
+        exp /= 2;
+    }
+    return result;
+}
+
+// Function to calculate the Greatest Common Divisor (GCD) using the Euclidean Algorithm
+long long gcd(long long a, long long b) {
+    while (b != 0) {
+        long long temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// Function to calculate the modular multiplicative inverse of e modulo phi
+// using the Extended Euclidean Algorithm.
+long long mod_inverse(long long e, long long phi) {
+    long long t = 0, new_t = 1;
+    long long r = phi, new_r = e;
+
+    while (new_r != 0) {
+        long long quotient = r / new_r;
+        t = new_t;
+        new_t = t - quotient * new_t;
+        r = new_r;
+        new_r = r - quotient * new_r;
+    }
+
+    // Ensure the result is positive
+    if (t < 0) {
+        t += phi;
+    }
+
+    return t;
+}
+
+int main() {
+    // RSA parameters: two distinct prime numbers
+    long long p = 61, q = 53;
+    long long n = p * q; // Modulus for public and private keys
+    long long phi = (p - 1) * (q - 1); // Euler's totient function
+
+    // Choose an integer e such that 1 < e < phi and gcd(e, phi) = 1
+    long long e = 17;
+    while (gcd(e, phi) != 1) {
+        e++; // Increment e until it's coprime with phi
+    }
+
+    // Calculate d, the modular multiplicative inverse of e modulo phi
+    long long d = mod_inverse(e, phi);
+
+    // Display the generated keys
+    std::cout << "Public Key (e, n): (" << e << ", " << n << ")" << std::endl;
+    std::cout << "Private Key (d, n): (" << d << ", " << n << ")" << std::endl;
+
+    long long message = 65; // Example message (must be < n)
+    std::cout << "Original Message: " << message << std::endl;
+
+    // Encryption: C = M^e mod n
+    long long encrypted = mod_exp(message, e, n);
+    std::cout << "Encrypted Message: " << encrypted << std::endl;
+
+    // Decryption: M = C^d mod n
+    long long decrypted = mod_exp(encrypted, d, n);
+    std::cout << "Decrypted Message: " << decrypted << std::endl;
+
+    return 0; // Indicate successful execution
+}
+```
+
+
+### **Output:**
+
+![][image8]
+
+### **Observation and Result**
+
+As we can see in the output, the RSA algorithm was successfully demonstrated.
+
+### **Conclusion**
+
+RSA algorithm was implemented in the C++ programming language.  
