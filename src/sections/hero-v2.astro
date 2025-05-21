@@ -26,10 +26,14 @@ const features = [
 ---
 
 <main class="">
-  <div class="flex flex-col m-7 gap-3 md:m-10 font-primary md:items-center md:mt-20 ">
+  <div
+    class="flex flex-col m-7 gap-3 md:m-10 font-primary md:items-center md:mt-20"
+  >
     <p class="text-l">&#9899; ddc/oss</p>
     <div class="flex flex-col mt-3 md:flex-row md:gap-2">
-      <h1 class="md:text-5xl text-4xl font-black text-main-blue tracking-normal">
+      <h1
+        class="md:text-5xl text-4xl font-black text-main-blue tracking-normal"
+      >
         Simplify Lab Work.
       </h1>
       <h1 class="md:text-5xl text-4xl font-bold text-main-blue tracking-normal">
@@ -75,8 +79,8 @@ const features = [
 
 <script type="module">
   document.getElementById("view-lab-button")?.addEventListener("click", () => {
-    const currentUrl = window.location;
-    if (currentUrl[-1] == "/") {
+    const currentUrl = window.location.href;
+    if (currentUrl[currentUrl.length - 1] == "/") {
       window.location.assign(`${window.location}universities`);
     } else {
       window.location.assign(`${window.location}/universities`);
@@ -86,8 +90,7 @@ const features = [
   document
     .getElementById("contribute-button")
     ?.addEventListener("click", () => {
-      const currentUrl = window.location;
-      if (currentUrl[-1] == "/") {
+      if (currentUrl[currentUrl.length - 1] == "/") {
         window.location.assign(`${window.location}contribute`);
       } else {
         window.location.assign(`${window.location}/contribute`);

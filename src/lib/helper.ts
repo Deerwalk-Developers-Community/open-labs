@@ -2,6 +2,7 @@ import { getCollection } from "astro:content";
 
 export async function getUniversities() {
   const allLabs = await getCollection("labs");
+
   const universitiesMap = new Map();
 
   allLabs.forEach((lab) => {
@@ -29,14 +30,14 @@ export async function getColleges() {
   return Array.from(collegesMap.values());
 }
 
-export async function getCollegeByName(collegeName: string){
-  const colleges = await  getColleges()
-  for(const college of colleges){
-    if (college.name == collegeName){
+export async function getCollegeByName(collegeName: string) {
+  const colleges = await getColleges();
+  for (const college of colleges) {
+    if (college.name == collegeName) {
       return college;
     }
   }
-  return null
+  return null;
 }
 
 export async function getCourses() {

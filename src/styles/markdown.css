@@ -1,6 +1,5 @@
-.markdown-content{
+.markdown-content {
   font-family: "DM Sans";
-  
 }
 .markdown-content h1 {
   font-size: 2rem;
@@ -15,7 +14,7 @@
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: 600;
-  color:#000000;
+  color: #000000;
 }
 
 .markdown-content h3 {
@@ -39,13 +38,13 @@
 }
 
 .markdown-content a {
-  color: black; 
+  color: black;
   font-weight: 400;
   transition: color 0.2s ease;
 }
 
 .markdown-content a:hover {
-  color: #3730A3; 
+  color: #3730a3;
 }
 
 .markdown-content ul,
@@ -59,7 +58,7 @@
 }
 
 .markdown-content code {
-  background-color: #F2F4FA; 
+  background-color: #f2f4fa;
 
   padding: 0.2em 0.4em;
   border-radius: 0.25rem;
@@ -72,24 +71,23 @@
 .markdown-content pre,
 .markdown-content .code-block,
 .markdown-content div[class*="language-"] {
-  background-color: #F2F4FA !important; 
+  background-color: #f2f4fa !important;
   padding: 1rem;
   overflow-x: auto;
-  color:#000000;
+  color: #000000;
   white-space: pre-wrap;
   word-wrap: break-word;
   border-radius: 0.5rem;
   margin: 1.5rem 0;
   font-family: "DM Sans", monospace;
   font-size: 0.9rem;
-
 }
 
 .markdown-content :not(pre) > code[class*="language-"],
 .markdown-content pre[class*="language-"],
 .markdown-content .shiki,
 .markdown-content .highlight {
-  background-color: #F2F4FA !important;
+  background-color: #f2f4fa !important;
   color: #000000;
 }
 
@@ -97,11 +95,11 @@
 .markdown-content .token.prolog,
 .markdown-content .token.doctype,
 .markdown-content .token.cdata {
-  color: #000000 !important; 
+  color: #000000 !important;
 }
 
 .markdown-content .token.punctuation {
-  color: #000000 !important; 
+  color: #000000 !important;
 }
 
 /* .markdown-content .token.property,
@@ -240,22 +238,21 @@
 .markdown-content pre code,
 .markdown-content .code-block code,
 .markdown-content div[class*="language-"] code {
-  background-color: #F2F4FA !important;
+  background-color: #f2f4fa !important;
   padding: 0;
   color: inherit;
-  border: none; 
-}  */
-
-.markdown-content blockquote {
+  border: none;
+}
+*/ .markdown-content blockquote {
   padding-left: 1rem;
-  color: #4F46E5;
+  color: #4f46e5;
   margin: 1.5rem 0;
-  border-left: 4px solid #4F46E5; 
+  border-left: 4px solid #4f46e5;
 }
 
 .markdown-content hr {
   border: none;
-  border-top: 1px solid #D1D5DB;
+  border-top: 1px solid #d1d5db;
   margin: 2rem 0;
 }
 
@@ -267,12 +264,12 @@
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid #D1D5DB; 
+  border: 1px solid #d1d5db;
   padding: 0.75rem;
 }
 
 .markdown-content th {
-  background-color: #F9FAFB; 
+  background-color: #f9fafb;
   font-weight: 600;
 }
 
@@ -302,5 +299,3 @@
   padding: 0.1em 0.3em;
   border-radius: 0.25rem;
 }
-
-

@@ -2,7 +2,7 @@ import { glob } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
 
 const labs = defineCollection({
-  loader: glob({ pattern: "**/*x", base: "/src/pages/labs" }),
+  loader: glob({ pattern: "**/**.mdx", base: "src/pages/labs" }),
   schema: z.object({
     title: z.string(),
     college_id: z.string(),
