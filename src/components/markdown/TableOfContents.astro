@@ -13,18 +13,33 @@ const {
 
 async function getHeadings() {
   const html = await Astro.slots.render("default");
-
+  
   const headingRegex = /<h([1-6])[^>]*>(.*?)<\/h\1>/g;
   const headings = [];
+  const idCounts = new Map(); // Track duplicate IDs
   let match;
 
   while ((match = headingRegex.exec(html)) !== null) {
     const level = parseInt(match[1]);
     const text = match[2].replace(/<[^>]*>/g, "");
-    const id = text
+    
+    let baseId = text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-");
+      .replace(/[^\w\s-()]/g, "") // Keep parentheses
+      .replace(/\s+/g, "-")
+      .replace(/\(\s*/g, "-") // Convert "( " to "-"
+      .replace(/\s*\)/g, "") // Convert " )" to ""
+      .replace(/-+/g, "-") // Replace multiple dashes with single dash
+      .replace(/^-|-$/g, ""); // Remove leading/trailing dashes
+    
+    // Handle duplicate IDs by adding a counter
+    let id = baseId;
+    const currentCount = idCounts.get(baseId) || 0;
+    if (currentCount > 0) {
+      id = `${baseId}-${currentCount}`;
+    }
+    idCounts.set(baseId, currentCount + 1);
+    
     headings.push({ level, text, id });
   }
 
@@ -39,33 +54,59 @@ const headings = await getHeadings();
 let renderedHTML = await Astro.slots.render("default");
 
 if (addLinks) {
+  const idCounts = new Map(); // Track duplicate IDs for HTML replacement
+  
   for (const heading of headings) {
+    const baseText = heading.text.replace(/<[^>]*>/g, "");
+    let baseId = baseText
+      .toLowerCase()
+      .replace(/[^\w\s-()]/g, "") // Keep parentheses
+      .replace(/\s+/g, "-")
+      .replace(/\(\s*/g, "-") // Convert "( " to "-"
+      .replace(/\s*\)/g, "") // Convert " )" to ""
+      .replace(/-+/g, "-") // Replace multiple dashes with single dash
+      .replace(/^-|-$/g, ""); // Remove leading/trailing dashes
+    
+    // Recreate the same ID logic for HTML replacement
+    let id = baseId;
+    const currentCount = idCounts.get(baseId) || 0;
+    if (currentCount > 0) {
+      id = `${baseId}-${currentCount}`;
+    }
+    idCounts.set(baseId, currentCount + 1);
+    
+    // Create a more specific regex to match the exact heading
+    const escapedText = baseText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(
-      `(<h${heading.level}[^>]*>)(${heading.text})(</h${heading.level}>)`,
-      "g",
+      `(<h${heading.level}[^>]*>)(${escapedText})(</h${heading.level}>)`,
+      ""
     );
-    renderedHTML = renderedHTML.replace(
-      regex,
-      `$1<a id="${heading.id}" href="#${heading.id}" class="heading-anchor">${heading.text}</a>$3`,
-    );
+    
+    // Only replace if this exact heading hasn't been processed yet
+    if (renderedHTML.match(regex)) {
+      renderedHTML = renderedHTML.replace(
+        regex,
+        `$1<a id="${id}" href="#${id}" class="heading-anchor">${baseText}</a>$3`
+      );
+    }
   }
 }
 ---
 
 <div class="flex flex-row justify-between gap-8 px-5 md:px-10 lg:px-15">
   <aside
-    class="hidden lg:flex sticky top-20 flex-col lg:w-64 flex-shrink-0 py-5 h-fit bg-white"
+    class="hidden lg:flex sticky top-20 flex-col lg:w-64 flex-shrink-0 py-5 h-fit max-h-[calc(100vh-3rem)] bg-white"
   >
-    <div class="flex flex-col mb-3">
+    <div class="flex flex-col mb-3 overflow-y-auto overflow-x-hidden">
       <ul
-        class="flex flex-col gap-4 space-y-3 pl-5 mt-3 items-center justify-center"
+        class="flex flex-col gap-4 space-y-3 pl-5 mt-3 items-start justify-center"
       >
         {
           headings.map((heading) => (
             <li class={`ml-${(heading.level - 1) * 3}`}>
               <a
                 href={`#${heading.id}`}
-                class="sidebar-link  hover:text-indigo-600 transition-colors duration-200"
+                class="sidebar-link hover:text-indigo-600 transition-colors duration-200"
                 data-heading-id={heading.id}
               >
                 {heading.text}
@@ -93,13 +134,13 @@ if (addLinks) {
       .filter(Boolean);
 
     function updateActiveHeading() {
-      const scrollPosition = window.scrollY + 120;
+      const scrollPosition = window.scrollY + 70;
       let activeHeading = null;
 
       for (let i = headingElements.length - 1; i >= 0; i--) {
         const heading = headingElements[i];
         if (heading && heading.offsetTop <= scrollPosition) {
-          activeHeading = heading;
+        activeHeading = heading;
           break;
         }
       }
