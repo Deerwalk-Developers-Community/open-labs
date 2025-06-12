@@ -21,19 +21,19 @@ import LabHeader from "#components/markdown/LabHeader.astro";
   doneBy={frontmatter.doneBy}
 />
 
-
 ## **Lab 1 \- Caesar Cipher**
-
 
 The Caesar Cipher is a simple substitution cipher used in cryptography, where each letter in the plaintext is shifted a fixed number of places in the alphabet. For example, with a shift of 3, "A" becomes "D," "B" becomes "E," and so on. It is one of the earliest encryption techniques, attributed to Julius Caesar, who used it to communicate securely with his generals. While easy to implement, the Caesar Cipher is highly insecure by modern standards, as it can be easily broken using frequency analysis or brute force methods.
 
 ### **Algorithm:**
 
-1. Choose a shift value (key) between 1 and 25\.  
-2. For each letter in the plaintext:  
-* Shift it forward by the key value in the alphabet.  
-* Wrap around if it exceeds 'Z' (for uppercase) or 'z' (for lowercase).  
-3. Keep non-alphabetic characters unchanged.  
+1. Choose a shift value (key) between 1 and 25\.
+2. For each letter in the plaintext:
+
+- Shift it forward by the key value in the alphabet.
+- Wrap around if it exceeds 'Z' (for uppercase) or 'z' (for lowercase).
+
+3. Keep non-alphabetic characters unchanged.
 4. Output the encrypted text.
 
 ### **Objective:**
@@ -44,7 +44,7 @@ To encrypt the text “Barcelona is the greatest club of all time” using Caesa
 
 GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
 
-### **Source Code:** 
+### **Source Code:**
 
 ```c++
 
@@ -85,8 +85,6 @@ int main(void) {
 
 ```
 
-
-
 ### **Output:**
 
 ### **Observation and Result**
@@ -99,13 +97,13 @@ Caesar cipher was implemented in the C programming language.
 
 ## **Lab 2 \- Monoalphabetic Cipher**
 
-A **Monoalphabetic Cipher** is a substitution cipher where each letter in the plaintext is replaced with a corresponding letter from a fixed but randomly shuffled alphabet. 
+A **Monoalphabetic Cipher** is a substitution cipher where each letter in the plaintext is replaced with a corresponding letter from a fixed but randomly shuffled alphabet.
 
 ### **Algorithm:**
 
-1. Create a key: a shuffled version of the alphabet (e.g., ABCDEFGHIJKLMNOPQRSTUVWXYZ → QWERTYUIOPASDFGHJKLZXCVBNM).  
-2. Replace each letter in the plaintext with its corresponding letter from the shuffled alphabet.  
-3. Keep non-alphabetic characters unchanged.  
+1. Create a key: a shuffled version of the alphabet (e.g., ABCDEFGHIJKLMNOPQRSTUVWXYZ → QWERTYUIOPASDFGHJKLZXCVBNM).
+2. Replace each letter in the plaintext with its corresponding letter from the shuffled alphabet.
+3. Keep non-alphabetic characters unchanged.
 4. Output the encrypted text.
 
 ### **Objective:**
@@ -165,9 +163,7 @@ int main(void) {
 }
 ```
 
-
 ### **Output:**
-
 
 ### **Observation and Result**
 
@@ -177,9 +173,9 @@ As we can see in the output the text `“messi is the greatest player of all tim
 
 Monoalphabetic cipher was implemented in the C++ programming language.
 
-## 
+##
 
-## **Lab 3 \- Playfair Cipher** 
+## **Lab 3 \- Playfair Cipher**
 
 The **Playfair Cipher** is a digraph substitution cipher that encrypts pairs of letters instead of single letters, making it more secure than simple monoalphabetic ciphers. It uses a **5×5 grid** of letters, generated from a keyword, where 'I' and 'J' are usually combined. To encrypt, pairs of letters in the plaintext are modified based on their positions in the grid: if they are in the same row, they shift right; in the same column, they shift down; otherwise, they form a rectangle and swap corners. This method reduces frequency analysis effectiveness, making it harder to break than a simple substitution cipher.
 
@@ -187,16 +183,16 @@ The **Playfair Cipher** is a digraph substitution cipher that encrypts pairs of 
 
 **Key Generation**
 
-1. Choose a keyword and remove duplicate letters.  
+1. Choose a keyword and remove duplicate letters.
 2. Fill a **5×5 grid** with the keyword, then the remaining letters of the alphabet (excluding 'J' or merging it with 'I').
 
 **Process**
 
-1. Divide the plaintext into letter pairs (digraphs) (e.g., "HELLO" → "HE LX LO" with 'X' added if needed to prevent duplicate letters in a pair).  
-2. For each digraph:  
-   1. Same Row: Replace each letter with the letter to its right (wrap around if at the end).  
-   2. Same Column: Replace each letter with the letter below (wrap around if at the bottom).  
-   3. Different Row & Column: Form a rectangle and swap letters at the opposite corners.  
+1. Divide the plaintext into letter pairs (digraphs) (e.g., "HELLO" → "HE LX LO" with 'X' added if needed to prevent duplicate letters in a pair).
+2. For each digraph:
+   1. Same Row: Replace each letter with the letter to its right (wrap around if at the end).
+   2. Same Column: Replace each letter with the letter below (wrap around if at the bottom).
+   3. Different Row & Column: Form a rectangle and swap letters at the opposite corners.
 3. Output the encrypted text.
 
 ### **Objective:**
@@ -207,7 +203,8 @@ To encrypt the text “argentina has two world cups” using the Playfair Cipher
 
 GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
 
-### **Source Code:** 
+### **Source Code:**
+
 ```cpp
 #include <bits/stdc++.h>
 #include <iostream>
@@ -215,7 +212,7 @@ GNU C Compiler (GCC) / Zig C Compiler ( LLVM Backend )
 
 #define MAX 25
 
-template <typename T> 
+template <typename T>
 void printVector(const std::vector<T> &vec) {
     for (const T &element : vec) {
         std::cout << element << " ";
@@ -243,7 +240,7 @@ std::vector<char> chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
 std::pair<int, int> findPosition(char ch, char matrix[5][5]) {
     if (ch == 'j')
         ch = 'i';
-    
+
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             if (matrix[i][j] == ch) {
@@ -251,50 +248,50 @@ std::pair<int, int> findPosition(char ch, char matrix[5][5]) {
             }
         }
     }
-    return {-1, -1}; 
+    return {-1, -1};
 }
 
 std::string prepareText(const std::string& text) {
     std::string result;
-    
+
     for (size_t i = 0; i < text.length(); i++) {
         char current = std::tolower(text[i]);
-        
+
         if (!std::isalpha(current))
             continue;
-            
+
         if (current == 'j')
             current = 'i';
-            
+
         result.push_back(current);
-        
+
         if (i + 1 < text.length() && std::tolower(text[i]) == std::tolower(text[i + 1])) {
             result.push_back('x');
         }
     }
-    
+
     if (result.length() % 2 != 0) {
         result.push_back('x');
     }
-    
+
     return result;
 }
 
 std::string encrypt(const std::string& preparedText, char matrix[5][5]) {
     std::string cipher;
-    
+
     for (size_t i = 0; i < preparedText.length(); i += 2) {
         char first = preparedText[i];
         char second = preparedText[i + 1];
-        
+
         auto pos1 = findPosition(first, matrix);
         auto pos2 = findPosition(second, matrix);
-        
+
         int row1 = pos1.first;
         int col1 = pos1.second;
         int row2 = pos2.first;
         int col2 = pos2.second;
-        
+
         // Same row
         if (row1 == row2) {
             cipher.push_back(matrix[row1][(col1 + 1) % 5]);
@@ -307,46 +304,46 @@ std::string encrypt(const std::string& preparedText, char matrix[5][5]) {
         }
         // Rectangle case
         else {
-            cipher.push_back(matrix[row1][col2]); 
+            cipher.push_back(matrix[row1][col2]);
             cipher.push_back(matrix[row2][col1]);
         }
     }
-    
+
     return cipher;
 }
 
 int main() {
     struct Message input = Message{};
     std::string keyWord;
-    
+
     std::cout << "Enter key: ";
     std::cin >> keyWord;
-    
+
     for (auto &c : keyWord) {
         c = std::tolower(c);
         if (c == 'j') c = 'i';
     }
-    
+
     std::cout << "Enter plaintext: ";
-    std::cin.ignore(); 
+    std::cin.ignore();
     std::getline(std::cin, input.message);
-    
+
     std::vector<char> matrixVector;
-    
+
     for (const char character : keyWord) {
         if (!has(matrixVector, character) && isalpha(character)) {
             matrixVector.push_back(character);
         }
     }
-    
+
     for (const char char_ : chars) {
         if (!has(matrixVector, char_)) {
             matrixVector.push_back(char_);
         }
     }
-    
+
     std::cout << "Your matrix is: " << std::endl;
-    
+
     char matrix[5][5];
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -355,39 +352,36 @@ int main() {
         }
         std::cout << std::endl;
     }
-    
+
     std::string preparedText = prepareText(input.message);
     std::cout << "\nPrepared text: " << preparedText << std::endl;
     std::string encrypted = encrypt(preparedText, matrix);
     std::cout << "Encrypted text: " << encrypted << std::endl;
-    
+
     return 0;
 }
 ```
-
-
-
 
 ### **Output:**
 
 ### **Observation and Result**
 
-As we can see in the output the text `“argentina has two world cups”` was encrypted using Playfair cipher  with the key of “messi” and a cipher text of `“sucatyftmomiqykzlurlgqrm”` was obtained.
+As we can see in the output the text `“argentina has two world cups”` was encrypted using Playfair cipher with the key of “messi” and a cipher text of `“sucatyftmomiqykzlurlgqrm”` was obtained.
 
 ### **Conclusion**
 
 Playfair cipher was implemented in the C++ programming language.
 
-## **Lab 4 \- Hill Cipher** 
+## **Lab 4 \- Hill Cipher**
 
 The Hill Cipher is a polygraphic substitution cipher that encrypts multiple letters simultaneously using matrix multiplication over modulo arithmetic. It relies on linear algebra, where plaintext letters are converted into numerical vectors and multiplied by an invertible key matrix to produce ciphertext. The cipher is more secure than simple substitution ciphers, but decryption requires the inverse of the key matrix, which exists only if the matrix has a nonzero determinant modulo 26\.
 
 ### **Algorithm**
 
-1. Choose an **n×n key matrix** (must be invertible modulo 26).  
-2. Convert plaintext into numerical form (`A=0, B=1, ..., Z=25`).  
-3. Divide plaintext into **blocks of size n** and represent each block as a vector.  
-4. Multiply each vector by the **key matrix** modulo 26\.  
+1. Choose an **n×n key matrix** (must be invertible modulo 26).
+2. Convert plaintext into numerical form (`A=0, B=1, ..., Z=25`).
+3. Divide plaintext into **blocks of size n** and represent each block as a vector.
+4. Multiply each vector by the **key matrix** modulo 26\.
 5. Convert resulting numbers back into letters to get ciphertext.
 
 ### **Objective:**
@@ -399,6 +393,7 @@ To encrypt the text “svelte is better than react” using the Hill Cipher with
 GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
 ### **Source Code**
+
 ```cpp
 
 #include <iostream>
@@ -540,9 +535,9 @@ The Vigenère Cipher is a polyalphabetic substitution cipher that uses a repeati
 
 ### **Algorithm**
 
-1. Choose a keyword and repeat it to match the plaintext length.  
-2. Convert letters to numbers (A=0, B=1, ..., Z=25).  
-3. Shift each plaintext letter forward using the corresponding keyword letter's value (modulo 26).  
+1. Choose a keyword and repeat it to match the plaintext length.
+2. Convert letters to numbers (A=0, B=1, ..., Z=25).
+3. Shift each plaintext letter forward using the corresponding keyword letter's value (modulo 26).
 4. Convert back to letters to get ciphertext.
 
 ### **Objective:**
@@ -555,7 +550,7 @@ GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
 ### **Source Code:**
 
-```cpp 
+```cpp
 #include <iostream>
 #include <string>
 #include <cctype>
@@ -637,8 +632,6 @@ int main() {
 
 ```
 
-
-
 ### **Observation and Result**
 
 As we can see in the output the text `“arsenal are the best in england”,`
@@ -660,8 +653,8 @@ The Rail Fence Cipher is a transposition cipher that rearranges the plaintext ch
 
 ### **Algorithm**
 
-1. Choose the number of rails (rows) (e.g., 3).  
-2. Write the plaintext in a zigzag pattern across the rails.  
+1. Choose the number of rails (rows) (e.g., 3).
+2. Write the plaintext in a zigzag pattern across the rails.
 3. Read the text row by row to get the ciphertext.
 
 ### **Objective:**
@@ -673,7 +666,8 @@ To encrypt the text “aashutosh is batman” using the Rail Fence Cipher algori
 GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
 ### **Source Code:**
-```cpp 
+
+```cpp
 #include <iostream>
 #include <string>
 #include <vector>
@@ -773,7 +767,6 @@ int main() {
 
 ```
 
-
 ### **Output:**
 
 ![][image5]
@@ -792,20 +785,20 @@ The Euclidean Algorithm finds the Greatest Common Divisor (GCD) of two numbers e
 
 Extended euclidean algorithm finds integers X and Y such that:
 
-#AX+BY=GCD(A,B) 
+#AX+BY=GCD(A,B)
 
 This is useful for modular inverses in cryptography.
 
 ### **Algorithm ( Euclidean )**
 
-1. Given two numbers A and B, where A \> B.  
-2. Compute A mod B (remainder of A when divided by B).  
-3. Replace A with B and B with A mod B.  
+1. Given two numbers A and B, where A \> B.
+2. Compute A mod B (remainder of A when divided by B).
+3. Replace A with B and B with A mod B.
 4. Repeat until B becomes 0\. The remaining A is the GCD.
 
 ### **Algorithm ( Extended Euclidean )**
 
-1. Use the Euclidean Algorithm to get the GCD(A, B)  
+1. Use the Euclidean Algorithm to get the GCD(A, B)
 2. Work backward to express GCD as a linear combination of A and B.
 
 ### **Objective:**
@@ -818,7 +811,7 @@ GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
 ### **Source Code:**
 
-```cpp 
+```cpp
 #include <iostream>
 #include <tuple>    // Required for std::tuple and std::make_tuple
 #include <numeric>  // Required for std::abs (though cmath might be more common for abs)
@@ -977,27 +970,27 @@ The Diffie-Hellman Key Exchange (DHKE) is a cryptographic protocol that allows t
 
 **Step 1: Public Parameters**
 
-* Choose a **large prime number** p.  
-* Choose a **primitive root** g (also called a generator) modulo p.  
-* These values (p,g) are publicly known.
+- Choose a **large prime number** p.
+- Choose a **primitive root** g (also called a generator) modulo p.
+- These values (p,g) are publicly known.
 
 **Step 2: Private Key Selection**
 
-* **Alice** picks a **private key** a (a secret number) and computes:  
-   A=g^a mod  p  
-*  She sends A to **Bob**.
+- **Alice** picks a **private key** a (a secret number) and computes:  
+   A=g^a mod  p
+- She sends A to **Bob**.
 
-* **Bob** picks a **private key** b and computes:  
-   B=g^b mod  p  
-* He sends B to **Alice**.
+- **Bob** picks a **private key** b and computes:  
+   B=g^b mod  p
+- He sends B to **Alice**.
 
 **Step 3: Compute Shared Secret**
 
-* **Alice** computes:  
-   S=B^a mod  p  
-* **Bob** computes:  
-   S=A^b mod  p  
-* Both get the same **shared secret S**, which can be used as a symmetric encryption key.
+- **Alice** computes:  
+   S=B^a mod  p
+- **Bob** computes:  
+   S=A^b mod  p
+- Both get the same **shared secret S**, which can be used as a symmetric encryption key.
 
 ### **Objective:**
 
@@ -1007,10 +1000,9 @@ To demonstrate Diffie Hellman Key exchange algorithm in the C++ programming lang
 
 GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
-### 
-
 ### **Source Code:**
-```cpp 
+
+```cpp
 #include <iostream> // Required for input/output operations
 #include <cmath>    // Not strictly necessary for this code, but often included for math functions
 
@@ -1083,7 +1075,6 @@ int main() {
 
 ```
 
-
 ### **Output:**
 
 ![][image7]
@@ -1098,9 +1089,9 @@ Diffie Hellman Key Exchange was implemented in the C++ programming language.
 
 ## **Lab 10 \- RSA Algorithm**
 
-The RSA algorithm is a widely used asymmetric encryption technique that enables secure communication and digital signatures. It relies on the mathematical difficulty of prime factorization. The algorithm involves three key steps: 
+The RSA algorithm is a widely used asymmetric encryption technique that enables secure communication and digital signatures. It relies on the mathematical difficulty of prime factorization. The algorithm involves three key steps:
 
-Key Generation, Encryption, and Decryption. In key generation, two large prime numbers are chosen and multiplied to form a modulus, from which a public key (e, n) and a private key (d, n) are derived. For encryption, the plaintext is raised to the power of the public exponent (e) and taken modulo n, producing the ciphertext. 
+Key Generation, Encryption, and Decryption. In key generation, two large prime numbers are chosen and multiplied to form a modulus, from which a public key (e, n) and a private key (d, n) are derived. For encryption, the plaintext is raised to the power of the public exponent (e) and taken modulo n, producing the ciphertext.
 
 Decryption reverses this by raising the ciphertext to the power of the private exponent (d) modulo n, recovering the original message. RSA's security relies on the fact that factoring large numbers (used in key generation) is computationally infeasible. It is commonly used in secure web communication (HTTPS), digital signatures, and cryptographic protocols.
 
@@ -1108,32 +1099,32 @@ Decryption reverses this by raising the ciphertext to the power of the private e
 
 **1\. Key Generation**
 
-1. **Choose two large prime numbers** p and q.  
-2. Compute n=p×q (this forms the modulus).  
+1. **Choose two large prime numbers** p and q.
+2. Compute n=p×q (this forms the modulus).
 3. Compute **Euler’s totient function**:  
-    ϕ(n)=(p−1)×(q−1)  
+   ϕ(n)=(p−1)×(q−1)
 4. Choose an **encryption exponent** eee such that:  
-    1\<e\<ϕ(n)and gcd⁡(e,ϕ(n))=1 (Common choice: **e \= 65537** for efficiency).
+   1\<e\<ϕ(n)and gcd⁡(e,ϕ(n))=1 (Common choice: **e \= 65537** for efficiency).
 
 5. Compute the **decryption exponent** d as the **modular inverse** of e mod ϕ(n:  
-    d=e−1mod  ϕ(n)  
-    (This can be computed using the **Extended Euclidean Algorithm**).
+   d=e−1mod  ϕ(n)  
+   (This can be computed using the **Extended Euclidean Algorithm**).
 
 6. **Public Key**: (e,n) **Private Key**: (d,n)
 
 **2\. Encryption**
 
-* Convert plaintext into a numeric form **M**.
+- Convert plaintext into a numeric form **M**.
 
-* Compute ciphertext **C** using:  
-   C=M^e mod  n  
-* Send **C** as the encrypted message.
+- Compute ciphertext **C** using:  
+   C=M^e mod  n
+- Send **C** as the encrypted message.
 
 **3\. Decryption**
 
-* Compute plaintext **M** from ciphertext **C** using the private key:  
-   M=C^d mod n  
-* Convert **M** back into readable text.
+- Compute plaintext **M** from ciphertext **C** using the private key:  
+   M=C^d mod n
+- Convert **M** back into readable text.
 
 ### **Objective:**
 
@@ -1144,7 +1135,8 @@ To demonstrate the RSA algorithm in the C++ programming language.
 GNU C/C++ Compiler (GCC) / Zig C/C++ Compiler.
 
 ### **Source Code:**
-```cpp 
+
+```cpp
 
 #include <iostream> // Required for input/output operations
 #include <cmath>    // Not strictly necessary for this code, but often included for math functions
@@ -1245,7 +1237,6 @@ int main() {
 }
 ```
 
-
 ### **Output:**
 
 ![][image8]
@@ -1256,4 +1247,4 @@ As we can see in the output, the RSA algorithm was successfully demonstrated.
 
 ### **Conclusion**
 
-RSA algorithm was implemented in the C++ programming language.  
+RSA algorithm was implemented in the C++ programming language.
