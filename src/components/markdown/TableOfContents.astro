@@ -7,7 +7,7 @@ export interface Props {
 
 const {
   class: className = "",
-  addLinks = false,
+  addLinks = true,
   excludeFirstHeading = true,
 } = Astro.props;
 
@@ -16,9 +16,9 @@ async function getHeadings() {
   
   const headingRegex = /<h([1-6])[^>]*>(.*?)<\/h\1>/g;
   const headings = [];
-  const idCounts = new Map(); // Track duplicate IDs
+  const idCounts = new Map(); 
   let match;
-
+  let lastH2Id = ""; 
   while ((match = headingRegex.exec(html)) !== null) {
     const level = parseInt(match[1]);
     const text = match[2].replace(/<[^>]*>/g, "");
@@ -31,8 +31,15 @@ async function getHeadings() {
       .replace(/\s*\)/g, "") // Convert " )" to ""
       .replace(/-+/g, "-") // Replace multiple dashes with single dash
       .replace(/^-|-$/g, ""); // Remove leading/trailing dashes
+        
+    if (level === 2) {
+      lastH2Id = baseId;
+    }
     
-    // Handle duplicate IDs by adding a counter
+    if (level === 3 && lastH2Id) {
+      baseId = `${lastH2Id}-${baseId}`;
+    }
+    
     let id = baseId;
     const currentCount = idCounts.get(baseId) || 0;
     if (currentCount > 0) {
@@ -54,41 +61,50 @@ const headings = await getHeadings();
 let renderedHTML = await Astro.slots.render("default");
 
 if (addLinks) {
-  const idCounts = new Map(); // Track duplicate IDs for HTML replacement
+  const headingRegex = /<h([1-6])[^>]*>(.*?)<\/h\1>/g;
+  const idCounts = new Map();
+  let lastH2Id = "";
+  let match;
+  headingRegex.lastIndex = 0;
   
-  for (const heading of headings) {
-    const baseText = heading.text.replace(/<[^>]*>/g, "");
-    let baseId = baseText
+  while ((match = headingRegex.exec(renderedHTML)) !== null) {
+    const level = parseInt(match[1]);
+    const fullMatch = match[0];
+    const text = match[2].replace(/<[^>]*>/g, "");
+    let baseId = text
       .toLowerCase()
-      .replace(/[^\w\s-()]/g, "") // Keep parentheses
+      .replace(/[^\w\s-()]/g, "")
       .replace(/\s+/g, "-")
-      .replace(/\(\s*/g, "-") // Convert "( " to "-"
-      .replace(/\s*\)/g, "") // Convert " )" to ""
-      .replace(/-+/g, "-") // Replace multiple dashes with single dash
-      .replace(/^-|-$/g, ""); // Remove leading/trailing dashes
+      .replace(/\(\s*/g, "-")
+      .replace(/\s*\)/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
     
-    // Recreate the same ID logic for HTML replacement
+    if (level === 2) {
+      lastH2Id = baseId;
+    }
+    
+    if (level === 3 && lastH2Id) {
+      baseId = `${lastH2Id}-${baseId}`;
+    }
+    
     let id = baseId;
+    console.log("current id's : ", id)
     const currentCount = idCounts.get(baseId) || 0;
+    
     if (currentCount > 0) {
       id = `${baseId}-${currentCount}`;
     }
-    idCounts.set(baseId, currentCount + 1);
     
-    // Create a more specific regex to match the exact heading
-    const escapedText = baseText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(
-      `(<h${heading.level}[^>]*>)(${escapedText})(</h${heading.level}>)`,
-      ""
+    idCounts.set(baseId, currentCount + 1);
+    const replacement = fullMatch.replace(
+      `>${text}<`,
+      `><a id="${id}" href="#${id}" class="heading-anchor">${text}</a><`
     );
     
-    // Only replace if this exact heading hasn't been processed yet
-    if (renderedHTML.match(regex)) {
-      renderedHTML = renderedHTML.replace(
-        regex,
-        `$1<a id="${id}" href="#${id}" class="heading-anchor">${baseText}</a>$3`
-      );
-    }
+    renderedHTML = renderedHTML.replace(fullMatch, replacement);
+    headingRegex.lastIndex = renderedHTML.indexOf(replacement) + replacement.length;
   }
 }
 ---
