@@ -1,0 +1,84 @@
+---
+import FaqItem from '#components/FaqItem.astro';
+import faqs from '#data/faq.ts'
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
+---
+
+<main class="font-primary flex flex-col  p-15 gap-10 md:px-50">
+  <div class="flex flex-col items-center gap-10">
+    <h1 class="text-4xl font-bold">Frequently Asked Questions</h1>
+    
+    <div class="w-full max-w-6xl">
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col gap-4 flex-1">
+          {faqs.filter((_, index) => index % 2 === 0).map((faq, index) => (
+            <FaqItem 
+              question={faq.question} 
+              answer={faq.answer} 
+              index={index * 2}
+            />
+          ))}
+        </div>
+
+        <div class="flex flex-col gap-4 flex-1 hidden lg:flex">
+          {faqs.filter((_, index) => index % 2 === 1).map((faq, index) => (
+            <FaqItem 
+              question={faq.question} 
+              answer={faq.answer} 
+              index={index * 2 + 1}
+            />
+          ))}
+        </div>
+        
+        <div class="flex flex-col gap-4 lg:hidden">
+          {faqs.filter((_, index) => index % 2 === 1).map((faq, index) => (
+            <FaqItem 
+              question={faq.question} 
+              answer={faq.answer} 
+              index={index * 2 + 1}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', function() {
+        // @ts-ignore
+        const faqItem = this.closest('.faq-item'); 
+        const answer = faqItem.querySelector('.faq-answer');
+        // @ts-ignore
+        const icon = this.querySelector('.faq-icon'); 
+        
+        if (answer.classList.contains('hidden')) {
+          faqItem?.classList.add('border-indigo-400');
+          faqItem?.classList.add('bg-indigo-50/50');
+          question?.classList.add('bg-indigo-50/50');
+
+          answer.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          faqItem?.classList.remove('border-indigo-400')
+          faqItem?.classList.remove('bg-indigo-50/50');
+          question?.classList.remove('bg-indigo-50/50');
+
+
+          answer.classList.add('hidden');
+          icon.style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+  });
+</script>
