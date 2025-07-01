@@ -1,4 +1,6 @@
 ---
+import OpenLabsLogo from '#sections/open-labs-logo.astro';
+
 export interface Props {
   class?: string;
   addLinks?: boolean;
@@ -107,8 +109,11 @@ if (addLinks) {
   }
 }
 ---
-
-<div class="flex flex-row justify-between gap-8 px-5 md:px-10 lg:px-15">
+<div class="flex flex-col gap-8 ">
+<div class="px-5 ">
+  <OpenLabsLogo />
+</div>
+<div class="flex flex-row justify-between gap-20 px-5 md:px-10 lg:px-15">
   <aside
     class="hidden lg:flex sticky top-20 flex-col lg:w-64 flex-shrink-0 py-5 h-fit max-h-[calc(100vh-3rem)] bg-white"
   >
@@ -136,6 +141,7 @@ if (addLinks) {
   <div class="flex-1 py-4">
     {addLinks ? <Fragment set:html={renderedHTML} /> : <slot />}
   </div>
+</div>
 </div>
 
 <script>

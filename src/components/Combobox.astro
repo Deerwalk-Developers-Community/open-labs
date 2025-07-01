@@ -20,7 +20,7 @@ console.log(uni);
 const universities = uni.map((university) => university.id.toLocaleUpperCase());
 ---
 
-<div class="flex flex-col justify-center gap-5 sm:flex-row w-full">
+<div class="flex flex-col justify-center items-center gap-7 sm:flex-row w-full">
   <div class="relative w-full sm:w-3/4">
     <input
       id="combobox-input"
@@ -51,7 +51,7 @@ const universities = uni.map((university) => university.id.toLocaleUpperCase());
     </ul>
   </div>
 
-  <Button text={buttonText} variant="primary" type="button" id="submitBtn" />
+    <Button className = "w-full sm:w-fit" text={buttonText} variant="primary" type="button" id="submitBtn" />
 </div>
 
 <script>

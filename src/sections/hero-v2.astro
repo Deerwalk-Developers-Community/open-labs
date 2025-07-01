@@ -11,12 +11,12 @@ const features = [
     icon: GraduationHatSVG,
   },
   {
-    title: "Github Powered Contributions",
-    icon: GithubSVG,
-  },
-  {
     title: "Request Lab Work",
     icon: PullRequestSVG,
+  },
+  {
+    title: "Github Powered Contributions",
+    icon: GithubSVG,
   },
   {
     title: "Open Source and Free",
@@ -41,7 +41,7 @@ const features = [
       </h1>
     </div>
     <p
-      class="text-m max-w-[95%] font-primary md:w-130 md:text-center text-main-blue md:text-l md:text-center"
+      class="text-m max-w-[95%] mt-2 font-primary md:w-130  text-main-blue md:text-l md:text-center"
     >
       Open Labs Nepal connects students across universities, enabling them to
       upload, browse, and collaborate on lab work efficiently.
@@ -63,17 +63,19 @@ const features = [
       />
     </div>
     <div
-      class="flex flex-col gap-2 mt-3 md:grid md:grid-cols-2 md:text-sm md:mt-5"
-    >
-      {
-        features.map((feature) => (
-          <div class="flex gap-2 items-center">
-            <feature.icon />
-            <h2 class="text-l">{feature.title}</h2>
-          </div>
-        ))
-      }
-    </div>
+  class="flex flex-col gap-3 mt-5  md:mt-8 sm:grid sm:grid-cols-2 sm:gap-4 md:gap-6 "
+>
+  {
+    features.map((feature) => (
+      <div class="flex gap-3 items-center" >
+        <div class="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0">
+          <feature.icon />
+        </div>
+        <h2 class="text-base sm:text-sm md:text-base lg:text-lg text-main-blue font-[500]">{feature.title}</h2>
+      </div>
+    ))
+  }
+</div>
   </div>
 </main>
 
