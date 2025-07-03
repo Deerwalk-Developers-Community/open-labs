@@ -10,12 +10,9 @@ const isCoursesPage = pathname.match(/\/open-labs\/courses\/[^\/]+\/?$/);
 const isSubjectsPage = pathname.match(/\/open-labs\/subjects\/[^\/]+\/?$/);
 
 const colleges = await getColleges();
-
-// const filteredColleges = colleges.filter(
-//   (college) => college.affiliated_to === params,
-// );
-console.log("Current path:", pathname);
 const courses = await getCourses();
+
+console.log("Current path:", pathname);
 
 const breadcrumbs = [];
 
@@ -25,20 +22,63 @@ breadcrumbs.push({
   active: isUniversitiesHome,
 });
 
-if (isCollegePage || isCoursesPage || isSubjectsPage) {
-  breadcrumbs.push({
-    title: "College",
-    // href: '#',
-    active: isCollegePage,
-  });
+function getData(title: string) {
+  if (title === 'college') {
+    const college = courses[0].taught_at[0];
+    const uni = colleges.find((affiliate) => affiliate.id == college)?.affiliated_to;
+    return uni;
+  } else if (title === 'course') {
+    const pathSegments = pathname.split('/');
+    const collegeCoursePart = pathSegments[pathSegments.length - 1]; 
+    
+    const matchingCourse = courses.find(course => {
+      const collegeNames = course.taught_at;
+      return collegeNames.some(college => 
+        collegeCoursePart === `${college}-${course.name}`
+      );
+    });
+    
+    if (matchingCourse) {
+      const courseName = matchingCourse.name;
+      const collegeName = collegeCoursePart.replace(`-${courseName}`, '');
+      return collegeName;
+    }
+    
+  }
+  return null;
 }
 
-if (isCoursesPage || isSubjectsPage) {
+if (isCollegePage || isCoursesPage || isSubjectsPage) {
+  let uniHref = '#'; // default fallback
+  if (isCoursesPage || isSubjectsPage) {
+    const uni = getData('college');
+    if (uni) {
+      uniHref = `/open-labs/universities/${uni}`;
+    }
+  }
+  
+  breadcrumbs.push({
+    title: "College",
+    href: uniHref,
+    active: isCollegePage,
+  });
+  
+  let courseHref= '#';
+  let course =   getData('course')
+  if (course){
+    courseHref = `/open-labs/courses/${course}`
+  }
+  if (isSubjectsPage || isCoursesPage) {
   breadcrumbs.push({
     title: "Courses",
+    href :courseHref,
     active: isCoursesPage,
   });
 }
+
+}
+
+
 
 if (isSubjectsPage) {
   breadcrumbs.push({
