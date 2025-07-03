@@ -17,7 +17,6 @@ const selectedSubjects = subjects.filter(
     subject.taught_at.includes(college) && subject.courses.includes(course),
 );
 
-console.log(selectedSubjects)
 ---
 
 <div
@@ -36,14 +35,16 @@ console.log(selectedSubjects)
         </span>
       </h1>
 
-      <div class="flex gap-3 flex-col md:flex-row">
+      <div 
+        class="flex gap-3 w-full sm:w-fit lg:w-full flex-col sm:flex-row mt-5"
+      >
         <SearchBar entity="subjects" />
         <Button
           id="search-button"
           variant="primary"
           type="button"
           text="Search"
-          className="px-8 text-sm lg:text-md"
+          className="px-8 sm:py-2 lg:py-4 text-sm lg:text-md"
         />
       </div>
       <div class="flex gap-2 mt-2 md:mt-5 flex-col items-start">

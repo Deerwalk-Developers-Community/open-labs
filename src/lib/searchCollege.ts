@@ -7,12 +7,10 @@ export function initCollegeSearch() {
 
     function filterColleges() {
       const searchValue = searchInput?.value.toLowerCase().trim();
-      console.log(searchValue);
       collegeCards.forEach((card) => {
         const collegeName = card
           .querySelector(".college-name")
           ?.textContent?.toLowerCase();
-        console.log(collegeName);
         if (searchValue === "" || collegeName?.includes(searchValue)) {
           card.classList.remove("hidden");
         } else {
