@@ -13,6 +13,7 @@ const colleges = await getColleges();
 const courses = await getCourses();
 
 console.log("Current path:", pathname);
+console.log("Courses data:", courses);
 
 const breadcrumbs = [];
 
@@ -28,22 +29,40 @@ function getData(title: string) {
     const uni = colleges.find((affiliate) => affiliate.id == college)?.affiliated_to;
     return uni;
   } else if (title === 'course') {
-    const pathSegments = pathname.split('/');
-    const collegeCoursePart = pathSegments[pathSegments.length - 1]; 
+    console.log("Getting course data...");
+    
+    const pathSegments = pathname.split('/').filter(segment => segment.length > 0);
+    console.log("Path segments:", pathSegments);
+    
+    const subjectsIndex = pathSegments.findIndex(segment => segment === 'subjects');
+    const collegeCoursePart = subjectsIndex !== -1 && subjectsIndex + 1 < pathSegments.length 
+      ? pathSegments[subjectsIndex + 1] 
+      : pathSegments[pathSegments.length - 1];
+    
+    console.log("College-course part from URL:", collegeCoursePart);
+    console.log("Available courses:", courses);
     
     const matchingCourse = courses.find(course => {
       const collegeNames = course.taught_at;
-      return collegeNames.some(college => 
-        collegeCoursePart === `${college}-${course.name}`
-      );
+      console.log(`Checking course: ${course.name}, taught_at: ${collegeNames}`);
+      
+      return collegeNames.some(college => {
+        const expectedPattern = `${college}-${course.name}`;
+        console.log(`Comparing: ${collegeCoursePart} === ${expectedPattern}`);
+        return collegeCoursePart === expectedPattern;
+      });
     });
+    
+    console.log("Matching course found:", matchingCourse);
     
     if (matchingCourse) {
       const courseName = matchingCourse.name;
       const collegeName = collegeCoursePart.replace(`-${courseName}`, '');
+      console.log("Extracted college name:", collegeName);
       return collegeName;
     }
     
+    console.log("No matching course found, returning null");
   }
   return null;
 }
@@ -63,22 +82,25 @@ if (isCollegePage || isCoursesPage || isSubjectsPage) {
     active: isCollegePage,
   });
   
-  let courseHref= '#';
-  let course =   getData('course')
-  if (course){
-    courseHref = `/open-labs/courses/${course}`
+  let courseHref = '#';
+  let course = getData('course');
+  console.log("Course result:", course);
+  
+  if (course) {
+    courseHref = `/open-labs/courses/${course}`;
+    console.log("Course href set to:", courseHref);
+  } else {
+    console.log("Course is null, href remains #");
   }
+  
   if (isSubjectsPage || isCoursesPage) {
-  breadcrumbs.push({
-    title: "Courses",
-    href :courseHref,
-    active: isCoursesPage,
-  });
+    breadcrumbs.push({
+      title: "Courses",
+      href: courseHref,
+      active: isCoursesPage,
+    });
+  }
 }
-
-}
-
-
 
 if (isSubjectsPage) {
   breadcrumbs.push({
@@ -86,6 +108,8 @@ if (isSubjectsPage) {
     active: true,
   });
 }
+
+console.log("Final breadcrumbs:", breadcrumbs);
 ---
 
 <nav class="flex">
