@@ -17,7 +17,6 @@ const selectedSubjects = subjects.filter(
     subject.taught_at.includes(college) && subject.courses.includes(course),
 );
 
-console.log(selectedSubjects)
 ---
 
 <div
@@ -43,7 +42,7 @@ console.log(selectedSubjects)
           variant="primary"
           type="button"
           text="Search"
-          className="px-8 text-sm lg:text-md"
+          className="px-8 sm:py-2 lg:py-4 text-sm lg:text-md"
         />
       </div>
       <div class="flex gap-2 mt-2 md:mt-5 flex-col items-start">

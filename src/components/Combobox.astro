@@ -16,7 +16,6 @@ const {
 } = Astro.props as ComboboxProps;
 
 const uni = await getUniversities();
-console.log(uni);
 const universities = uni.map((university) => university.id.toLocaleUpperCase());
 ---
 
