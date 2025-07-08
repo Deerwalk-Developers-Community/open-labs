@@ -1,0 +1,104 @@
+---
+title: "C Programming Lab Works"
+college_id: soe
+college_name: "KU School of Engineering"
+course: technical-writing
+semester: 2
+subject: microprocessing
+university_id: ku
+university_name: "Kathmandu University"
+layout: "#layouts/lab-layout.astro"
+doneBy: "Aashutosh Pudasaini"
+---
+
+import LabHeader from "#components/markdown/LabHeader.astro";
+
+<LabHeader
+  title={frontmatter.title}
+  collegeName={frontmatter.college_name}
+  course={frontmatter.course}
+  semester={frontmatter.semester}
+  doneBy={frontmatter.doneBy}
+/>
+
+# Write a C Program to calculate the Area of a Circle
+
+```c
+#include<stdio.h>
+#define PI 3.14
+
+int main(void)
+{
+    int radius,area;
+    printf("Enter radius of circle :");
+    scanf("%d",&radius);
+    area = PI *radius*radius;
+    printf("The area is %d\n",area);
+}
+
+```
+
+# Write a Program to Calcualte the area of a Rectangle
+
+```c
+#include<stdio.h>
+
+int main(void){
+    int length,breadth,area;
+    printf("Enter Length and Breadth of Rectangle seperated by ; :");
+    scanf("%d;%d",&length,&breadth);
+    area = length*breadth;
+    printf("The area is %d\n",area);
+}
+
+```
+
+# Write a Program to calculate the area of a triangle
+
+```c
+#include<stdio.h>
+
+int main(void){
+    int base,height,area;
+    printf("Enter Base and Height of your triangle, seperated by ; :");
+    scanf("%d;%d",&base,&height);
+    area = (float)1/2*base*height;
+    printf("The area is %d\n",area);
+}
+
+```
+
+# Write a program to calculate Simple Interest
+
+```c
+
+#include <stdio.h>
+
+int main(void){
+  int age;
+  char gender;
+  char name[20];
+
+  printf("Please Enter Your Age : ");
+  scanf("%d", &age);
+  printf("Please Enter Your Gender : ");
+  scanf(" %c", &gender);
+  printf("Please Enter Your Name : ");
+  scanf("%s",&name);
+
+  printf("%s is Your Name\nYou are %d years old and\nYou are a %c\n", name, age, gender);
+  return 0;
+}
+
+```
+
+```python
+continue
+```
+
+~strikethrough~
+
+```javascript
+
+const let = await fetch('yoururlhere');
+```
