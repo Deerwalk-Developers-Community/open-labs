@@ -12,8 +12,7 @@ const isSubjectsPage = pathname.match(/\/open-labs\/subjects\/[^\/]+\/?$/);
 const colleges = await getColleges();
 const courses = await getCourses();
 
-console.log("Current path:", pathname);
-console.log("Courses data:", courses);
+
 
 const breadcrumbs = [];
 
@@ -30,7 +29,6 @@ function getData(title: string) {
     const uni = colleges.find((affiliate) => affiliate.id == college)?.affiliated_to;
     return uni;
   } else if (title === 'course') {
-    console.log("Getting course data...");
     const pathSegments = pathname.split('/').filter(segment => segment.length > 0);
     
     const subjectsIndex = pathSegments.findIndex(segment => segment === 'subjects');
@@ -49,7 +47,6 @@ function getData(title: string) {
       });
     });
     
-    console.log("Matching course found:", matchingCourse);
     
     if (matchingCourse) {
       const courseName = matchingCourse.name;
@@ -80,14 +77,10 @@ if (isCollegePage || isCoursesPage || isSubjectsPage) {
   
   let courseHref = '#';
   let course = getData('course');
-  console.log("Course result:", course);
   
   if (course) {
     courseHref = `/open-labs/courses/${course}`;
-    console.log("Course href set to:", courseHref);
-  } else {
-    console.log("Course is null, href remains #");
-  }
+  } 
   
   if (isSubjectsPage || isCoursesPage) {
     breadcrumbs.push({
@@ -105,7 +98,6 @@ if (isSubjectsPage) {
   });
 }
 
-console.log("Final breadcrumbs:", breadcrumbs);
 ---
 
 <nav class="flex">
