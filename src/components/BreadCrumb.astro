@@ -25,26 +25,22 @@ breadcrumbs.push({
 
 function getData(title: string) {
   if (title === 'college') {
-    const college = courses[0].taught_at[0];
+    const pathSegments = pathname.split('/').filter(segment=>segment.length >0)
+    const college = pathSegments[pathSegments.length-1]
     const uni = colleges.find((affiliate) => affiliate.id == college)?.affiliated_to;
     return uni;
   } else if (title === 'course') {
     console.log("Getting course data...");
-    
     const pathSegments = pathname.split('/').filter(segment => segment.length > 0);
-    console.log("Path segments:", pathSegments);
     
     const subjectsIndex = pathSegments.findIndex(segment => segment === 'subjects');
     const collegeCoursePart = subjectsIndex !== -1 && subjectsIndex + 1 < pathSegments.length 
       ? pathSegments[subjectsIndex + 1] 
       : pathSegments[pathSegments.length - 1];
     
-    console.log("College-course part from URL:", collegeCoursePart);
-    console.log("Available courses:", courses);
     
     const matchingCourse = courses.find(course => {
       const collegeNames = course.taught_at;
-      console.log(`Checking course: ${course.name}, taught_at: ${collegeNames}`);
       
       return collegeNames.some(college => {
         const expectedPattern = `${college}-${course.name}`;
