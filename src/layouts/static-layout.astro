@@ -1,0 +1,15 @@
+---
+import LandingLayout from "#layouts/landing-layout.astro";
+import "../styles/global.css";
+const { title, isLanding = false } = Astro.props;
+import OpenLabsLogoSVG from "#assets/logos/open_labs_logo.svg";
+---
+<LandingLayout pageTitle={title} isLanding={isLanding}>
+ <aside class="px-10 md:px-30 lg:px-50 mt-5 w-fit py-5  h-fit">
+  <a href="/open-labs">
+    <OpenLabsLogoSVG />
+  </a>
+</aside>
+
+  <slot />
+</LandingLayout>
